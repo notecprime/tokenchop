@@ -43,5 +43,18 @@ library Math {
 //   }
 // }
 
-
+    // function mulDiv(
+    //     uint256 value,
+    //     uint256 numerator,
+    //     uint256 denominator
+    // )
+    //     internal
+    //     constant
+    //     returns (uint256)
+    // {
+    //     require(value < 2**128);
+    //     require(numerator < 2**128);
+    //     require(numerator <= denominator);
+    //     return (value * numerator) / denominator;
+    // }
 }
