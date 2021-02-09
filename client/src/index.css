@@ -1,0 +1,42 @@
+* {
+  user-select: none;
+}
+
+.selectable {
+  user-select: all;
+}
+
+body {
+  width: 900px;
+  margin: 0 auto;
+  display: flex;
+  background: rgb(63, 81, 181, 0.15);
+  flex-direction: column;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;  
+  flex: 1 1 auto;
+  background: #FFF;
+}
+
+header {
+  flex: 0 0 auto;  
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+input {
+  text-align: right;
+  font-size: 20px;
+}
