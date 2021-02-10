@@ -2,5 +2,6 @@
 pragma solidity =0.7.6;
 
 interface ITokenChopToken {
-    function initialize(int8 typeId, address base, address quote, address sister) external;
+    function initialize(uint8 typeId, address base, address quote, address sister) external;
+    function setBandAddress(address) external;
 }

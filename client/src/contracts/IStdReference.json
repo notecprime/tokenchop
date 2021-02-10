@@ -84,7 +84,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_base\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_quote\",\"type\":\"string\"}],\"name\":\"getReferenceData\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"rate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedBase\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedQuote\",\"type\":\"uint256\"}],\"internalType\":\"struct IStdReference.ReferenceData\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string[]\",\"name\":\"_bases\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"_quotes\",\"type\":\"string[]\"}],\"name\":\"getReferenceDataBulk\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"rate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedBase\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedQuote\",\"type\":\"uint256\"}],\"internalType\":\"struct IStdReference.ReferenceData[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/token_chop/contracts/interfaces/IStdReference.sol\":\"IStdReference\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/token_chop/contracts/interfaces/IStdReference.sol\":{\"keccak256\":\"0x84f63ac1938d5fc224eaf9d81c305c4d273ad33498d96b25899fa110f7658f96\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://34bcd231ce0d9e110e69ace7513e32343cec28223e6e64c498312a54aec1699e\",\"dweb:/ipfs/QmVNPLzAWZFXsQAEDWrQoUoJknMxZ2PZHTWLPhCWx2eN8k\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_base\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_quote\",\"type\":\"string\"}],\"name\":\"getReferenceData\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"rate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedBase\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedQuote\",\"type\":\"uint256\"}],\"internalType\":\"struct IStdReference.ReferenceData\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string[]\",\"name\":\"_bases\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"_quotes\",\"type\":\"string[]\"}],\"name\":\"getReferenceDataBulk\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"rate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedBase\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedQuote\",\"type\":\"uint256\"}],\"internalType\":\"struct IStdReference.ReferenceData[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/tokenchop/contracts/interfaces/IStdReference.sol\":\"IStdReference\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/tokenchop/contracts/interfaces/IStdReference.sol\":{\"keccak256\":\"0x84f63ac1938d5fc224eaf9d81c305c4d273ad33498d96b25899fa110f7658f96\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://34bcd231ce0d9e110e69ace7513e32343cec28223e6e64c498312a54aec1699e\",\"dweb:/ipfs/QmVNPLzAWZFXsQAEDWrQoUoJknMxZ2PZHTWLPhCWx2eN8k\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -93,36 +93,36 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// FROM https://github.com/bandprotocol/bandchain/blob/4aabd1a19070dadc8bc0287c56a944177f81f318/bridges/evm/contracts/stdref/IStdReference.sol\r\npragma solidity 0.7.6;\r\npragma experimental ABIEncoderV2;\r\n\r\ninterface IStdReference {\r\n    struct ReferenceData {\r\n        uint256 rate; // base/quote exchange rate, multiplied by 1e18.\r\n        uint256 lastUpdatedBase; // UNIX epoch of the last time when base price gets updated.\r\n        uint256 lastUpdatedQuote; // UNIX epoch of the last time when quote price gets updated.\r\n    }\r\n\r\n    function getReferenceData(string memory _base, string memory _quote)\r\n        external\r\n        view\r\n        returns (ReferenceData memory);\r\n\r\n    function getReferenceDataBulk(string[] memory _bases, string[] memory _quotes)\r\n        external\r\n        view\r\n        returns (ReferenceData[] memory);\r\n}",
-  "sourcePath": "C:/Repos/token_chop/contracts/interfaces/IStdReference.sol",
+  "sourcePath": "C:\\Repos\\tokenchop\\contracts\\interfaces\\IStdReference.sol",
   "ast": {
-    "absolutePath": "/C/Repos/token_chop/contracts/interfaces/IStdReference.sol",
+    "absolutePath": "/C/Repos/tokenchop/contracts/interfaces/IStdReference.sol",
     "exportedSymbols": {
       "IStdReference": [
-        214
+        1552
       ]
     },
-    "id": 215,
+    "id": 1553,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 184,
+        "id": 1522,
         "literals": [
           "solidity",
           "0.7",
           ".6"
         ],
         "nodeType": "PragmaDirective",
-        "src": "177:22:3"
+        "src": "177:22:6"
       },
       {
-        "id": 185,
+        "id": 1523,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "201:33:3"
+        "src": "201:33:6"
       },
       {
         "abstract": false,
@@ -130,25 +130,25 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 214,
+        "id": 1552,
         "linearizedBaseContracts": [
-          214
+          1552
         ],
         "name": "IStdReference",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "IStdReference.ReferenceData",
-            "id": 192,
+            "id": 1530,
             "members": [
               {
                 "constant": false,
-                "id": 187,
+                "id": 1525,
                 "mutability": "mutable",
                 "name": "rate",
                 "nodeType": "VariableDeclaration",
-                "scope": 192,
-                "src": "301:12:3",
+                "scope": 1530,
+                "src": "301:12:6",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -156,10 +156,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 186,
+                  "id": 1524,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "301:7:3",
+                  "src": "301:7:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -169,12 +169,12 @@
               },
               {
                 "constant": false,
-                "id": 189,
+                "id": 1527,
                 "mutability": "mutable",
                 "name": "lastUpdatedBase",
                 "nodeType": "VariableDeclaration",
-                "scope": 192,
-                "src": "373:23:3",
+                "scope": 1530,
+                "src": "373:23:6",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -182,10 +182,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 188,
+                  "id": 1526,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "373:7:3",
+                  "src": "373:7:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -195,12 +195,12 @@
               },
               {
                 "constant": false,
-                "id": 191,
+                "id": 1529,
                 "mutability": "mutable",
                 "name": "lastUpdatedQuote",
                 "nodeType": "VariableDeclaration",
-                "scope": 192,
-                "src": "468:24:3",
+                "scope": 1530,
+                "src": "468:24:6",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -208,10 +208,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 190,
+                  "id": 1528,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "468:7:3",
+                  "src": "468:7:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -222,30 +222,30 @@
             ],
             "name": "ReferenceData",
             "nodeType": "StructDefinition",
-            "scope": 214,
-            "src": "269:293:3",
+            "scope": 1552,
+            "src": "269:293:6",
             "visibility": "public"
           },
           {
             "functionSelector": "65555bcc",
-            "id": 201,
+            "id": 1539,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getReferenceData",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 197,
+              "id": 1535,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 194,
+                  "id": 1532,
                   "mutability": "mutable",
                   "name": "_base",
                   "nodeType": "VariableDeclaration",
-                  "scope": 201,
-                  "src": "596:19:3",
+                  "scope": 1539,
+                  "src": "596:19:6",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -253,10 +253,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 193,
+                    "id": 1531,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "596:6:3",
+                    "src": "596:6:6",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -266,12 +266,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 196,
+                  "id": 1534,
                   "mutability": "mutable",
                   "name": "_quote",
                   "nodeType": "VariableDeclaration",
-                  "scope": 201,
-                  "src": "617:20:3",
+                  "scope": 1539,
+                  "src": "617:20:6",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -279,10 +279,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 195,
+                    "id": 1533,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "617:6:3",
+                    "src": "617:6:6",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -291,68 +291,68 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "595:43:3"
+              "src": "595:43:6"
             },
             "returnParameters": {
-              "id": 200,
+              "id": 1538,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 199,
+                  "id": 1537,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 201,
-                  "src": "689:20:3",
+                  "scope": 1539,
+                  "src": "689:20:6",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_ReferenceData_$192_memory_ptr",
+                    "typeIdentifier": "t_struct$_ReferenceData_$1530_memory_ptr",
                     "typeString": "struct IStdReference.ReferenceData"
                   },
                   "typeName": {
-                    "id": 198,
+                    "id": 1536,
                     "name": "ReferenceData",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 192,
-                    "src": "689:13:3",
+                    "referencedDeclaration": 1530,
+                    "src": "689:13:6",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_ReferenceData_$192_storage_ptr",
+                      "typeIdentifier": "t_struct$_ReferenceData_$1530_storage_ptr",
                       "typeString": "struct IStdReference.ReferenceData"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "688:22:3"
+              "src": "688:22:6"
             },
-            "scope": 214,
-            "src": "570:141:3",
+            "scope": 1552,
+            "src": "570:141:6",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "functionSelector": "e42a071b",
-            "id": 213,
+            "id": 1551,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getReferenceDataBulk",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 208,
+              "id": 1546,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 204,
+                  "id": 1542,
                   "mutability": "mutable",
                   "name": "_bases",
                   "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "749:22:3",
+                  "scope": 1551,
+                  "src": "749:22:6",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -361,18 +361,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 202,
+                      "id": 1540,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "749:6:3",
+                      "src": "749:6:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
                       }
                     },
-                    "id": 203,
+                    "id": 1541,
                     "nodeType": "ArrayTypeName",
-                    "src": "749:8:3",
+                    "src": "749:8:6",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -382,12 +382,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 207,
+                  "id": 1545,
                   "mutability": "mutable",
                   "name": "_quotes",
                   "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "773:23:3",
+                  "scope": 1551,
+                  "src": "773:23:6",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -396,18 +396,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 205,
+                      "id": 1543,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "773:6:3",
+                      "src": "773:6:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
                       }
                     },
-                    "id": 206,
+                    "id": 1544,
                     "nodeType": "ArrayTypeName",
-                    "src": "773:8:3",
+                    "src": "773:8:6",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -416,70 +416,70 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "748:49:3"
+              "src": "748:49:6"
             },
             "returnParameters": {
-              "id": 212,
+              "id": 1550,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 211,
+                  "id": 1549,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "848:22:3",
+                  "scope": 1551,
+                  "src": "848:22:6",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_ReferenceData_$192_memory_ptr_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_ReferenceData_$1530_memory_ptr_$dyn_memory_ptr",
                     "typeString": "struct IStdReference.ReferenceData[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 209,
+                      "id": 1547,
                       "name": "ReferenceData",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 192,
-                      "src": "848:13:3",
+                      "referencedDeclaration": 1530,
+                      "src": "848:13:6",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_ReferenceData_$192_storage_ptr",
+                        "typeIdentifier": "t_struct$_ReferenceData_$1530_storage_ptr",
                         "typeString": "struct IStdReference.ReferenceData"
                       }
                     },
-                    "id": 210,
+                    "id": 1548,
                     "nodeType": "ArrayTypeName",
-                    "src": "848:15:3",
+                    "src": "848:15:6",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_ReferenceData_$192_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_ReferenceData_$1530_storage_$dyn_storage_ptr",
                       "typeString": "struct IStdReference.ReferenceData[]"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "847:24:3"
+              "src": "847:24:6"
             },
-            "scope": 214,
-            "src": "719:153:3",
+            "scope": 1552,
+            "src": "719:153:6",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 215,
-        "src": "238:637:3"
+        "scope": 1553,
+        "src": "238:637:6"
       }
     ],
-    "src": "177:698:3"
+    "src": "177:698:6"
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/C/Repos/token_chop/contracts/interfaces/IStdReference.sol",
+      "absolutePath": "/C/Repos/tokenchop/contracts/interfaces/IStdReference.sol",
       "exportedSymbols": {
         "IStdReference": [
-          214
+          1552
         ]
       },
       "license": "MIT"
@@ -493,9 +493,9 @@
             ".6"
           ]
         },
-        "id": 184,
+        "id": 1522,
         "name": "PragmaDirective",
-        "src": "177:22:3"
+        "src": "177:22:6"
       },
       {
         "attributes": {
@@ -504,9 +504,9 @@
             "ABIEncoderV2"
           ]
         },
-        "id": 185,
+        "id": 1523,
         "name": "PragmaDirective",
-        "src": "201:33:3"
+        "src": "201:33:6"
       },
       {
         "attributes": {
@@ -520,17 +520,17 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            214
+            1552
           ],
           "name": "IStdReference",
-          "scope": 215
+          "scope": 1553
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "IStdReference.ReferenceData",
               "name": "ReferenceData",
-              "scope": 214,
+              "scope": 1552,
               "visibility": "public"
             },
             "children": [
@@ -539,7 +539,7 @@
                   "constant": false,
                   "mutability": "mutable",
                   "name": "rate",
-                  "scope": 192,
+                  "scope": 1530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -551,21 +551,21 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 186,
+                    "id": 1524,
                     "name": "ElementaryTypeName",
-                    "src": "301:7:3"
+                    "src": "301:7:6"
                   }
                 ],
-                "id": 187,
+                "id": 1525,
                 "name": "VariableDeclaration",
-                "src": "301:12:3"
+                "src": "301:12:6"
               },
               {
                 "attributes": {
                   "constant": false,
                   "mutability": "mutable",
                   "name": "lastUpdatedBase",
-                  "scope": 192,
+                  "scope": 1530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -577,21 +577,21 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 188,
+                    "id": 1526,
                     "name": "ElementaryTypeName",
-                    "src": "373:7:3"
+                    "src": "373:7:6"
                   }
                 ],
-                "id": 189,
+                "id": 1527,
                 "name": "VariableDeclaration",
-                "src": "373:23:3"
+                "src": "373:23:6"
               },
               {
                 "attributes": {
                   "constant": false,
                   "mutability": "mutable",
                   "name": "lastUpdatedQuote",
-                  "scope": 192,
+                  "scope": 1530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -603,19 +603,19 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 190,
+                    "id": 1528,
                     "name": "ElementaryTypeName",
-                    "src": "468:7:3"
+                    "src": "468:7:6"
                   }
                 ],
-                "id": 191,
+                "id": 1529,
                 "name": "VariableDeclaration",
-                "src": "468:24:3"
+                "src": "468:24:6"
               }
             ],
-            "id": 192,
+            "id": 1530,
             "name": "StructDefinition",
-            "src": "269:293:3"
+            "src": "269:293:6"
           },
           {
             "attributes": {
@@ -627,7 +627,7 @@
                 null
               ],
               "name": "getReferenceData",
-              "scope": 214,
+              "scope": 1552,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -640,7 +640,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_base",
-                      "scope": 201,
+                      "scope": 1539,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string",
@@ -652,21 +652,21 @@
                           "name": "string",
                           "type": "string"
                         },
-                        "id": 193,
+                        "id": 1531,
                         "name": "ElementaryTypeName",
-                        "src": "596:6:3"
+                        "src": "596:6:6"
                       }
                     ],
-                    "id": 194,
+                    "id": 1532,
                     "name": "VariableDeclaration",
-                    "src": "596:19:3"
+                    "src": "596:19:6"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_quote",
-                      "scope": 201,
+                      "scope": 1539,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string",
@@ -678,19 +678,19 @@
                           "name": "string",
                           "type": "string"
                         },
-                        "id": 195,
+                        "id": 1533,
                         "name": "ElementaryTypeName",
-                        "src": "617:6:3"
+                        "src": "617:6:6"
                       }
                     ],
-                    "id": 196,
+                    "id": 1534,
                     "name": "VariableDeclaration",
-                    "src": "617:20:3"
+                    "src": "617:20:6"
                   }
                 ],
-                "id": 197,
+                "id": 1535,
                 "name": "ParameterList",
-                "src": "595:43:3"
+                "src": "595:43:6"
               },
               {
                 "children": [
@@ -699,7 +699,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 201,
+                      "scope": 1539,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "struct IStdReference.ReferenceData",
@@ -709,27 +709,27 @@
                       {
                         "attributes": {
                           "name": "ReferenceData",
-                          "referencedDeclaration": 192,
+                          "referencedDeclaration": 1530,
                           "type": "struct IStdReference.ReferenceData"
                         },
-                        "id": 198,
+                        "id": 1536,
                         "name": "UserDefinedTypeName",
-                        "src": "689:13:3"
+                        "src": "689:13:6"
                       }
                     ],
-                    "id": 199,
+                    "id": 1537,
                     "name": "VariableDeclaration",
-                    "src": "689:20:3"
+                    "src": "689:20:6"
                   }
                 ],
-                "id": 200,
+                "id": 1538,
                 "name": "ParameterList",
-                "src": "688:22:3"
+                "src": "688:22:6"
               }
             ],
-            "id": 201,
+            "id": 1539,
             "name": "FunctionDefinition",
-            "src": "570:141:3"
+            "src": "570:141:6"
           },
           {
             "attributes": {
@@ -741,7 +741,7 @@
                 null
               ],
               "name": "getReferenceDataBulk",
-              "scope": 214,
+              "scope": 1552,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -754,7 +754,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_bases",
-                      "scope": 213,
+                      "scope": 1551,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string[]",
@@ -771,26 +771,26 @@
                               "name": "string",
                               "type": "string"
                             },
-                            "id": 202,
+                            "id": 1540,
                             "name": "ElementaryTypeName",
-                            "src": "749:6:3"
+                            "src": "749:6:6"
                           }
                         ],
-                        "id": 203,
+                        "id": 1541,
                         "name": "ArrayTypeName",
-                        "src": "749:8:3"
+                        "src": "749:8:6"
                       }
                     ],
-                    "id": 204,
+                    "id": 1542,
                     "name": "VariableDeclaration",
-                    "src": "749:22:3"
+                    "src": "749:22:6"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_quotes",
-                      "scope": 213,
+                      "scope": 1551,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string[]",
@@ -807,24 +807,24 @@
                               "name": "string",
                               "type": "string"
                             },
-                            "id": 205,
+                            "id": 1543,
                             "name": "ElementaryTypeName",
-                            "src": "773:6:3"
+                            "src": "773:6:6"
                           }
                         ],
-                        "id": 206,
+                        "id": 1544,
                         "name": "ArrayTypeName",
-                        "src": "773:8:3"
+                        "src": "773:8:6"
                       }
                     ],
-                    "id": 207,
+                    "id": 1545,
                     "name": "VariableDeclaration",
-                    "src": "773:23:3"
+                    "src": "773:23:6"
                   }
                 ],
-                "id": 208,
+                "id": 1546,
                 "name": "ParameterList",
-                "src": "748:49:3"
+                "src": "748:49:6"
               },
               {
                 "children": [
@@ -833,7 +833,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 213,
+                      "scope": 1551,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "struct IStdReference.ReferenceData[]",
@@ -848,42 +848,42 @@
                           {
                             "attributes": {
                               "name": "ReferenceData",
-                              "referencedDeclaration": 192,
+                              "referencedDeclaration": 1530,
                               "type": "struct IStdReference.ReferenceData"
                             },
-                            "id": 209,
+                            "id": 1547,
                             "name": "UserDefinedTypeName",
-                            "src": "848:13:3"
+                            "src": "848:13:6"
                           }
                         ],
-                        "id": 210,
+                        "id": 1548,
                         "name": "ArrayTypeName",
-                        "src": "848:15:3"
+                        "src": "848:15:6"
                       }
                     ],
-                    "id": 211,
+                    "id": 1549,
                     "name": "VariableDeclaration",
-                    "src": "848:22:3"
+                    "src": "848:22:6"
                   }
                 ],
-                "id": 212,
+                "id": 1550,
                 "name": "ParameterList",
-                "src": "847:24:3"
+                "src": "847:24:6"
               }
             ],
-            "id": 213,
+            "id": 1551,
             "name": "FunctionDefinition",
-            "src": "719:153:3"
+            "src": "719:153:6"
           }
         ],
-        "id": 214,
+        "id": 1552,
         "name": "ContractDefinition",
-        "src": "238:637:3"
+        "src": "238:637:6"
       }
     ],
-    "id": 215,
+    "id": 1553,
     "name": "SourceUnit",
-    "src": "177:698:3"
+    "src": "177:698:6"
   },
   "compiler": {
     "name": "solc",
@@ -891,7 +891,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-02-02T08:28:50.693Z",
+  "updatedAt": "2021-02-10T09:30:43.013Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

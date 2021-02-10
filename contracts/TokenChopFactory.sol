@@ -7,14 +7,16 @@ import './TokenChopToken.sol';
 contract TokenChopFactory is ITokenChopFactory {
     address public override feeTo;
     address public override feeToSetter;
+    address public bandAddr;
 
     mapping(address => mapping(address => address)) public override getStableAddress;
     mapping(address => mapping(address => address)) public override getSpecAddress;
     address[] public override allStable;
     address[] public override allSpec;
 
-    constructor(address _feeToSetter) {
+    constructor(address _feeToSetter, address _bandAddr) {
         feeToSetter = _feeToSetter;
+        bandAddr = _bandAddr;
     }
 
     function allPairsLength() external view override returns (uint) {
@@ -30,7 +32,9 @@ contract TokenChopFactory is ITokenChopFactory {
         address _stableAddr = createToken(0, _base, _quote);
         address _specAddr = createToken(1, _base, _quote);
         ITokenChopToken(_stableAddr).initialize(0, _base, _quote, _specAddr);
+        ITokenChopToken(_stableAddr).setBandAddress(bandAddr);
         ITokenChopToken(_specAddr).initialize(1, _base, _quote, _stableAddr);
+        ITokenChopToken(_specAddr).setBandAddress(bandAddr);
         getStableAddress[_base][_quote] = _stableAddr;
         getSpecAddress[_base][_quote] = _specAddr;
         allStable.push(_stableAddr);
@@ -39,7 +43,7 @@ contract TokenChopFactory is ITokenChopFactory {
         return (_stableAddr, _specAddr);
     }
 
-    function createToken(int8 _type, address _base, address _quote) internal returns (address) {
+    function createToken(uint8 _type, address _base, address _quote) internal returns (address) {
         bytes memory bytecode = type(TokenChopToken).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(_type, _base, _quote));
         address _token;

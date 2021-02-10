@@ -13,40 +13,58 @@ contract TokenChopToken is IBEP20, ITokenChopToken {
     mapping(address => uint256) public override balanceOf;
     mapping(address => mapping(address => uint256)) public override allowance;
 
-    string public override name;
-    string public override symbol;
-    string public baseSymbol;
-    string public quoteSymbol;
-    string public poolType;
+    string  public override name;
+    string  public override symbol;
+    string  public baseSymbol;
+    string  public quoteSymbol;
+    string  public poolType;
+    uint8   public typeId;
     address public base;
     address public quote;
     address public sister;
     address public factory;
     uint256 public collateral;
+    uint256 public previousPrice;
     uint256 public price;
     uint256 public override totalSupply;
-    address private constant _bandProtocol = 0xDA7a001b254CD22e46d3eAB04d937489c93174C3;
+    address public bandProtocol;
 
     event CollateralTransfer(address indexed from, address indexed to, uint256 value);
     event PriceUpdate(uint256 oldPrice, uint256 newPrice);
 
+    bytes4 private constant TRANSFER_SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));
+    bytes4 private constant TRANSFER_FROM_SELECTOR = bytes4(keccak256(bytes('transferFrom(address,address,uint256)')));
+    
     constructor() {
         factory = msg.sender;
     }
 
-    function initialize(int8 typeId, address _base, address _quote, address _sister) external override {
+    modifier onlyFactory() {
         require(msg.sender == factory, 'TokenChop: FORBIDDEN');
-        poolType = typeId == 0 ? "Stable" : "Spec";
+        _;
+    }
+
+    modifier onlySister() {
+        require(msg.sender == sister, 'TokenChop: FORBIDDEN');
+        _;
+    }
+
+    function initialize(uint8 _typeId, address _base, address _quote, address _sister) external override onlyFactory {
+        typeId = _typeId;
+        poolType = _typeId == 0 ? "Stable" : "Spec";
+        bandProtocol = 0xDA7a001b254CD22e46d3eAB04d937489c93174C3;
         base = _base;
         quote = _quote;
         sister = _sister;
-        IBEP20 baseContract = IBEP20(base);
-        baseSymbol = baseContract.symbol();
+        baseSymbol = IBEP20(base).symbol();
         baseSymbol = keccak256(abi.encodePacked(baseSymbol)) == keccak256(abi.encodePacked("WBNB")) ? "BNB" : baseSymbol;
-        IBEP20 quoteContract = IBEP20(quote);
-        quoteSymbol = quoteContract.symbol();
+        quoteSymbol = IBEP20(quote).symbol();
         name = string(abi.encodePacked(bytes("TokenChop: "), bytes(baseSymbol), bytes("/"), bytes(quoteSymbol), bytes(" "), bytes(poolType)));
         symbol = string(abi.encodePacked(bytes(baseSymbol), bytes(quoteSymbol), bytes(typeId == 0 ? '0' : '1')));
+    }
+
+    function setBandAddress(address _bandAddr) external override onlyFactory {
+        bandProtocol = _bandAddr;
     }
 
     function getOwner() external override view returns (address) {
@@ -93,90 +111,96 @@ contract TokenChopToken is IBEP20, ITokenChopToken {
         emit Approval(_owner, _spender, _amount);
     }
 
-    function updatePrice() public returns (bool) {
-        IStdReference bandProtocolContract = IStdReference(_bandProtocol);
-        IStdReference.ReferenceData memory data = bandProtocolContract.getReferenceData(baseSymbol,quoteSymbol);
+    function updatePrice() internal {
+        IStdReference bandProtocolContract = IStdReference(bandProtocol);
+        IStdReference.ReferenceData memory data = bandProtocolContract.getReferenceData(baseSymbol, quoteSymbol);
         uint256 newPrice = data.rate;
-        if (price == newPrice) {
-            return true;
-        }
-        if (price == 0) {
-            price = newPrice;
-        }
-        uint256 newCollateral = 0;
-        if (collateral != 0) {
-            newCollateral = Math.mulDiv(price, newPrice, collateral);
-            rebalanceCollateral(newCollateral);
-        }
+        require(newPrice != 0, "TokenChop: Price update Failed");
+        emit PriceUpdate(price, newPrice);
+        previousPrice = price;
         price = newPrice;
-        emit PriceUpdate(price, newPrice);        
-        return true;
     }
 
-    function rebalanceCollateral(uint256 newCollateral) public returns (bool) {
-        if (newCollateral > collateral) {
-            uint256 amount = newCollateral.sub(collateral);
-            uint obtained = getCollateralFromSister(amount);
+    function updateCollateral() internal {
+        if (typeId == 0) {
+            uint256 oldPriceCollateral = previousPrice.mul(collateral);
+            uint256 currentPriceCollateral = price.mul(collateral);
+            if (oldPriceCollateral == currentPriceCollateral) return;
+            if (oldPriceCollateral < currentPriceCollateral) {
+                uint256 quoteAmount = currentPriceCollateral.sub(oldPriceCollateral);
+                uint256 obtained = getCollateralFromSister(quoteAmount);
+            } else {
+                uint256 quoteAmount = currentPriceCollateral.sub(oldPriceCollateral);
+                uint256 sent = sendCollateralToSister(quoteAmount);
+            }
         } else {
-            uint256 amount = collateral.sub(newCollateral);
-            uint sent = sendCollateralToSister(amount);
+            TokenChopToken(sister).updateCollateralBySister();
         }
-        return true;
+    }
+
+    function updateCollateralBySister() public onlySister {
+        updatePrice();
+        updateCollateral();
     }
 
     function getCollateralFromSister(uint256 _amount) internal returns (uint) {
+        // Amount is in quote. Collateral is in base
         TokenChopToken _sisterContract = TokenChopToken(sister);
         uint received = _sisterContract.sendCollateralToSister(_amount);
         collateral = collateral.add(received);
         return received;
     }
 
-    function sendCollateralToSister(uint256 _requestedAmount) public returns (uint256 amount) {
+    function sendCollateralToSister(uint256 _requestedAmount) public onlySister returns (uint256 amount) {
+        // Amount is in quote. Collateral is in base
         uint _amount = collateral < _requestedAmount ? collateral : _requestedAmount;
-        IBEP20 baseContract = IBEP20(base);
-        bool success = baseContract.transfer(sister, _amount);
-        if (success) {
-            collateral = collateral.sub(_amount);
-        }
-        uint _sentAmount = success ? _amount : 0;
-        emit CollateralTransfer(address(this), sister, _sentAmount);
-        return _sentAmount;
+        // Reentry risk?
+        _safeTransfer(base, sister, _amount);
+        collateral = collateral.sub(_amount);
+        emit CollateralTransfer(address(this), sister, _amount);
+        return _amount;
     }
 
     function mint(uint256 _collateralAmount) public returns (bool) {
-        IBEP20 baseContract = IBEP20(base);
-        bool result = baseContract.transferFrom(msg.sender, address(this), _collateralAmount); //try a transfer from
-        emit Transfer(address(0), msg.sender, 1);
-        require(result, "Failed to transfer token. Transfer must be approved first");
-        bool updatePriceDone = updatePrice();
-        // value of amount in tokens is _totalSupply/collateral
-        uint256 _tokenAmount = _collateralAmount;
-        if (totalSupply != 0 && collateral != 0 && _collateralAmount != 0) {
-            _tokenAmount = Math.mulDiv(totalSupply, collateral, _collateralAmount);
-        }
-        balanceOf[msg.sender] = balanceOf[msg.sender].add(_tokenAmount);
-        totalSupply = totalSupply.add(_tokenAmount);
-        collateral = collateral.add(_collateralAmount);
-        emit Transfer(address(0), msg.sender, _tokenAmount);
-        emit CollateralTransfer(msg.sender, address(this), _collateralAmount);
+        _safeTransferFrom(base, msg.sender, address(this), _collateralAmount);
+        //do i need pending collateral
+        updatePrice();
+        // updateCollateral();
+        // // value of amount in tokens is _totalSupply/collateral
+        // uint256 _tokenAmount = _collateralAmount;
+        // if (totalSupply != 0 && collateral != 0 && _collateralAmount != 0) {
+        //     _tokenAmount = Math.mulDiv(totalSupply, collateral, _collateralAmount);
+        // }
+        // balanceOf[msg.sender] = balanceOf[msg.sender].add(_tokenAmount);
+        // totalSupply = totalSupply.add(_tokenAmount);
+        // collateral = collateral.add(_collateralAmount);
+        //emit Transfer(address(0), msg.sender, _tokenAmount);
+        //emit CollateralTransfer(msg.sender, address(this), _collateralAmount);
         return true;
     }
 
     function burn(uint256 _tokenAmount) public returns (bool) {
-        require(_tokenAmount <= balanceOf[msg.sender]);
-        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_tokenAmount);
-        bool updatePriceDone = updatePrice();
-        // amount to return is colat*tokens/totalsupply
-        emit Transfer(address(0), msg.sender, collateral);
-        emit Transfer(address(0), msg.sender, _tokenAmount);
-        emit Transfer(address(0), msg.sender, totalSupply);                        
-        uint256 collateralAmount = Math.mulDiv(collateral, _tokenAmount, totalSupply);
-        emit Transfer(address(0), msg.sender, collateralAmount);                                
+        //require(_tokenAmount <= balanceOf[msg.sender]);
+        //balanceOf[msg.sender] = balanceOf[msg.sender].sub(_tokenAmount);
+        updatePrice();
+        // updateCollateral();
+        // // amount to return is colat*tokens/totalsupply
+        // uint256 collateralAmount = Math.mulDiv(collateral, _tokenAmount, totalSupply);
         // collateral = collateral.sub(collateralAmount);
+        // _safeTransfer(base, msg.sender, collateralAmount);
         // emit Transfer(msg.sender, address(0), _tokenAmount);
         // emit CollateralTransfer(address(this), msg.sender, collateralAmount);        
-        // IBEP20 baseContract = IBEP20(base);
-        // return baseContract.transfer(msg.sender, collateralAmount);
+        return true;
+    }
+
+    function _safeTransfer(address _token, address _to, uint _value) private {
+        (bool _success, bytes memory _data) = _token.call(abi.encodeWithSelector(TRANSFER_SELECTOR, _to, _value));
+        require(_success && (_data.length == 0 || abi.decode(_data, (bool))), 'TokenChop: TRANSFER_FAILED');
+    }
+
+    function _safeTransferFrom(address _token, address _sender, address _recipient, uint _value) private {
+        (bool _success, bytes memory _data) = _token.call(abi.encodeWithSelector(TRANSFER_FROM_SELECTOR, _sender, _recipient, _value));
+        require(_success && (_data.length == 0 || abi.decode(_data, (bool))), 'TokenChop: TRANSFER_FROM_FAILED');
     }
 
 }

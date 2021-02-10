@@ -13,13 +13,11 @@ library Math {
         return ( _quotient);
     }    
 
-    // todo find something better
-    // https://medium.com/coinmonks/math-in-solidity-part-3-percents-and-proportions-4db014e080b1
-    // x*y/z
-    function mulDiv (uint256 x, uint256 y, uint256 z) public pure returns (uint256) {
-        uint a = x / z; uint b = x % z; // x = a * z + b
-        uint c = y / z; uint d = y % z; // y = c * z + d
-        return a * b * z + a * d + b * c + b * d / z;
+    function mulDiv(uint256 value, uint256 numerator, uint256 denominator) internal pure returns (uint256) {
+        require(value < 2**128);
+        require(numerator < 2**128);
+        require(numerator <= denominator);
+        return (value * numerator) / denominator;
     }
 
 // pragma solidity 0.5.9;
@@ -43,18 +41,4 @@ library Math {
 //   }
 // }
 
-    // function mulDiv(
-    //     uint256 value,
-    //     uint256 numerator,
-    //     uint256 denominator
-    // )
-    //     internal
-    //     constant
-    //     returns (uint256)
-    // {
-    //     require(value < 2**128);
-    //     require(numerator < 2**128);
-    //     require(numerator <= denominator);
-    //     return (value * numerator) / denominator;
-    // }
 }

@@ -1,7 +1,8 @@
 const Math = artifacts.require("Math");
 const PairFunctions = artifacts.require("PairFunctions");
 const TokenChopFactory = artifacts.require("TokenChopFactory");
-const TokenChopToken = artifacts.require("TokenChopFactory");
+const MockMathLib = artifacts.require("MockMathLib");
+const MockBandProtocol = artifacts.require("MockBandProtocol");
 
 const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 const ETH = '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378';
@@ -11,13 +12,18 @@ const DAI = '0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867';
 const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
 
 module.exports = async function(deployer, network, accounts) {
+  console.log(network);
   await deployer.deploy(PairFunctions);
   await deployer.deploy(Math);
+  await deployer.link(Math, MockMathLib);
+  await deployer.deploy(MockMathLib);
+  await deployer.deploy(MockBandProtocol);
   await deployer.link(PairFunctions, TokenChopFactory);
   await deployer.link(Math, TokenChopFactory);
-  await deployer.deploy(TokenChopFactory, accounts[0]);
+  await deployer.deploy(TokenChopFactory, accounts[0], MockBandProtocol.address);
   const factory = await TokenChopFactory.deployed();
   await factory.createPair(BNB, BUSD);
+  console.log(MockBandProtocol.address);
   //await factory.createPair(ETH, BUSD);
   //await factory.createPair(BTC, BUSD);
   //await factory.createPair(XRP, BUSD);
