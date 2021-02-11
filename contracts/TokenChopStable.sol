@@ -176,7 +176,8 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     function burn(uint256 quoteAmount) public returns (bool) {
         updatePrice();
         updateCollateral();
-        require(quoteAmount <= balanceOf[msg.sender]);
+        require(quoteAmount <= balanceOf[msg.sender], "Bad quote amount");
+        emit PriceUpdate(4, 4);
         balanceOf[msg.sender] = balanceOf[msg.sender].sub(quoteAmount);
         uint256 baseAmount = Math.quoteToBase(price, quoteAmount);
         collateral = collateral.sub(baseAmount);

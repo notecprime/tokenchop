@@ -23,7 +23,7 @@ module.exports = async function(deployer, network, accounts) {
   await deployer.deploy(TokenChopFactory, accounts[0], MockBandProtocol.address);
   const factory = await TokenChopFactory.deployed();
   await factory.createPair(BNB, BUSD);
-  console.log(MockBandProtocol.address);
+  //console.log(MockBandProtocol.address);
   //await factory.createPair(ETH, BUSD);
   //await factory.createPair(BTC, BUSD);
   //await factory.createPair(XRP, BUSD);
