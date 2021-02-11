@@ -8,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./scripts/build.js",
-    "ganache": "ganache-cli -m \"inch picnic ivory melody ostrich board aware now daughter since submit awkward\" --db C:\\Temp\\ganacheDb -f https://data-seed-prebsc-1-s1.binance.org:8545/"
+    "ganache": "node ./scripts/ganache.js"
   },
   "author": "",
   "license": "ISC",

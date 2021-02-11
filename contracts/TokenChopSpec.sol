@@ -4,11 +4,12 @@ pragma abicoder v2;
 
 import "./interfaces/IBEP20.sol";
 import "./interfaces/ITokenChopToken.sol";
+import "./TokenChopStable.sol";
 import "./interfaces/IStdReference.sol";
 import "./libs/SafeMath.sol";
 import "./libs/Math.sol";
 
-contract TokenChopToken is IBEP20, ITokenChopToken {
+contract TokenChopSpec is IBEP20, ITokenChopToken {
     using SafeMath for uint256;
     mapping(address => uint256) public override balanceOf;
     mapping(address => mapping(address => uint256)) public override allowance;
@@ -17,8 +18,8 @@ contract TokenChopToken is IBEP20, ITokenChopToken {
     string  public override symbol;
     string  public baseSymbol;
     string  public quoteSymbol;
-    string  public poolType;
-    uint8   public typeId;
+    string  public constant poolType = "Spec";
+    uint8   public constant typeId = 1;
     address public base;
     address public quote;
     address public sister;
@@ -49,9 +50,7 @@ contract TokenChopToken is IBEP20, ITokenChopToken {
         _;
     }
 
-    function initialize(uint8 _typeId, address _base, address _quote, address _sister) external override onlyFactory {
-        typeId = _typeId;
-        poolType = _typeId == 0 ? "Stable" : "Spec";
+    function initialize(address _base, address _quote, address _sister) external override onlyFactory {
         bandProtocol = 0xDA7a001b254CD22e46d3eAB04d937489c93174C3;
         base = _base;
         quote = _quote;
@@ -59,8 +58,8 @@ contract TokenChopToken is IBEP20, ITokenChopToken {
         baseSymbol = IBEP20(base).symbol();
         baseSymbol = keccak256(abi.encodePacked(baseSymbol)) == keccak256(abi.encodePacked("WBNB")) ? "BNB" : baseSymbol;
         quoteSymbol = IBEP20(quote).symbol();
-        name = string(abi.encodePacked(bytes("TokenChop: "), bytes(baseSymbol), bytes("/"), bytes(quoteSymbol), bytes(" "), bytes(poolType)));
-        symbol = string(abi.encodePacked(bytes(baseSymbol), bytes(quoteSymbol), bytes(typeId == 0 ? '0' : '1')));
+        name = string(abi.encodePacked(bytes("TokenChop: "), bytes(baseSymbol), bytes("/"), bytes(quoteSymbol), bytes(" Spec")));
+        symbol = string(abi.encodePacked(bytes(baseSymbol), bytes(quoteSymbol), bytes('1')));
     }
 
     function setBandAddress(address _bandAddr) external override onlyFactory {
@@ -122,33 +121,7 @@ contract TokenChopToken is IBEP20, ITokenChopToken {
     }
 
     function updateCollateral() internal {
-        if (typeId == 0) {
-            uint256 oldPriceCollateral = previousPrice.mul(collateral);
-            uint256 currentPriceCollateral = price.mul(collateral);
-            if (oldPriceCollateral == currentPriceCollateral) return;
-            if (oldPriceCollateral < currentPriceCollateral) {
-                uint256 quoteAmount = currentPriceCollateral.sub(oldPriceCollateral);
-                uint256 obtained = getCollateralFromSister(quoteAmount);
-            } else {
-                uint256 quoteAmount = currentPriceCollateral.sub(oldPriceCollateral);
-                uint256 sent = sendCollateralToSister(quoteAmount);
-            }
-        } else {
-            TokenChopToken(sister).updateCollateralBySister();
-        }
-    }
-
-    function updateCollateralBySister() public onlySister {
-        updatePrice();
-        updateCollateral();
-    }
-
-    function getCollateralFromSister(uint256 _amount) internal returns (uint) {
-        // Amount is in quote. Collateral is in base
-        TokenChopToken _sisterContract = TokenChopToken(sister);
-        uint received = _sisterContract.sendCollateralToSister(_amount);
-        collateral = collateral.add(received);
-        return received;
+        TokenChopStable(sister).updateCollateralBySister();
     }
 
     function sendCollateralToSister(uint256 _requestedAmount) public onlySister returns (uint256 amount) {
