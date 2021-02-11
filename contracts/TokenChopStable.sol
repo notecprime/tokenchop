@@ -32,7 +32,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     address public bandProtocol;
 
     event CollateralTransfer(address indexed from, address indexed to, uint256 value);
-    event InsufficientCollateral(uint256 requested, uint received);
+    event InsufficientCollateral(uint256 required, uint256 obtained);
     event PriceUpdate(uint256 oldPrice, uint256 newPrice);
 
     bytes4 private constant TRANSFER_SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));
@@ -130,7 +130,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
             uint256 obtained = getCollateralFromSister(required);
             if (obtained < required) {
                 uint newTotalSupply = totalSupply.sub(required).add(obtained);
-                emit event InsufficientCollateral(uint256 requested, uint received);
+                emit InsufficientCollateral(required, obtained);
                 //dealWithShortfall(newTotalSupply) - Have to rebalance all of the individual balances
             }
         } else {
@@ -145,7 +145,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     }
 
     function getCollateralFromSister(uint256 _quoteAmount) internal returns (uint256 quoteReceived) {
-        uint baseAmount = Math.quoteTobase(price, _quoteAmount);
+        uint baseAmount = Math.quoteToBase(price, _quoteAmount);
         TokenChopSpec _sisterContract = TokenChopSpec(sister);
         uint baseReceived = _sisterContract.sendCollateralToSister(baseAmount);
         collateral = collateral.add(baseReceived);
@@ -153,7 +153,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     }
 
     function sendStableCollateralToSpec(uint256 _quoteAmount) internal {
-        uint256 baseAmount = Math.quoteToBase(price, _quoteAmount)
+        uint256 baseAmount = Math.quoteToBase(price, _quoteAmount);
         collateral = collateral.sub(baseAmount);
         // Reentry risk?
         _safeTransfer(base, sister, baseAmount);

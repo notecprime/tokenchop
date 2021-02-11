@@ -124,7 +124,7 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         TokenChopStable(sister).updateCollateralBySister();
     }
 
-    function sendCollateralToSister(uint256 baseRequested) public onlySister returns (uint256 baseSent) {
+    function sendCollateralToSister(uint256 baseRequested) public onlySister returns (uint256 sent) {
         uint baseSent = collateral < baseRequested ? collateral : baseRequested;
         // reentry risk?
         _safeTransfer(base, sister, baseSent);

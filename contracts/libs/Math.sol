@@ -21,11 +21,11 @@ library Math {
     }
 
     function quoteToBase(uint price, uint amount) internal pure returns (uint256) {
-        return Math.mulDiv(_amount, _price, 10**18);
+        return Math.mulDiv(amount, price, 10**18);
     }
 
-    function baseToQuote(uint _price, uint _amount) internal pure returns (uint256) {
-        return Math.mulDiv(_amount, 10**18, _price);
+    function baseToQuote(uint price, uint amount) internal pure returns (uint256) {
+        return Math.mulDiv(amount, 10**18, price);
     }
 
 // pragma solidity 0.5.9;
