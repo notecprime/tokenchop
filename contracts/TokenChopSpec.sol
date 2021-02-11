@@ -124,14 +124,13 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         TokenChopStable(sister).updateCollateralBySister();
     }
 
-    function sendCollateralToSister(uint256 _requestedAmount) public onlySister returns (uint256 amount) {
-        // Amount is in quote. Collateral is in base
-        uint _amount = collateral < _requestedAmount ? collateral : _requestedAmount;
-        // Reentry risk?
-        _safeTransfer(base, sister, _amount);
-        collateral = collateral.sub(_amount);
-        emit CollateralTransfer(address(this), sister, _amount);
-        return _amount;
+    function sendCollateralToSister(uint256 baseRequested) public onlySister returns (uint256 baseSent) {
+        uint baseSent = collateral < baseRequested ? collateral : baseRequested;
+        // reentry risk?
+        _safeTransfer(base, sister, baseSent);
+        collateral = collateral.sub(baseSent);
+        emit CollateralTransfer(address(this), sister, baseSent);
+        return baseSent;
     }
 
     function mint(uint256 _collateralAmount) public returns (bool) {

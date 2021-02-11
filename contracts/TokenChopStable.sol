@@ -27,10 +27,12 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     uint256 public collateral;
     uint256 public previousPrice;
     uint256 public price;
+    uint8   public constant priceDecimals = 18;
     uint256 public override totalSupply;
     address public bandProtocol;
 
     event CollateralTransfer(address indexed from, address indexed to, uint256 value);
+    event InsufficientCollateral(uint256 requested, uint received);
     event PriceUpdate(uint256 oldPrice, uint256 newPrice);
 
     bytes4 private constant TRANSFER_SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));
@@ -121,15 +123,19 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     }
 
     function updateCollateral() internal {
-        uint256 oldPriceCollateral = previousPrice.mul(collateral);
-        uint256 currentPriceCollateral = price.mul(collateral);
-        if (oldPriceCollateral == currentPriceCollateral) return;
-        if (oldPriceCollateral < currentPriceCollateral) {
-            uint256 quoteAmount = currentPriceCollateral.sub(oldPriceCollateral);
-            uint256 obtained = getCollateralFromSister(quoteAmount);
+        uint256 quoteCollateral = Math.baseToQuote(price, collateral);
+        if (quoteCollateral == totalSupply) return;
+        if (quoteCollateral < totalSupply) {
+            uint256 required = totalSupply.sub(quoteCollateral);
+            uint256 obtained = getCollateralFromSister(required);
+            if (obtained < required) {
+                uint newTotalSupply = totalSupply.sub(required).add(obtained);
+                emit event InsufficientCollateral(uint256 requested, uint received);
+                //dealWithShortfall(newTotalSupply) - Have to rebalance all of the individual balances
+            }
         } else {
-            uint256 quoteAmount = currentPriceCollateral.sub(oldPriceCollateral);
-            uint256 sent = sendCollateralToSister(quoteAmount);
+            uint256 surplus = quoteCollateral.sub(totalSupply);
+            sendStableCollateralToSpec(surplus);
         }
     }
 
@@ -138,53 +144,45 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         updateCollateral();
     }
 
-    function getCollateralFromSister(uint256 _amount) internal returns (uint) {
-        // Amount is in quote. Collateral is in base
+    function getCollateralFromSister(uint256 _quoteAmount) internal returns (uint256 quoteReceived) {
+        uint baseAmount = Math.quoteTobase(price, _quoteAmount);
         TokenChopSpec _sisterContract = TokenChopSpec(sister);
-        uint received = _sisterContract.sendCollateralToSister(_amount);
-        collateral = collateral.add(received);
-        return received;
+        uint baseReceived = _sisterContract.sendCollateralToSister(baseAmount);
+        collateral = collateral.add(baseReceived);
+        return Math.baseToQuote(price, baseReceived);
     }
 
-    function sendCollateralToSister(uint256 _requestedAmount) public onlySister returns (uint256 amount) {
-        // Amount is in quote. Collateral is in base
-        uint _amount = collateral < _requestedAmount ? collateral : _requestedAmount;
+    function sendStableCollateralToSpec(uint256 _quoteAmount) internal {
+        uint256 baseAmount = Math.quoteToBase(price, _quoteAmount)
+        collateral = collateral.sub(baseAmount);
         // Reentry risk?
-        _safeTransfer(base, sister, _amount);
-        collateral = collateral.sub(_amount);
-        emit CollateralTransfer(address(this), sister, _amount);
-        return _amount;
+        _safeTransfer(base, sister, baseAmount);
+        emit CollateralTransfer(address(this), sister, baseAmount);
     }
 
-    function mint(uint256 _collateralAmount) public returns (bool) {
-        _safeTransferFrom(base, msg.sender, address(this), _collateralAmount);
-        //do i need pending collateral
+    function mintAtBaseAmount(uint256 baseAmount) public returns (bool) {
         updatePrice();
-        // updateCollateral();
-        // // value of amount in tokens is _totalSupply/collateral
-        // uint256 _tokenAmount = _collateralAmount;
-        // if (totalSupply != 0 && collateral != 0 && _collateralAmount != 0) {
-        //     _tokenAmount = Math.mulDiv(totalSupply, collateral, _collateralAmount);
-        // }
-        // balanceOf[msg.sender] = balanceOf[msg.sender].add(_tokenAmount);
-        // totalSupply = totalSupply.add(_tokenAmount);
-        // collateral = collateral.add(_collateralAmount);
-        //emit Transfer(address(0), msg.sender, _tokenAmount);
-        //emit CollateralTransfer(msg.sender, address(this), _collateralAmount);
+        updateCollateral();
+        _safeTransferFrom(base, msg.sender, address(this), baseAmount);
+        uint256 quoteAmount = Math.baseToQuote(price, baseAmount);
+        balanceOf[msg.sender] = balanceOf[msg.sender].add(quoteAmount);
+        totalSupply = totalSupply.add(quoteAmount);
+        collateral = collateral.add(baseAmount);
+        emit Transfer(address(0), msg.sender, quoteAmount);
+        emit CollateralTransfer(msg.sender, address(this), baseAmount);
         return true;
     }
 
-    function burn(uint256 _tokenAmount) public returns (bool) {
-        //require(_tokenAmount <= balanceOf[msg.sender]);
-        //balanceOf[msg.sender] = balanceOf[msg.sender].sub(_tokenAmount);
+    function burn(uint256 quoteAmount) public returns (bool) {
         updatePrice();
-        // updateCollateral();
-        // // amount to return is colat*tokens/totalsupply
-        // uint256 collateralAmount = Math.mulDiv(collateral, _tokenAmount, totalSupply);
-        // collateral = collateral.sub(collateralAmount);
-        // _safeTransfer(base, msg.sender, collateralAmount);
-        // emit Transfer(msg.sender, address(0), _tokenAmount);
-        // emit CollateralTransfer(address(this), msg.sender, collateralAmount);        
+        updateCollateral();
+        require(quoteAmount <= balanceOf[msg.sender]);
+        balanceOf[msg.sender] = balanceOf[msg.sender].sub(quoteAmount);
+        uint256 baseAmount = Math.quoteToBase(price, quoteAmount);
+        collateral = collateral.sub(baseAmount);
+        _safeTransfer(base, msg.sender, baseAmount);
+        emit Transfer(msg.sender, address(0), quoteAmount);
+        emit CollateralTransfer(address(this), msg.sender, baseAmount);
         return true;
     }
 

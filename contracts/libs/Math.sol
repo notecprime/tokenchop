@@ -20,6 +20,14 @@ library Math {
         return (value * numerator) / denominator;
     }
 
+    function quoteToBase(uint price, uint amount) internal pure returns (uint256) {
+        return Math.mulDiv(_amount, _price, 10**18);
+    }
+
+    function baseToQuote(uint _price, uint _amount) internal pure returns (uint256) {
+        return Math.mulDiv(_amount, 10**18, _price);
+    }
+
 // pragma solidity 0.5.9;
 
 // import "openzeppelin-solidity/contracts/math/SafeMath.sol";
