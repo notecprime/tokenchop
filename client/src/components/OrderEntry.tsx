@@ -6,9 +6,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useERC20Contract } from "../hooks/useERC20Contract";
 import { selectAppContext } from "../slices/appContextSlice";
-import { approveAsync, chopAsync, ChopType, selectToken } from "../slices/tokenSlice";
+import { approveAsync, selectToken } from "../slices/tokenSlice";
 import { selectWallet, ValidToken } from "../slices/walletSlice";
-import { useTokenChopPairContract } from "../hooks/useTokenChopPairContract";
+import { useTokenChopFactoryContract } from "../hooks/useTokenChopFactoryContract";
+import { chopAsync, ChopType, selectFactory } from "../slices/factorySlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,8 +51,9 @@ export default function OrderEntry(){
     const { stepperStage, selectedToken } = useSelector(selectAppContext);
     const { account } = useWeb3React<Web3Provider>()      
     const contract = useERC20Contract(selectedToken);
-    const chopContract = useTokenChopPairContract();
-    const { approval, chop } = useSelector(selectToken(selectedToken || 'BNB'));
+    const chopContract = useTokenChopFactoryContract();
+    const { approval } = useSelector(selectToken(selectedToken || 'BNB'));
+    const { chop } = useSelector(selectFactory(selectedToken || 'BNB'));
     const { balances } = useSelector(selectWallet);
     const [formValues, setFormValues] = React.useState({ amount: '0', type: 'low' });
     const [disableApprove, setDisableApprove] = React.useState(true);
@@ -148,8 +150,8 @@ export default function OrderEntry(){
                 />
                 <FormHelperText className={classes.helperText}>{helperText.amount}</FormHelperText>                                
                 <RadioGroup name="tokenType" value={formValues.type} onChange={handleRadioChange}>
-                    <FormControlLabel labelPlacement="start" value="high" control={<Radio color="primary" />} label="Get High Token" className={classes.radioButton}/>
-                    <FormControlLabel labelPlacement="start" value="low" control={<Radio color="primary" />} label="Get Low Token" className={classes.radioButton}/>
+                    <FormControlLabel labelPlacement="start" value="high" control={<Radio color="primary" />} label="Buy Spec Pool" className={classes.radioButton}/>
+                    <FormControlLabel labelPlacement="start" value="low" control={<Radio color="primary" />} label="Buy Stable Pool" className={classes.radioButton}/>
                 </RadioGroup>
                 <Button type="submit" variant="outlined" color="primary" onClick={handleApprove}
                     disabled={disableApprove || approval?.status === 'Approved'} className={classes.button}>{ approval?.status === "Pending" ? <CircularProgress size={24}/> : 'APPROVAL' }</Button>

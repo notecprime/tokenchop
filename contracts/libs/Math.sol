@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.8.0;
 
-library Math {
+import './SafeMath.sol';
 
-    function max(int256 a, int256 b) internal pure returns (int256) {
-        return a >= b ? a : b;
-    }    
+library Math {
+    using SafeMath for uint256;
 
     function percent(uint256 numerator, uint256 denominator, uint8 decimals) internal pure returns(uint256 value) {
         uint _numerator  = numerator * 10 ** (decimals + 1);
@@ -16,36 +15,25 @@ library Math {
     function mulDiv(uint256 value, uint256 numerator, uint256 denominator) internal pure returns (uint256) {
         require(value < 2**128, "Value too large");
         require(numerator < 2**128, "Numerator too large ");
-        return (value * numerator) / denominator;
+        return value.mul(numerator).div(denominator);
     }
 
-    function quoteToBase(uint price, uint amount) internal pure returns (uint256) {
+    function quoteToBase(uint256 price, uint256 amount) internal pure returns (uint256) {
+        require(price != 0, "price must not be 0");
         return Math.mulDiv(amount, 10**18, price);
     }
 
-    function baseToQuote(uint price, uint amount) internal pure returns (uint256) {
+    function baseToQuote(uint256 price, uint256 amount) internal pure returns (uint256) {
         return Math.mulDiv(amount, price, 10**18);
     }
 
-// pragma solidity 0.5.9;
+    function supplyToBase(uint256 totalSupply, uint256 totalCollateral, uint256 supplyAmount) internal pure returns (uint256) {
+        require(totalSupply != 0, "supplyAmount must not be 0");
+        return Math.mulDiv(supplyAmount, totalCollateral, totalSupply);
+    }
 
-// import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-
-
-// /// "Fractional" library facilitate fixed point decimal computation. In Band Protocol, fixed point decimal can be
-// /// represented using `uint256` data type. The decimal is fixed at 18 digits and `mulFrac` can be used to multiply
-// /// the fixed point decimal with an ordinary `uint256` value.
-// library Fractional {
-//   using SafeMath for uint256;
-//   uint256 internal constant DENOMINATOR = 1e18;
-
-//   function getDenominator() internal pure returns (uint256) {
-//     return DENOMINATOR;
-//   }
-
-//   function mulFrac(uint256 numerator, uint256 value) internal pure returns(uint256) {
-//     return numerator.mul(value).div(DENOMINATOR);
-//   }
-// }
-
+    function baseToSupply(uint256 totalSupply, uint256 totalCollateral, uint256 baseAmount) internal pure returns (uint256) {
+        if (totalCollateral == 0 || totalSupply == 0) return baseAmount;
+        return Math.mulDiv(baseAmount, totalSupply, totalCollateral);
+    }
 }

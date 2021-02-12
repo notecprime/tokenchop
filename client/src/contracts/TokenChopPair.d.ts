@@ -26,13 +26,26 @@ interface TokenChopPairInterface extends ethers.utils.Interface {
     "PRICE_DECIMALS()": FunctionFragment;
     "SLICE_POINT()": FunctionFragment;
     "SLICE_POINT_DECIMALS()": FunctionFragment;
+    "base()": FunctionFragment;
     "closePrice()": FunctionFragment;
+    "factory()": FunctionFragment;
     "fee()": FunctionFragment;
+    "highBalanceOf(address)": FunctionFragment;
+    "highPoolSupply()": FunctionFragment;
     "highToken()": FunctionFragment;
+    "lowBalanceOf(address)": FunctionFragment;
+    "lowPoolSupply()": FunctionFragment;
     "lowToken()": FunctionFragment;
     "openPrice()": FunctionFragment;
+    "quote()": FunctionFragment;
+    "name()": FunctionFragment;
+    "initialize(address,address)": FunctionFragment;
     "setClosePrice(uint256)": FunctionFragment;
     "getHighTokens()": FunctionFragment;
+    "mintHighToken(uint256)": FunctionFragment;
+    "withdrawHigh(uint256)": FunctionFragment;
+    "mintLowToken(uint256)": FunctionFragment;
+    "withdrawLow(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -51,14 +64,38 @@ interface TokenChopPairInterface extends ethers.utils.Interface {
     functionFragment: "SLICE_POINT_DECIMALS",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "base", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "closePrice",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "factory", values?: undefined): string;
   encodeFunctionData(functionFragment: "fee", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "highBalanceOf",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "highPoolSupply",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "highToken", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "lowBalanceOf",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lowPoolSupply",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "lowToken", values?: undefined): string;
   encodeFunctionData(functionFragment: "openPrice", values?: undefined): string;
+  encodeFunctionData(functionFragment: "quote", values?: undefined): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string]
+  ): string;
   encodeFunctionData(
     functionFragment: "setClosePrice",
     values: [BigNumberish]
@@ -66,6 +103,22 @@ interface TokenChopPairInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getHighTokens",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintHighToken",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawHigh",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintLowToken",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawLow",
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -84,11 +137,32 @@ interface TokenChopPairInterface extends ethers.utils.Interface {
     functionFragment: "SLICE_POINT_DECIMALS",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "base", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "closePrice", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "fee", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "highBalanceOf",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "highPoolSupply",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "highToken", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "lowBalanceOf",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lowPoolSupply",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "lowToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "openPrice", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "quote", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setClosePrice",
     data: BytesLike
@@ -97,8 +171,32 @@ interface TokenChopPairInterface extends ethers.utils.Interface {
     functionFragment: "getHighTokens",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintHighToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawHigh",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintLowToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawLow",
+    data: BytesLike
+  ): Result;
 
-  events: {};
+  events: {
+    "HighTransfer(address,address,uint256)": EventFragment;
+    "LowTransfer(address,address,uint256)": EventFragment;
+    "Mint(address,address,uint256,uint256)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "HighTransfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "LowTransfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
 }
 
 export class TokenChopPair extends Contract {
@@ -131,17 +229,50 @@ export class TokenChopPair extends Contract {
 
     "SLICE_POINT_DECIMALS()"(overrides?: CallOverrides): Promise<[number]>;
 
+    base(overrides?: CallOverrides): Promise<[string]>;
+
+    "base()"(overrides?: CallOverrides): Promise<[string]>;
+
     closePrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "closePrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    factory(overrides?: CallOverrides): Promise<[string]>;
+
+    "factory()"(overrides?: CallOverrides): Promise<[string]>;
 
     fee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "fee()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    highBalanceOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "highBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    highPoolSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "highPoolSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     highToken(overrides?: CallOverrides): Promise<[string]>;
 
     "highToken()"(overrides?: CallOverrides): Promise<[string]>;
+
+    lowBalanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "lowBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    lowPoolSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "lowPoolSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lowToken(overrides?: CallOverrides): Promise<[string]>;
 
@@ -150,6 +281,26 @@ export class TokenChopPair extends Contract {
     openPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "openPrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    quote(overrides?: CallOverrides): Promise<[string]>;
+
+    "quote()"(overrides?: CallOverrides): Promise<[string]>;
+
+    name(overrides?: CallOverrides): Promise<[string]>;
+
+    "name()"(overrides?: CallOverrides): Promise<[string]>;
+
+    initialize(
+      _base: string,
+      _quote: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "initialize(address,address)"(
+      _base: string,
+      _quote: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
 
     setClosePrice(
       _price: BigNumberish,
@@ -168,6 +319,46 @@ export class TokenChopPair extends Contract {
     "getHighTokens()"(
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { amount: BigNumber }>;
+
+    mintHighToken(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "mintHighToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    withdrawHigh(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "withdrawHigh(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    mintLowToken(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "mintLowToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    withdrawLow(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "withdrawLow(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
   };
 
   FEE_DECIMALS(overrides?: CallOverrides): Promise<number>;
@@ -186,17 +377,47 @@ export class TokenChopPair extends Contract {
 
   "SLICE_POINT_DECIMALS()"(overrides?: CallOverrides): Promise<number>;
 
+  base(overrides?: CallOverrides): Promise<string>;
+
+  "base()"(overrides?: CallOverrides): Promise<string>;
+
   closePrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   "closePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  factory(overrides?: CallOverrides): Promise<string>;
+
+  "factory()"(overrides?: CallOverrides): Promise<string>;
 
   fee(overrides?: CallOverrides): Promise<BigNumber>;
 
   "fee()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+  highBalanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  "highBalanceOf(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  highPoolSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "highPoolSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   highToken(overrides?: CallOverrides): Promise<string>;
 
   "highToken()"(overrides?: CallOverrides): Promise<string>;
+
+  lowBalanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  "lowBalanceOf(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  lowPoolSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "lowPoolSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   lowToken(overrides?: CallOverrides): Promise<string>;
 
@@ -205,6 +426,26 @@ export class TokenChopPair extends Contract {
   openPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   "openPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  quote(overrides?: CallOverrides): Promise<string>;
+
+  "quote()"(overrides?: CallOverrides): Promise<string>;
+
+  name(overrides?: CallOverrides): Promise<string>;
+
+  "name()"(overrides?: CallOverrides): Promise<string>;
+
+  initialize(
+    _base: string,
+    _quote: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "initialize(address,address)"(
+    _base: string,
+    _quote: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
 
   setClosePrice(
     _price: BigNumberish,
@@ -219,6 +460,46 @@ export class TokenChopPair extends Contract {
   getHighTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
   "getHighTokens()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  mintHighToken(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "mintHighToken(uint256)"(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  withdrawHigh(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "withdrawHigh(uint256)"(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  mintLowToken(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "mintLowToken(uint256)"(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  withdrawLow(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "withdrawLow(uint256)"(
+    _amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     FEE_DECIMALS(overrides?: CallOverrides): Promise<number>;
@@ -237,17 +518,47 @@ export class TokenChopPair extends Contract {
 
     "SLICE_POINT_DECIMALS()"(overrides?: CallOverrides): Promise<number>;
 
+    base(overrides?: CallOverrides): Promise<string>;
+
+    "base()"(overrides?: CallOverrides): Promise<string>;
+
     closePrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     "closePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    factory(overrides?: CallOverrides): Promise<string>;
+
+    "factory()"(overrides?: CallOverrides): Promise<string>;
 
     fee(overrides?: CallOverrides): Promise<BigNumber>;
 
     "fee()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    highBalanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "highBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    highPoolSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "highPoolSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     highToken(overrides?: CallOverrides): Promise<string>;
 
     "highToken()"(overrides?: CallOverrides): Promise<string>;
+
+    lowBalanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "lowBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    lowPoolSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "lowPoolSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     lowToken(overrides?: CallOverrides): Promise<string>;
 
@@ -256,6 +567,26 @@ export class TokenChopPair extends Contract {
     openPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     "openPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    quote(overrides?: CallOverrides): Promise<string>;
+
+    "quote()"(overrides?: CallOverrides): Promise<string>;
+
+    name(overrides?: CallOverrides): Promise<string>;
+
+    "name()"(overrides?: CallOverrides): Promise<string>;
+
+    initialize(
+      _base: string,
+      _quote: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "initialize(address,address)"(
+      _base: string,
+      _quote: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setClosePrice(
       _price: BigNumberish,
@@ -270,9 +601,68 @@ export class TokenChopPair extends Contract {
     getHighTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getHighTokens()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintHighToken(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "mintHighToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    withdrawHigh(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "withdrawHigh(uint256)"(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    mintLowToken(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "mintLowToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    withdrawLow(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "withdrawLow(uint256)"(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
   };
 
-  filters: {};
+  filters: {
+    HighTransfer(
+      from: string | null,
+      to: string | null,
+      value: null
+    ): EventFilter;
+
+    LowTransfer(
+      from: string | null,
+      to: string | null,
+      value: null
+    ): EventFilter;
+
+    Mint(
+      ownerLow: string | null,
+      ownerHigh: string | null,
+      openPrice: null,
+      amount: null
+    ): EventFilter;
+  };
 
   estimateGas: {
     FEE_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -291,17 +681,47 @@ export class TokenChopPair extends Contract {
 
     "SLICE_POINT_DECIMALS()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    base(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "base()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     closePrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     "closePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    factory(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "factory()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     fee(overrides?: CallOverrides): Promise<BigNumber>;
 
     "fee()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    highBalanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "highBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    highPoolSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "highPoolSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     highToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     "highToken()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    lowBalanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "lowBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    lowPoolSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "lowPoolSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     lowToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -310,6 +730,26 @@ export class TokenChopPair extends Contract {
     openPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     "openPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    quote(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "quote()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(
+      _base: string,
+      _quote: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "initialize(address,address)"(
+      _base: string,
+      _quote: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
 
     setClosePrice(
       _price: BigNumberish,
@@ -324,6 +764,46 @@ export class TokenChopPair extends Contract {
     getHighTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getHighTokens()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintHighToken(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "mintHighToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    withdrawHigh(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "withdrawHigh(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    mintLowToken(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "mintLowToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    withdrawLow(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "withdrawLow(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -349,17 +829,55 @@ export class TokenChopPair extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "base()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     closePrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "closePrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "factory()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     fee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "fee()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    highBalanceOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "highBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    highPoolSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "highPoolSupply()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     highToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "highToken()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lowBalanceOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "lowBalanceOf(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    lowPoolSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "lowPoolSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lowToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -368,6 +886,26 @@ export class TokenChopPair extends Contract {
     openPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "openPrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    quote(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "quote()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialize(
+      _base: string,
+      _quote: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "initialize(address,address)"(
+      _base: string,
+      _quote: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
 
     setClosePrice(
       _price: BigNumberish,
@@ -382,5 +920,45 @@ export class TokenChopPair extends Contract {
     getHighTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getHighTokens()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    mintHighToken(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "mintHighToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    withdrawHigh(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawHigh(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    mintLowToken(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "mintLowToken(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    withdrawLow(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawLow(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
   };
 }

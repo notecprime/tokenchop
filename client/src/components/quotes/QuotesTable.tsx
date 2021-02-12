@@ -114,8 +114,10 @@ export default function QuotesTable() {
         <TableHead className={classes.tableHead}>
           <TableRow>
             <TableCell className={classes.tableHeadCellSymbol}>Symbol</TableCell>
-            <TableCell align="right" className={classes.tableHeadCellPrice}>Price (USD)</TableCell>
-            <TableCell align="right" className={classes.tableHeadCellBalance}>Balance</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellPrice}>Price(BUSD)</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Wallet</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Spec</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Stable</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -124,6 +126,8 @@ export default function QuotesTable() {
               <TableCell component="th" scope="row">{row.base}</TableCell>
               <TableCell align="right"><PriceDisplay value={row.price}/></TableCell>
               <TableCell align="right"><BalanceDisplay value={row.balance}/></TableCell>
+              <TableCell align="right"><BalanceDisplay value={'0'}/></TableCell>
+              <TableCell align="right"><BalanceDisplay value={'0'}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

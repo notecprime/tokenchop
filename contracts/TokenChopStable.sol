@@ -37,7 +37,8 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
 
     bytes4 private constant TRANSFER_SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));
     bytes4 private constant TRANSFER_FROM_SELECTOR = bytes4(keccak256(bytes('transferFrom(address,address,uint256)')));
-    
+    bool private _updateCollateralInProgress = false;
+
     constructor() {
         factory = msg.sender;
     }
@@ -64,7 +65,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         symbol = string(abi.encodePacked(bytes(baseSymbol), bytes(quoteSymbol), bytes('0')));
     }
 
-    function setBandAddress(address _bandAddr) external override onlyFactory {
+    function setBandAddress(address _bandAddr) external onlyFactory {
         bandProtocol = _bandAddr;
     }
 
@@ -123,6 +124,8 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     }
 
     function updateCollateral() internal {
+        require(!_updateCollateralInProgress, "Update collateral in progress");
+        _updateCollateralInProgress = true;
         uint256 quoteCollateral = Math.baseToQuote(price, collateral);
         if (quoteCollateral == totalSupply) return;
         if (quoteCollateral < totalSupply) {
@@ -137,25 +140,23 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
             uint256 surplus = quoteCollateral.sub(totalSupply);
             sendStableCollateralToSpec(surplus);
         }
+        collateral = IBEP20(base).balanceOf(address(this));
+        _updateCollateralInProgress = false;
     }
 
-    function updateCollateralBySister() external onlySister {
+    function updatePriceBySister() external onlySister {
         updatePrice();
-        updateCollateral();
     }
 
     function getCollateralFromSister(uint256 _quoteAmount) internal returns (uint256 quoteReceived) {
         uint baseAmount = Math.quoteToBase(price, _quoteAmount);
         TokenChopSpec _sisterContract = TokenChopSpec(sister);
         uint baseReceived = _sisterContract.sendCollateralToSister(baseAmount);
-        collateral = collateral.add(baseReceived);
         return Math.baseToQuote(price, baseReceived);
     }
 
     function sendStableCollateralToSpec(uint256 _quoteAmount) internal {
         uint256 baseAmount = Math.quoteToBase(price, _quoteAmount);
-        collateral = collateral.sub(baseAmount);
-        // Reentry risk?
         _safeTransfer(base, sister, baseAmount);
         emit CollateralTransfer(address(this), sister, baseAmount);
     }
@@ -167,7 +168,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         uint256 quoteAmount = Math.baseToQuote(price, baseAmount);
         balanceOf[msg.sender] = balanceOf[msg.sender].add(quoteAmount);
         totalSupply = totalSupply.add(quoteAmount);
-        collateral = collateral.add(baseAmount);
+        collateral = IBEP20(base).balanceOf(address(this));
         emit Transfer(address(0), msg.sender, quoteAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);
         return true;
@@ -180,11 +181,16 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         emit PriceUpdate(4, 4);
         balanceOf[msg.sender] = balanceOf[msg.sender].sub(quoteAmount);
         uint256 baseAmount = Math.quoteToBase(price, quoteAmount);
-        collateral = collateral.sub(baseAmount);
+        collateral = IBEP20(base).balanceOf(address(this));
         _safeTransfer(base, msg.sender, baseAmount);
         emit Transfer(msg.sender, address(0), quoteAmount);
         emit CollateralTransfer(address(this), msg.sender, baseAmount);
         return true;
+    }
+
+    function refresh() public {
+        updatePrice();
+        updateCollateral();
     }
 
     function _safeTransfer(address _token, address _to, uint _value) private {

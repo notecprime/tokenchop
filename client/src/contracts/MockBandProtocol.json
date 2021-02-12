@@ -44,9 +44,9 @@
       "constant": true
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_base\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_quote\",\"type\":\"string\"}],\"name\":\"getReferenceData\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"rate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedBase\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedQuote\",\"type\":\"uint256\"}],\"internalType\":\"struct MockBandProtocol.ReferenceData\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/tokenchop/contracts/test/MockBandProtocol.sol\":\"MockBandProtocol\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/tokenchop/contracts/test/MockBandProtocol.sol\":{\"keccak256\":\"0x900107cee33152f92637d4359390ab4ba923887c99e4e0929c957dbb1f1216cb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c04e3d8134e11c16e0c76c4494c34ebbc00b2ab48c624ce88da0403c84e53c1e\",\"dweb:/ipfs/QmXShu4c98pHW56tTCoM1sDMFkwTjYCvWkWxGz9KUzfMDq\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610389806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c806365555bcc14610030575b600080fd5b61004a600480360381019061004591906101ff565b610060565b60405161005791906102bc565b60405180910390f35b610068610176565b60006006438161007457fe5b06905060006040518060c00160405280604051806060016040528062989680815260200142815260200142815250815260200160405180606001604052806301312d00815260200142815260200142815250815260200160405180606001604052806301c9c380815260200142815260200142815250815260200160405180606001604052806302625a00815260200142815260200142815250815260200160405180606001604052806302faf080815260200142815260200142815250815260200160405180606001604052806303938700815260200142815260200142815250815250905080826006811061016757fe5b60200201519250505092915050565b60405180606001604052806000815260200160008152602001600081525090565b60006101aa6101a584610308565b6102d7565b9050828152602081018484840111156101c257600080fd5b6101cd848285610342565b509392505050565b600082601f8301126101e657600080fd5b81356101f6848260208601610197565b91505092915050565b6000806040838503121561021257600080fd5b600083013567ffffffffffffffff81111561022c57600080fd5b610238858286016101d5565b925050602083013567ffffffffffffffff81111561025557600080fd5b610261858286016101d5565b9150509250929050565b60608201600082015161028160008501826102ad565b50602082015161029460208501826102ad565b5060408201516102a760408501826102ad565b50505050565b6102b681610338565b82525050565b60006060820190506102d1600083018461026b565b92915050565b6000604051905081810181811067ffffffffffffffff821117156102fe576102fd610351565b5b8060405250919050565b600067ffffffffffffffff82111561032357610322610351565b5b601f19601f8301169050602081019050919050565b6000819050919050565b82818337600083830152505050565bfefea26469706673582212208d1f4a50e5c7b3d124c085ff0d753149e60bb60ad0f439608cbe7400dec20adf64736f6c63430007060033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c806365555bcc14610030575b600080fd5b61004a600480360381019061004591906101ff565b610060565b60405161005791906102bc565b60405180910390f35b610068610176565b60006006438161007457fe5b06905060006040518060c00160405280604051806060016040528062989680815260200142815260200142815250815260200160405180606001604052806301312d00815260200142815260200142815250815260200160405180606001604052806301c9c380815260200142815260200142815250815260200160405180606001604052806302625a00815260200142815260200142815250815260200160405180606001604052806302faf080815260200142815260200142815250815260200160405180606001604052806303938700815260200142815260200142815250815250905080826006811061016757fe5b60200201519250505092915050565b60405180606001604052806000815260200160008152602001600081525090565b60006101aa6101a584610308565b6102d7565b9050828152602081018484840111156101c257600080fd5b6101cd848285610342565b509392505050565b600082601f8301126101e657600080fd5b81356101f6848260208601610197565b91505092915050565b6000806040838503121561021257600080fd5b600083013567ffffffffffffffff81111561022c57600080fd5b610238858286016101d5565b925050602083013567ffffffffffffffff81111561025557600080fd5b610261858286016101d5565b9150509250929050565b60608201600082015161028160008501826102ad565b50602082015161029460208501826102ad565b5060408201516102a760408501826102ad565b50505050565b6102b681610338565b82525050565b60006060820190506102d1600083018461026b565b92915050565b6000604051905081810181811067ffffffffffffffff821117156102fe576102fd610351565b5b8060405250919050565b600067ffffffffffffffff82111561032357610322610351565b5b601f19601f8301169050602081019050919050565b6000819050919050565b82818337600083830152505050565bfefea26469706673582212208d1f4a50e5c7b3d124c085ff0d753149e60bb60ad0f439608cbe7400dec20adf64736f6c63430007060033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_base\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_quote\",\"type\":\"string\"}],\"name\":\"getReferenceData\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"rate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedBase\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdatedQuote\",\"type\":\"uint256\"}],\"internalType\":\"struct MockBandProtocol.ReferenceData\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/tokenchop/contracts/test/MockBandProtocol.sol\":\"MockBandProtocol\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/tokenchop/contracts/test/MockBandProtocol.sol\":{\"keccak256\":\"0x773ade755daa165525446b7e9cb90c4ccf8210bb6f8c8fb5792aac99aaddc9e0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a1562d40d31fecfe3d6bdeb7050743516d09e9870b7ed6e41f73c1ae520751bf\",\"dweb:/ipfs/QmVWYBafGrtg3F75p3692ffuJHBsXH63F5fUKTEy9UZGm6\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506103a8806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c806365555bcc14610030575b600080fd5b61004a6004803603810190610045919061021e565b610060565b60405161005791906102db565b60405180910390f35b610068610195565b60006006438161007457fe5b06905060006040518060c00160405280604051806060016040528068056bc75e2d6310000081526020014281526020014281525081526020016040518060600160405280680ad78ebc5ac620000081526020014281526020014281525081526020016040518060600160405280681043561a8829300000815260200142815260200142815250815260200160405180606001604052806815af1d78b58c40000081526020014281526020014281525081526020016040518060600160405280681b1ae4d6e2ef50000081526020014281526020014281525081526020016040518060600160405280682086ac351052600000815260200142815260200142815250815250905080826006811061018657fe5b60200201519250505092915050565b60405180606001604052806000815260200160008152602001600081525090565b60006101c96101c484610327565b6102f6565b9050828152602081018484840111156101e157600080fd5b6101ec848285610361565b509392505050565b600082601f83011261020557600080fd5b81356102158482602086016101b6565b91505092915050565b6000806040838503121561023157600080fd5b600083013567ffffffffffffffff81111561024b57600080fd5b610257858286016101f4565b925050602083013567ffffffffffffffff81111561027457600080fd5b610280858286016101f4565b9150509250929050565b6060820160008201516102a060008501826102cc565b5060208201516102b360208501826102cc565b5060408201516102c660408501826102cc565b50505050565b6102d581610357565b82525050565b60006060820190506102f0600083018461028a565b92915050565b6000604051905081810181811067ffffffffffffffff8211171561031d5761031c610370565b5b8060405250919050565b600067ffffffffffffffff82111561034257610341610370565b5b601f19601f8301169050602081019050919050565b6000819050919050565b82818337600083830152505050565bfefea26469706673582212202919926f4f9966279564cc9eee4b8495a0023ffad35a054c6ae32ed7f5340b2f64736f6c63430007060033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c806365555bcc14610030575b600080fd5b61004a6004803603810190610045919061021e565b610060565b60405161005791906102db565b60405180910390f35b610068610195565b60006006438161007457fe5b06905060006040518060c00160405280604051806060016040528068056bc75e2d6310000081526020014281526020014281525081526020016040518060600160405280680ad78ebc5ac620000081526020014281526020014281525081526020016040518060600160405280681043561a8829300000815260200142815260200142815250815260200160405180606001604052806815af1d78b58c40000081526020014281526020014281525081526020016040518060600160405280681b1ae4d6e2ef50000081526020014281526020014281525081526020016040518060600160405280682086ac351052600000815260200142815260200142815250815250905080826006811061018657fe5b60200201519250505092915050565b60405180606001604052806000815260200160008152602001600081525090565b60006101c96101c484610327565b6102f6565b9050828152602081018484840111156101e157600080fd5b6101ec848285610361565b509392505050565b600082601f83011261020557600080fd5b81356102158482602086016101b6565b91505092915050565b6000806040838503121561023157600080fd5b600083013567ffffffffffffffff81111561024b57600080fd5b610257858286016101f4565b925050602083013567ffffffffffffffff81111561027457600080fd5b610280858286016101f4565b9150509250929050565b6060820160008201516102a060008501826102cc565b5060208201516102b360208501826102cc565b5060408201516102c660408501826102cc565b50505050565b6102d581610357565b82525050565b60006060820190506102f0600083018461028a565b92915050565b6000604051905081810181811067ffffffffffffffff8211171561031d5761031c610370565b5b8060405250919050565b600067ffffffffffffffff82111561034257610341610370565b5b601f19601f8301169050602081019050919050565b6000819050919050565b82818337600083830152505050565bfefea26469706673582212202919926f4f9966279564cc9eee4b8495a0023ffad35a054c6ae32ed7f5340b2f64736f6c63430007060033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [
@@ -1271,7 +1271,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_struct$_ReferenceData_$2583_memory_ptr_to_t_struct$_ReferenceData_$2583_memory_ptr_fromStack",
+            "name": "abi_encode_t_struct$_ReferenceData_$2774_memory_ptr_to_t_struct$_ReferenceData_$2774_memory_ptr_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1422,7 +1422,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_struct$_ReferenceData_$2583_memory_ptr_to_t_struct$_ReferenceData_$2583_memory_ptr_fromStack",
+                      "name": "abi_encode_t_struct$_ReferenceData_$2774_memory_ptr_to_t_struct$_ReferenceData_$2774_memory_ptr_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "2417:105:15"
                     },
@@ -1434,7 +1434,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_struct$_ReferenceData_$2583_memory_ptr__to_t_struct$_ReferenceData_$2583_memory_ptr__fromStack_reversed",
+            "name": "abi_encode_tuple_t_struct$_ReferenceData_$2774_memory_ptr__to_t_struct$_ReferenceData_$2774_memory_ptr__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -2000,29 +2000,29 @@
           }
         ]
       },
-      "contents": "{\n\n    function abi_decode_available_length_t_string_memory_ptr(src, length, end) -> array {\n        array := allocateMemory(array_allocation_size_t_string_memory_ptr(length))\n        mstore(array, length)\n        let dst := add(array, 0x20)\n        if gt(add(src, length), end) { revert(0, 0) }\n        copy_calldata_to_memory(src, dst, length)\n    }\n\n    // string\n    function abi_decode_t_string_memory_ptr(offset, end) -> array {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(0, 0) }\n        let length := calldataload(offset)\n        array := abi_decode_available_length_t_string_memory_ptr(add(offset, 0x20), length, end)\n    }\n\n    function abi_decode_tuple_t_string_memory_ptrt_string_memory_ptr(headStart, dataEnd) -> value0, value1 {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n\n        {\n\n            let offset := calldataload(add(headStart, 0))\n            if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n\n            value0 := abi_decode_t_string_memory_ptr(add(headStart, offset), dataEnd)\n        }\n\n        {\n\n            let offset := calldataload(add(headStart, 32))\n            if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n\n            value1 := abi_decode_t_string_memory_ptr(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    // struct MockBandProtocol.ReferenceData -> struct MockBandProtocol.ReferenceData\n    function abi_encode_t_struct$_ReferenceData_$2583_memory_ptr_to_t_struct$_ReferenceData_$2583_memory_ptr_fromStack(value, pos)  {\n        let tail := add(pos, 0x60)\n\n        {\n            // rate\n\n            let memberValue0 := mload(add(value, 0x00))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x00))\n        }\n\n        {\n            // lastUpdatedBase\n\n            let memberValue0 := mload(add(value, 0x20))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x20))\n        }\n\n        {\n            // lastUpdatedQuote\n\n            let memberValue0 := mload(add(value, 0x40))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x40))\n        }\n\n    }\n\n    function abi_encode_t_uint256_to_t_uint256(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_t_struct$_ReferenceData_$2583_memory_ptr__to_t_struct$_ReferenceData_$2583_memory_ptr__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 96)\n\n        abi_encode_t_struct$_ReferenceData_$2583_memory_ptr_to_t_struct$_ReferenceData_$2583_memory_ptr_fromStack(value0,  add(headStart, 0))\n\n    }\n\n    function allocateMemory(size) -> memPtr {\n        memPtr := mload(64)\n        let newFreePtr := add(memPtr, size)\n        // protect against overflow\n        if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr)) { panic_error() }\n        mstore(64, newFreePtr)\n    }\n\n    function array_allocation_size_t_string_memory_ptr(length) -> size {\n        // Make sure we can allocate memory without overflow\n        if gt(length, 0xffffffffffffffff) { panic_error() }\n\n        // round up\n        size := and(add(length, 0x1f), not(0x1f))\n\n        // add length slot\n        size := add(size, 0x20)\n\n    }\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function copy_calldata_to_memory(src, dst, length) {\n        calldatacopy(dst, src, length)\n        // clear end\n        mstore(add(dst, length), 0)\n    }\n\n    function panic_error() {\n        invalid()\n    }\n\n}\n",
+      "contents": "{\n\n    function abi_decode_available_length_t_string_memory_ptr(src, length, end) -> array {\n        array := allocateMemory(array_allocation_size_t_string_memory_ptr(length))\n        mstore(array, length)\n        let dst := add(array, 0x20)\n        if gt(add(src, length), end) { revert(0, 0) }\n        copy_calldata_to_memory(src, dst, length)\n    }\n\n    // string\n    function abi_decode_t_string_memory_ptr(offset, end) -> array {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(0, 0) }\n        let length := calldataload(offset)\n        array := abi_decode_available_length_t_string_memory_ptr(add(offset, 0x20), length, end)\n    }\n\n    function abi_decode_tuple_t_string_memory_ptrt_string_memory_ptr(headStart, dataEnd) -> value0, value1 {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n\n        {\n\n            let offset := calldataload(add(headStart, 0))\n            if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n\n            value0 := abi_decode_t_string_memory_ptr(add(headStart, offset), dataEnd)\n        }\n\n        {\n\n            let offset := calldataload(add(headStart, 32))\n            if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n\n            value1 := abi_decode_t_string_memory_ptr(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    // struct MockBandProtocol.ReferenceData -> struct MockBandProtocol.ReferenceData\n    function abi_encode_t_struct$_ReferenceData_$2774_memory_ptr_to_t_struct$_ReferenceData_$2774_memory_ptr_fromStack(value, pos)  {\n        let tail := add(pos, 0x60)\n\n        {\n            // rate\n\n            let memberValue0 := mload(add(value, 0x00))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x00))\n        }\n\n        {\n            // lastUpdatedBase\n\n            let memberValue0 := mload(add(value, 0x20))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x20))\n        }\n\n        {\n            // lastUpdatedQuote\n\n            let memberValue0 := mload(add(value, 0x40))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x40))\n        }\n\n    }\n\n    function abi_encode_t_uint256_to_t_uint256(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_t_struct$_ReferenceData_$2774_memory_ptr__to_t_struct$_ReferenceData_$2774_memory_ptr__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 96)\n\n        abi_encode_t_struct$_ReferenceData_$2774_memory_ptr_to_t_struct$_ReferenceData_$2774_memory_ptr_fromStack(value0,  add(headStart, 0))\n\n    }\n\n    function allocateMemory(size) -> memPtr {\n        memPtr := mload(64)\n        let newFreePtr := add(memPtr, size)\n        // protect against overflow\n        if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr)) { panic_error() }\n        mstore(64, newFreePtr)\n    }\n\n    function array_allocation_size_t_string_memory_ptr(length) -> size {\n        // Make sure we can allocate memory without overflow\n        if gt(length, 0xffffffffffffffff) { panic_error() }\n\n        // round up\n        size := and(add(length, 0x1f), not(0x1f))\n\n        // add length slot\n        size := add(size, 0x20)\n\n    }\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function copy_calldata_to_memory(src, dst, length) {\n        calldatacopy(dst, src, length)\n        // clear end\n        mstore(add(dst, length), 0)\n    }\n\n    function panic_error() {\n        invalid()\n    }\n\n}\n",
       "id": 15,
       "language": "Yul",
       "name": "#utility.yul"
     }
   ],
-  "sourceMap": "81:869:13:-:0;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "81:869:13:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;245:700;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;337:20;;:::i;:::-;370:9;397:1;382:12;:16;;;;;;370:28;;409:30;:498;;;;;;;;457:57;;;;;;;;471:8;457:57;;;;481:15;457:57;;;;498:15;457:57;;;409:498;;;;529:57;;;;;;;;543:8;529:57;;;;553:15;529:57;;;;570:15;529:57;;;409:498;;;;601:57;;;;;;;;615:8;601:57;;;;625:15;601:57;;;;642:15;601:57;;;409:498;;;;673:57;;;;;;;;687:8;673:57;;;;697:15;673:57;;;;714:15;673:57;;;409:498;;;;756:57;;;;;;;;770:8;756:57;;;;780:15;756:57;;;;797:15;756:57;;;409:498;;;;839:57;;;;;;;;853:8;839:57;;;;863:15;839:57;;;;880:15;839:57;;;409:498;;;;;925:6;932:4;925:12;;;;;;;;;;;918:19;;;;245:700;;;;:::o;-1:-1:-1:-;;;;;;;;;;;;;;;;;;;;;;;;:::o;7:344:15:-;;110:65;125:49;167:6;125:49;:::i;:::-;110:65;:::i;:::-;101:74;;198:6;191:5;184:21;236:4;229:5;225:16;274:3;265:6;260:3;256:16;253:25;250:2;;;291:1;288;281:12;250:2;304:41;338:6;333:3;328;304:41;:::i;:::-;91:260;;;;;;:::o;371:273::-;;476:3;469:4;461:6;457:17;453:27;443:2;;494:1;491;484:12;443:2;534:6;521:20;559:79;634:3;626:6;619:4;611:6;607:17;559:79;:::i;:::-;550:88;;433:211;;;;;:::o;650:633::-;;;795:2;783:9;774:7;770:23;766:32;763:2;;;811:1;808;801:12;763:2;882:1;871:9;867:17;854:31;912:18;904:6;901:30;898:2;;;944:1;941;934:12;898:2;972:63;1027:7;1018:6;1007:9;1003:22;972:63;:::i;:::-;962:73;;825:220;1112:2;1101:9;1097:18;1084:32;1143:18;1135:6;1132:30;1129:2;;;1175:1;1172;1165:12;1129:2;1203:63;1258:7;1249:6;1238:9;1234:22;1203:63;:::i;:::-;1193:73;;1055:221;753:530;;;;;:::o;1375:716::-;1534:4;1529:3;1525:14;1621:4;1614:5;1610:16;1604:23;1640:63;1697:4;1692:3;1688:14;1674:12;1640:63;:::i;:::-;1549:164;1806:4;1799:5;1795:16;1789:23;1825:63;1882:4;1877:3;1873:14;1859:12;1825:63;:::i;:::-;1723:175;1992:4;1985:5;1981:16;1975:23;2011:63;2068:4;2063:3;2059:14;2045:12;2011:63;:::i;:::-;1908:176;1503:588;;;:::o;2097:108::-;2174:24;2192:5;2174:24;:::i;:::-;2169:3;2162:37;2152:53;;:::o;2211:346::-;;2404:2;2393:9;2389:18;2381:26;;2417:133;2547:1;2536:9;2532:17;2523:6;2417:133;:::i;:::-;2371:186;;;;:::o;2563:278::-;;2629:2;2623:9;2613:19;;2671:4;2663:6;2659:17;2778:6;2766:10;2763:22;2742:18;2730:10;2727:34;2724:62;2721:2;;;2789:13;;:::i;:::-;2721:2;2824:10;2820:2;2813:22;2603:238;;;;:::o;2847:327::-;;2999:18;2991:6;2988:30;2985:2;;;3021:13;;:::i;:::-;2985:2;3101:4;3097:9;3090:4;3082:6;3078:17;3074:33;3066:41;;3162:4;3156;3152:15;3144:23;;2914:260;;;:::o;3180:77::-;;3246:5;3235:16;;3225:32;;;:::o;3263:154::-;3347:6;3342:3;3337;3324:30;3409:1;3400:6;3395:3;3391:16;3384:27;3314:103;;;:::o;3423:48::-;3456:9",
-  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity =0.7.6;\r\npragma abicoder v2;\r\n\r\ncontract MockBandProtocol {\r\n\r\n    struct ReferenceData {\r\n        uint256 rate;\r\n        uint256 lastUpdatedBase;\r\n        uint256 lastUpdatedQuote;\r\n    }\r\n\r\n    function getReferenceData(string memory _base, string memory _quote) external view returns (ReferenceData memory) {\r\n        uint pick = block.number % 6;\r\n        ReferenceData[6] memory values = [\r\n            ReferenceData(10000000, block.timestamp, block.timestamp),\r\n            ReferenceData(20000000, block.timestamp, block.timestamp),\r\n            ReferenceData(30000000, block.timestamp, block.timestamp),\r\n            ReferenceData(40000000, block.timestamp, block.timestamp),           \r\n            ReferenceData(50000000, block.timestamp, block.timestamp),           \r\n            ReferenceData(60000000, block.timestamp, block.timestamp)\r\n        ];\r\n        return values[pick];\r\n    }\r\n\r\n}\r\n",
+  "sourceMap": "81:947:13:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "81:947:13:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;245:778;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;337:20;;:::i;:::-;370:9;397:1;382:12;:16;;;;;;370:28;;409:30;:576;;;;;;;;457:70;;;;;;;;471:21;457:70;;;;494:15;457:70;;;;511:15;457:70;;;409:576;;;;542:70;;;;;;;;556:21;542:70;;;;579:15;542:70;;;;596:15;542:70;;;409:576;;;;627:70;;;;;;;;641:21;627:70;;;;664:15;627:70;;;;681:15;627:70;;;409:576;;;;712:70;;;;;;;;726:21;712:70;;;;749:15;712:70;;;;766:15;712:70;;;409:576;;;;808:70;;;;;;;;822:21;808:70;;;;845:15;808:70;;;;862:15;808:70;;;409:576;;;;904:70;;;;;;;;918:21;904:70;;;;941:15;904:70;;;;958:15;904:70;;;409:576;;;;;1003:6;1010:4;1003:12;;;;;;;;;;;996:19;;;;245:778;;;;:::o;-1:-1:-1:-;;;;;;;;;;;;;;;;;;;;;;;;:::o;7:344:15:-;;110:65;125:49;167:6;125:49;:::i;:::-;110:65;:::i;:::-;101:74;;198:6;191:5;184:21;236:4;229:5;225:16;274:3;265:6;260:3;256:16;253:25;250:2;;;291:1;288;281:12;250:2;304:41;338:6;333:3;328;304:41;:::i;:::-;91:260;;;;;;:::o;371:273::-;;476:3;469:4;461:6;457:17;453:27;443:2;;494:1;491;484:12;443:2;534:6;521:20;559:79;634:3;626:6;619:4;611:6;607:17;559:79;:::i;:::-;550:88;;433:211;;;;;:::o;650:633::-;;;795:2;783:9;774:7;770:23;766:32;763:2;;;811:1;808;801:12;763:2;882:1;871:9;867:17;854:31;912:18;904:6;901:30;898:2;;;944:1;941;934:12;898:2;972:63;1027:7;1018:6;1007:9;1003:22;972:63;:::i;:::-;962:73;;825:220;1112:2;1101:9;1097:18;1084:32;1143:18;1135:6;1132:30;1129:2;;;1175:1;1172;1165:12;1129:2;1203:63;1258:7;1249:6;1238:9;1234:22;1203:63;:::i;:::-;1193:73;;1055:221;753:530;;;;;:::o;1375:716::-;1534:4;1529:3;1525:14;1621:4;1614:5;1610:16;1604:23;1640:63;1697:4;1692:3;1688:14;1674:12;1640:63;:::i;:::-;1549:164;1806:4;1799:5;1795:16;1789:23;1825:63;1882:4;1877:3;1873:14;1859:12;1825:63;:::i;:::-;1723:175;1992:4;1985:5;1981:16;1975:23;2011:63;2068:4;2063:3;2059:14;2045:12;2011:63;:::i;:::-;1908:176;1503:588;;;:::o;2097:108::-;2174:24;2192:5;2174:24;:::i;:::-;2169:3;2162:37;2152:53;;:::o;2211:346::-;;2404:2;2393:9;2389:18;2381:26;;2417:133;2547:1;2536:9;2532:17;2523:6;2417:133;:::i;:::-;2371:186;;;;:::o;2563:278::-;;2629:2;2623:9;2613:19;;2671:4;2663:6;2659:17;2778:6;2766:10;2763:22;2742:18;2730:10;2727:34;2724:62;2721:2;;;2789:13;;:::i;:::-;2721:2;2824:10;2820:2;2813:22;2603:238;;;;:::o;2847:327::-;;2999:18;2991:6;2988:30;2985:2;;;3021:13;;:::i;:::-;2985:2;3101:4;3097:9;3090:4;3082:6;3078:17;3074:33;3066:41;;3162:4;3156;3152:15;3144:23;;2914:260;;;:::o;3180:77::-;;3246:5;3235:16;;3225:32;;;:::o;3263:154::-;3347:6;3342:3;3337;3324:30;3409:1;3400:6;3395:3;3391:16;3384:27;3314:103;;;:::o;3423:48::-;3456:9",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity =0.7.6;\r\npragma abicoder v2;\r\n\r\ncontract MockBandProtocol {\r\n\r\n    struct ReferenceData {\r\n        uint256 rate;\r\n        uint256 lastUpdatedBase;\r\n        uint256 lastUpdatedQuote;\r\n    }\r\n\r\n    function getReferenceData(string memory _base, string memory _quote) external view returns (ReferenceData memory) {\r\n        uint pick = block.number % 6;\r\n        ReferenceData[6] memory values = [\r\n            ReferenceData(100000000000000000000, block.timestamp, block.timestamp),\r\n            ReferenceData(200000000000000000000, block.timestamp, block.timestamp),\r\n            ReferenceData(300000000000000000000, block.timestamp, block.timestamp),\r\n            ReferenceData(400000000000000000000, block.timestamp, block.timestamp),           \r\n            ReferenceData(500000000000000000000, block.timestamp, block.timestamp),           \r\n            ReferenceData(600000000000000000000, block.timestamp, block.timestamp)\r\n        ];\r\n        return values[pick];\r\n    }\r\n\r\n}\r\n",
   "sourcePath": "C:/Repos/tokenchop/contracts/test/MockBandProtocol.sol",
   "ast": {
     "absolutePath": "/C/Repos/tokenchop/contracts/test/MockBandProtocol.sol",
     "exportedSymbols": {
       "MockBandProtocol": [
-        2654
+        2845
       ]
     },
-    "id": 2655,
+    "id": 2846,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2575,
+        "id": 2766,
         "literals": [
           "solidity",
           "=",
@@ -2033,7 +2033,7 @@
         "src": "33:23:13"
       },
       {
-        "id": 2576,
+        "id": 2767,
         "literals": [
           "abicoder",
           "v2"
@@ -2047,24 +2047,24 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 2654,
+        "id": 2845,
         "linearizedBaseContracts": [
-          2654
+          2845
         ],
         "name": "MockBandProtocol",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "MockBandProtocol.ReferenceData",
-            "id": 2583,
+            "id": 2774,
             "members": [
               {
                 "constant": false,
-                "id": 2578,
+                "id": 2769,
                 "mutability": "mutable",
                 "name": "rate",
                 "nodeType": "VariableDeclaration",
-                "scope": 2583,
+                "scope": 2774,
                 "src": "148:12:13",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2073,7 +2073,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 2577,
+                  "id": 2768,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "148:7:13",
@@ -2086,11 +2086,11 @@
               },
               {
                 "constant": false,
-                "id": 2580,
+                "id": 2771,
                 "mutability": "mutable",
                 "name": "lastUpdatedBase",
                 "nodeType": "VariableDeclaration",
-                "scope": 2583,
+                "scope": 2774,
                 "src": "171:23:13",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2099,7 +2099,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 2579,
+                  "id": 2770,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "171:7:13",
@@ -2112,11 +2112,11 @@
               },
               {
                 "constant": false,
-                "id": 2582,
+                "id": 2773,
                 "mutability": "mutable",
                 "name": "lastUpdatedQuote",
                 "nodeType": "VariableDeclaration",
-                "scope": 2583,
+                "scope": 2774,
                 "src": "205:24:13",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2125,7 +2125,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 2581,
+                  "id": 2772,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "205:7:13",
@@ -2139,28 +2139,28 @@
             ],
             "name": "ReferenceData",
             "nodeType": "StructDefinition",
-            "scope": 2654,
+            "scope": 2845,
             "src": "116:121:13",
             "visibility": "public"
           },
           {
             "body": {
-              "id": 2652,
+              "id": 2843,
               "nodeType": "Block",
-              "src": "359:586:13",
+              "src": "359:664:13",
               "statements": [
                 {
                   "assignments": [
-                    2593
+                    2784
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 2593,
+                      "id": 2784,
                       "mutability": "mutable",
                       "name": "pick",
                       "nodeType": "VariableDeclaration",
-                      "scope": 2652,
+                      "scope": 2843,
                       "src": "370:9:13",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -2169,7 +2169,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 2592,
+                        "id": 2783,
                         "name": "uint",
                         "nodeType": "ElementaryTypeName",
                         "src": "370:4:13",
@@ -2181,20 +2181,20 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 2598,
+                  "id": 2789,
                   "initialValue": {
                     "commonType": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 2597,
+                    "id": 2788,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 2594,
+                        "id": 2785,
                         "name": "block",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -2205,7 +2205,7 @@
                           "typeString": "block"
                         }
                       },
-                      "id": 2595,
+                      "id": 2786,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2222,7 +2222,7 @@
                     "operator": "%",
                     "rightExpression": {
                       "hexValue": "36",
-                      "id": 2596,
+                      "id": 2787,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2247,39 +2247,39 @@
                 },
                 {
                   "assignments": [
-                    2603
+                    2794
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 2603,
+                      "id": 2794,
                       "mutability": "mutable",
                       "name": "values",
                       "nodeType": "VariableDeclaration",
-                      "scope": 2652,
+                      "scope": 2843,
                       "src": "409:30:13",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2583_memory_ptr_$6_memory_ptr",
+                        "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2774_memory_ptr_$6_memory_ptr",
                         "typeString": "struct MockBandProtocol.ReferenceData[6]"
                       },
                       "typeName": {
                         "baseType": {
-                          "id": 2601,
+                          "id": 2792,
                           "name": "ReferenceData",
                           "nodeType": "UserDefinedTypeName",
-                          "referencedDeclaration": 2583,
+                          "referencedDeclaration": 2774,
                           "src": "409:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_ReferenceData_$2583_storage_ptr",
+                            "typeIdentifier": "t_struct$_ReferenceData_$2774_storage_ptr",
                             "typeString": "struct MockBandProtocol.ReferenceData"
                           }
                         },
-                        "id": 2602,
+                        "id": 2793,
                         "length": {
                           "hexValue": "36",
-                          "id": 2600,
+                          "id": 2791,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2296,55 +2296,55 @@
                         "nodeType": "ArrayTypeName",
                         "src": "409:16:13",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2583_storage_$6_storage_ptr",
+                          "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2774_storage_$6_storage_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData[6]"
                         }
                       },
                       "visibility": "internal"
                     }
                   ],
-                  "id": 2647,
+                  "id": 2838,
                   "initialValue": {
                     "components": [
                       {
                         "arguments": [
                           {
-                            "hexValue": "3130303030303030",
-                            "id": 2605,
+                            "hexValue": "313030303030303030303030303030303030303030",
+                            "id": 2796,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "471:8:13",
+                            "src": "471:21:13",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_rational_10000000_by_1",
-                              "typeString": "int_const 10000000"
+                              "typeIdentifier": "t_rational_100000000000000000000_by_1",
+                              "typeString": "int_const 100000000000000000000"
                             },
-                            "value": "10000000"
+                            "value": "100000000000000000000"
                           },
                           {
                             "expression": {
-                              "id": 2606,
+                              "id": 2797,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "481:5:13",
+                              "src": "494:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2607,
+                            "id": 2798,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "481:15:13",
+                            "src": "494:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2352,25 +2352,25 @@
                           },
                           {
                             "expression": {
-                              "id": 2608,
+                              "id": 2799,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "498:5:13",
+                              "src": "511:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2609,
+                            "id": 2800,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "498:15:13",
+                            "src": "511:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2380,8 +2380,8 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_rational_10000000_by_1",
-                              "typeString": "int_const 10000000"
+                              "typeIdentifier": "t_rational_100000000000000000000_by_1",
+                              "typeString": "int_const 100000000000000000000"
                             },
                             {
                               "typeIdentifier": "t_uint256",
@@ -2392,18 +2392,18 @@
                               "typeString": "uint256"
                             }
                           ],
-                          "id": 2604,
+                          "id": 2795,
                           "name": "ReferenceData",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2583,
+                          "referencedDeclaration": 2774,
                           "src": "457:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2583_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2774_storage_ptr_$",
                             "typeString": "type(struct MockBandProtocol.ReferenceData storage pointer)"
                           }
                         },
-                        "id": 2610,
+                        "id": 2801,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2411,52 +2411,52 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "457:57:13",
+                        "src": "457:70:13",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                          "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData memory"
                         }
                       },
                       {
                         "arguments": [
                           {
-                            "hexValue": "3230303030303030",
-                            "id": 2612,
+                            "hexValue": "323030303030303030303030303030303030303030",
+                            "id": 2803,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "543:8:13",
+                            "src": "556:21:13",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_rational_20000000_by_1",
-                              "typeString": "int_const 20000000"
+                              "typeIdentifier": "t_rational_200000000000000000000_by_1",
+                              "typeString": "int_const 200000000000000000000"
                             },
-                            "value": "20000000"
+                            "value": "200000000000000000000"
                           },
                           {
                             "expression": {
-                              "id": 2613,
+                              "id": 2804,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "553:5:13",
+                              "src": "579:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2614,
+                            "id": 2805,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "553:15:13",
+                            "src": "579:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2464,25 +2464,25 @@
                           },
                           {
                             "expression": {
-                              "id": 2615,
+                              "id": 2806,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "570:5:13",
+                              "src": "596:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2616,
+                            "id": 2807,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "570:15:13",
+                            "src": "596:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2492,8 +2492,8 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_rational_20000000_by_1",
-                              "typeString": "int_const 20000000"
+                              "typeIdentifier": "t_rational_200000000000000000000_by_1",
+                              "typeString": "int_const 200000000000000000000"
                             },
                             {
                               "typeIdentifier": "t_uint256",
@@ -2504,18 +2504,18 @@
                               "typeString": "uint256"
                             }
                           ],
-                          "id": 2611,
+                          "id": 2802,
                           "name": "ReferenceData",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2583,
-                          "src": "529:13:13",
+                          "referencedDeclaration": 2774,
+                          "src": "542:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2583_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2774_storage_ptr_$",
                             "typeString": "type(struct MockBandProtocol.ReferenceData storage pointer)"
                           }
                         },
-                        "id": 2617,
+                        "id": 2808,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2523,52 +2523,52 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "529:57:13",
+                        "src": "542:70:13",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                          "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData memory"
                         }
                       },
                       {
                         "arguments": [
                           {
-                            "hexValue": "3330303030303030",
-                            "id": 2619,
+                            "hexValue": "333030303030303030303030303030303030303030",
+                            "id": 2810,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "615:8:13",
+                            "src": "641:21:13",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_rational_30000000_by_1",
-                              "typeString": "int_const 30000000"
+                              "typeIdentifier": "t_rational_300000000000000000000_by_1",
+                              "typeString": "int_const 300000000000000000000"
                             },
-                            "value": "30000000"
+                            "value": "300000000000000000000"
                           },
                           {
                             "expression": {
-                              "id": 2620,
+                              "id": 2811,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "625:5:13",
+                              "src": "664:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2621,
+                            "id": 2812,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "625:15:13",
+                            "src": "664:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2576,25 +2576,25 @@
                           },
                           {
                             "expression": {
-                              "id": 2622,
+                              "id": 2813,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "642:5:13",
+                              "src": "681:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2623,
+                            "id": 2814,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "642:15:13",
+                            "src": "681:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2604,8 +2604,8 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_rational_30000000_by_1",
-                              "typeString": "int_const 30000000"
+                              "typeIdentifier": "t_rational_300000000000000000000_by_1",
+                              "typeString": "int_const 300000000000000000000"
                             },
                             {
                               "typeIdentifier": "t_uint256",
@@ -2616,18 +2616,18 @@
                               "typeString": "uint256"
                             }
                           ],
-                          "id": 2618,
+                          "id": 2809,
                           "name": "ReferenceData",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2583,
-                          "src": "601:13:13",
+                          "referencedDeclaration": 2774,
+                          "src": "627:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2583_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2774_storage_ptr_$",
                             "typeString": "type(struct MockBandProtocol.ReferenceData storage pointer)"
                           }
                         },
-                        "id": 2624,
+                        "id": 2815,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2635,52 +2635,52 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "601:57:13",
+                        "src": "627:70:13",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                          "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData memory"
                         }
                       },
                       {
                         "arguments": [
                           {
-                            "hexValue": "3430303030303030",
-                            "id": 2626,
+                            "hexValue": "343030303030303030303030303030303030303030",
+                            "id": 2817,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "687:8:13",
+                            "src": "726:21:13",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_rational_40000000_by_1",
-                              "typeString": "int_const 40000000"
+                              "typeIdentifier": "t_rational_400000000000000000000_by_1",
+                              "typeString": "int_const 400000000000000000000"
                             },
-                            "value": "40000000"
+                            "value": "400000000000000000000"
                           },
                           {
                             "expression": {
-                              "id": 2627,
+                              "id": 2818,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "697:5:13",
+                              "src": "749:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2628,
+                            "id": 2819,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "697:15:13",
+                            "src": "749:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2688,25 +2688,25 @@
                           },
                           {
                             "expression": {
-                              "id": 2629,
+                              "id": 2820,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "714:5:13",
+                              "src": "766:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2630,
+                            "id": 2821,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "714:15:13",
+                            "src": "766:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2716,8 +2716,8 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_rational_40000000_by_1",
-                              "typeString": "int_const 40000000"
+                              "typeIdentifier": "t_rational_400000000000000000000_by_1",
+                              "typeString": "int_const 400000000000000000000"
                             },
                             {
                               "typeIdentifier": "t_uint256",
@@ -2728,18 +2728,18 @@
                               "typeString": "uint256"
                             }
                           ],
-                          "id": 2625,
+                          "id": 2816,
                           "name": "ReferenceData",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2583,
-                          "src": "673:13:13",
+                          "referencedDeclaration": 2774,
+                          "src": "712:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2583_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2774_storage_ptr_$",
                             "typeString": "type(struct MockBandProtocol.ReferenceData storage pointer)"
                           }
                         },
-                        "id": 2631,
+                        "id": 2822,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2747,52 +2747,52 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "673:57:13",
+                        "src": "712:70:13",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                          "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData memory"
                         }
                       },
                       {
                         "arguments": [
                           {
-                            "hexValue": "3530303030303030",
-                            "id": 2633,
+                            "hexValue": "353030303030303030303030303030303030303030",
+                            "id": 2824,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "770:8:13",
+                            "src": "822:21:13",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_rational_50000000_by_1",
-                              "typeString": "int_const 50000000"
+                              "typeIdentifier": "t_rational_500000000000000000000_by_1",
+                              "typeString": "int_const 500000000000000000000"
                             },
-                            "value": "50000000"
+                            "value": "500000000000000000000"
                           },
                           {
                             "expression": {
-                              "id": 2634,
+                              "id": 2825,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "780:5:13",
+                              "src": "845:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2635,
+                            "id": 2826,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "780:15:13",
+                            "src": "845:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2800,25 +2800,25 @@
                           },
                           {
                             "expression": {
-                              "id": 2636,
+                              "id": 2827,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "797:5:13",
+                              "src": "862:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2637,
+                            "id": 2828,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "797:15:13",
+                            "src": "862:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2828,8 +2828,8 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_rational_50000000_by_1",
-                              "typeString": "int_const 50000000"
+                              "typeIdentifier": "t_rational_500000000000000000000_by_1",
+                              "typeString": "int_const 500000000000000000000"
                             },
                             {
                               "typeIdentifier": "t_uint256",
@@ -2840,18 +2840,18 @@
                               "typeString": "uint256"
                             }
                           ],
-                          "id": 2632,
+                          "id": 2823,
                           "name": "ReferenceData",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2583,
-                          "src": "756:13:13",
+                          "referencedDeclaration": 2774,
+                          "src": "808:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2583_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2774_storage_ptr_$",
                             "typeString": "type(struct MockBandProtocol.ReferenceData storage pointer)"
                           }
                         },
-                        "id": 2638,
+                        "id": 2829,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2859,52 +2859,52 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "756:57:13",
+                        "src": "808:70:13",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                          "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData memory"
                         }
                       },
                       {
                         "arguments": [
                           {
-                            "hexValue": "3630303030303030",
-                            "id": 2640,
+                            "hexValue": "363030303030303030303030303030303030303030",
+                            "id": 2831,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "853:8:13",
+                            "src": "918:21:13",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_rational_60000000_by_1",
-                              "typeString": "int_const 60000000"
+                              "typeIdentifier": "t_rational_600000000000000000000_by_1",
+                              "typeString": "int_const 600000000000000000000"
                             },
-                            "value": "60000000"
+                            "value": "600000000000000000000"
                           },
                           {
                             "expression": {
-                              "id": 2641,
+                              "id": 2832,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "863:5:13",
+                              "src": "941:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2642,
+                            "id": 2833,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "863:15:13",
+                            "src": "941:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2912,25 +2912,25 @@
                           },
                           {
                             "expression": {
-                              "id": 2643,
+                              "id": 2834,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 4294967292,
-                              "src": "880:5:13",
+                              "src": "958:5:13",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_block",
                                 "typeString": "block"
                               }
                             },
-                            "id": 2644,
+                            "id": 2835,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "timestamp",
                             "nodeType": "MemberAccess",
-                            "src": "880:15:13",
+                            "src": "958:15:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -2940,8 +2940,8 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_rational_60000000_by_1",
-                              "typeString": "int_const 60000000"
+                              "typeIdentifier": "t_rational_600000000000000000000_by_1",
+                              "typeString": "int_const 600000000000000000000"
                             },
                             {
                               "typeIdentifier": "t_uint256",
@@ -2952,18 +2952,18 @@
                               "typeString": "uint256"
                             }
                           ],
-                          "id": 2639,
+                          "id": 2830,
                           "name": "ReferenceData",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2583,
-                          "src": "839:13:13",
+                          "referencedDeclaration": 2774,
+                          "src": "904:13:13",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2583_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_ReferenceData_$2774_storage_ptr_$",
                             "typeString": "type(struct MockBandProtocol.ReferenceData storage pointer)"
                           }
                         },
-                        "id": 2645,
+                        "id": 2836,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2971,52 +2971,52 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "839:57:13",
+                        "src": "904:70:13",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                          "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                           "typeString": "struct MockBandProtocol.ReferenceData memory"
                         }
                       }
                     ],
-                    "id": 2646,
+                    "id": 2837,
                     "isConstant": false,
                     "isInlineArray": true,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "442:465:13",
+                    "src": "442:543:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2583_memory_ptr_$6_memory_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2774_memory_ptr_$6_memory_ptr",
                       "typeString": "struct MockBandProtocol.ReferenceData memory[6] memory"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "409:498:13"
+                  "src": "409:576:13"
                 },
                 {
                   "expression": {
                     "baseExpression": {
-                      "id": 2648,
+                      "id": 2839,
                       "name": "values",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2603,
-                      "src": "925:6:13",
+                      "referencedDeclaration": 2794,
+                      "src": "1003:6:13",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2583_memory_ptr_$6_memory_ptr",
+                        "typeIdentifier": "t_array$_t_struct$_ReferenceData_$2774_memory_ptr_$6_memory_ptr",
                         "typeString": "struct MockBandProtocol.ReferenceData memory[6] memory"
                       }
                     },
-                    "id": 2650,
+                    "id": 2841,
                     "indexExpression": {
-                      "id": 2649,
+                      "id": 2840,
                       "name": "pick",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2593,
-                      "src": "932:4:13",
+                      "referencedDeclaration": 2784,
+                      "src": "1010:4:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3027,37 +3027,37 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "925:12:13",
+                    "src": "1003:12:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                      "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                       "typeString": "struct MockBandProtocol.ReferenceData memory"
                     }
                   },
-                  "functionReturnParameters": 2591,
-                  "id": 2651,
+                  "functionReturnParameters": 2782,
+                  "id": 2842,
                   "nodeType": "Return",
-                  "src": "918:19:13"
+                  "src": "996:19:13"
                 }
               ]
             },
             "functionSelector": "65555bcc",
-            "id": 2653,
+            "id": 2844,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getReferenceData",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2588,
+              "id": 2779,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2585,
+                  "id": 2776,
                   "mutability": "mutable",
                   "name": "_base",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2653,
+                  "scope": 2844,
                   "src": "271:19:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -3066,7 +3066,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2584,
+                    "id": 2775,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "271:6:13",
@@ -3079,11 +3079,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2587,
+                  "id": 2778,
                   "mutability": "mutable",
                   "name": "_quote",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2653,
+                  "scope": 2844,
                   "src": "292:20:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -3092,7 +3092,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2586,
+                    "id": 2777,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "292:6:13",
@@ -3107,31 +3107,31 @@
               "src": "270:43:13"
             },
             "returnParameters": {
-              "id": 2591,
+              "id": 2782,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2590,
+                  "id": 2781,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2653,
+                  "scope": 2844,
                   "src": "337:20:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_ReferenceData_$2583_memory_ptr",
+                    "typeIdentifier": "t_struct$_ReferenceData_$2774_memory_ptr",
                     "typeString": "struct MockBandProtocol.ReferenceData"
                   },
                   "typeName": {
-                    "id": 2589,
+                    "id": 2780,
                     "name": "ReferenceData",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 2583,
+                    "referencedDeclaration": 2774,
                     "src": "337:13:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_ReferenceData_$2583_storage_ptr",
+                      "typeIdentifier": "t_struct$_ReferenceData_$2774_storage_ptr",
                       "typeString": "struct MockBandProtocol.ReferenceData"
                     }
                   },
@@ -3140,25 +3140,25 @@
               ],
               "src": "336:22:13"
             },
-            "scope": 2654,
-            "src": "245:700:13",
+            "scope": 2845,
+            "src": "245:778:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2655,
-        "src": "81:869:13"
+        "scope": 2846,
+        "src": "81:947:13"
       }
     ],
-    "src": "33:919:13"
+    "src": "33:997:13"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/C/Repos/tokenchop/contracts/test/MockBandProtocol.sol",
       "exportedSymbols": {
         "MockBandProtocol": [
-          2654
+          2845
         ]
       },
       "license": "MIT"
@@ -3173,7 +3173,7 @@
             ".6"
           ]
         },
-        "id": 2575,
+        "id": 2766,
         "name": "PragmaDirective",
         "src": "33:23:13"
       },
@@ -3184,7 +3184,7 @@
             "v2"
           ]
         },
-        "id": 2576,
+        "id": 2767,
         "name": "PragmaDirective",
         "src": "58:19:13"
       },
@@ -3200,17 +3200,17 @@
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2654
+            2845
           ],
           "name": "MockBandProtocol",
-          "scope": 2655
+          "scope": 2846
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "MockBandProtocol.ReferenceData",
               "name": "ReferenceData",
-              "scope": 2654,
+              "scope": 2845,
               "visibility": "public"
             },
             "children": [
@@ -3219,7 +3219,7 @@
                   "constant": false,
                   "mutability": "mutable",
                   "name": "rate",
-                  "scope": 2583,
+                  "scope": 2774,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -3231,12 +3231,12 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 2577,
+                    "id": 2768,
                     "name": "ElementaryTypeName",
                     "src": "148:7:13"
                   }
                 ],
-                "id": 2578,
+                "id": 2769,
                 "name": "VariableDeclaration",
                 "src": "148:12:13"
               },
@@ -3245,7 +3245,7 @@
                   "constant": false,
                   "mutability": "mutable",
                   "name": "lastUpdatedBase",
-                  "scope": 2583,
+                  "scope": 2774,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -3257,12 +3257,12 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 2579,
+                    "id": 2770,
                     "name": "ElementaryTypeName",
                     "src": "171:7:13"
                   }
                 ],
-                "id": 2580,
+                "id": 2771,
                 "name": "VariableDeclaration",
                 "src": "171:23:13"
               },
@@ -3271,7 +3271,7 @@
                   "constant": false,
                   "mutability": "mutable",
                   "name": "lastUpdatedQuote",
-                  "scope": 2583,
+                  "scope": 2774,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -3283,17 +3283,17 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 2581,
+                    "id": 2772,
                     "name": "ElementaryTypeName",
                     "src": "205:7:13"
                   }
                 ],
-                "id": 2582,
+                "id": 2773,
                 "name": "VariableDeclaration",
                 "src": "205:24:13"
               }
             ],
-            "id": 2583,
+            "id": 2774,
             "name": "StructDefinition",
             "src": "116:121:13"
           },
@@ -3307,7 +3307,7 @@
                 null
               ],
               "name": "getReferenceData",
-              "scope": 2654,
+              "scope": 2845,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -3320,7 +3320,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_base",
-                      "scope": 2653,
+                      "scope": 2844,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string",
@@ -3332,12 +3332,12 @@
                           "name": "string",
                           "type": "string"
                         },
-                        "id": 2584,
+                        "id": 2775,
                         "name": "ElementaryTypeName",
                         "src": "271:6:13"
                       }
                     ],
-                    "id": 2585,
+                    "id": 2776,
                     "name": "VariableDeclaration",
                     "src": "271:19:13"
                   },
@@ -3346,7 +3346,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_quote",
-                      "scope": 2653,
+                      "scope": 2844,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string",
@@ -3358,17 +3358,17 @@
                           "name": "string",
                           "type": "string"
                         },
-                        "id": 2586,
+                        "id": 2777,
                         "name": "ElementaryTypeName",
                         "src": "292:6:13"
                       }
                     ],
-                    "id": 2587,
+                    "id": 2778,
                     "name": "VariableDeclaration",
                     "src": "292:20:13"
                   }
                 ],
-                "id": 2588,
+                "id": 2779,
                 "name": "ParameterList",
                 "src": "270:43:13"
               },
@@ -3379,7 +3379,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 2653,
+                      "scope": 2844,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "struct MockBandProtocol.ReferenceData",
@@ -3389,20 +3389,20 @@
                       {
                         "attributes": {
                           "name": "ReferenceData",
-                          "referencedDeclaration": 2583,
+                          "referencedDeclaration": 2774,
                           "type": "struct MockBandProtocol.ReferenceData"
                         },
-                        "id": 2589,
+                        "id": 2780,
                         "name": "UserDefinedTypeName",
                         "src": "337:13:13"
                       }
                     ],
-                    "id": 2590,
+                    "id": 2781,
                     "name": "VariableDeclaration",
                     "src": "337:20:13"
                   }
                 ],
-                "id": 2591,
+                "id": 2782,
                 "name": "ParameterList",
                 "src": "336:22:13"
               },
@@ -3411,7 +3411,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        2593
+                        2784
                       ]
                     },
                     "children": [
@@ -3420,7 +3420,7 @@
                           "constant": false,
                           "mutability": "mutable",
                           "name": "pick",
-                          "scope": 2652,
+                          "scope": 2843,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -3432,12 +3432,12 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 2592,
+                            "id": 2783,
                             "name": "ElementaryTypeName",
                             "src": "370:4:13"
                           }
                         ],
-                        "id": 2593,
+                        "id": 2784,
                         "name": "VariableDeclaration",
                         "src": "370:9:13"
                       },
@@ -3474,12 +3474,12 @@
                                   "type": "block",
                                   "value": "block"
                                 },
-                                "id": 2594,
+                                "id": 2785,
                                 "name": "Identifier",
                                 "src": "382:5:13"
                               }
                             ],
-                            "id": 2595,
+                            "id": 2786,
                             "name": "MemberAccess",
                             "src": "382:12:13"
                           },
@@ -3494,24 +3494,24 @@
                               "type": "int_const 6",
                               "value": "6"
                             },
-                            "id": 2596,
+                            "id": 2787,
                             "name": "Literal",
                             "src": "397:1:13"
                           }
                         ],
-                        "id": 2597,
+                        "id": 2788,
                         "name": "BinaryOperation",
                         "src": "382:16:13"
                       }
                     ],
-                    "id": 2598,
+                    "id": 2789,
                     "name": "VariableDeclarationStatement",
                     "src": "370:28:13"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        2603
+                        2794
                       ]
                     },
                     "children": [
@@ -3520,7 +3520,7 @@
                           "constant": false,
                           "mutability": "mutable",
                           "name": "values",
-                          "scope": 2652,
+                          "scope": 2843,
                           "stateVariable": false,
                           "storageLocation": "memory",
                           "type": "struct MockBandProtocol.ReferenceData[6]",
@@ -3535,10 +3535,10 @@
                               {
                                 "attributes": {
                                   "name": "ReferenceData",
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "struct MockBandProtocol.ReferenceData"
                                 },
-                                "id": 2601,
+                                "id": 2792,
                                 "name": "UserDefinedTypeName",
                                 "src": "409:13:13"
                               },
@@ -3553,17 +3553,17 @@
                                   "type": "int_const 6",
                                   "value": "6"
                                 },
-                                "id": 2600,
+                                "id": 2791,
                                 "name": "Literal",
                                 "src": "423:1:13"
                               }
                             ],
-                            "id": 2602,
+                            "id": 2793,
                             "name": "ArrayTypeName",
                             "src": "409:16:13"
                           }
                         ],
-                        "id": 2603,
+                        "id": 2794,
                         "name": "VariableDeclaration",
                         "src": "409:30:13"
                       },
@@ -3596,8 +3596,8 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_rational_10000000_by_1",
-                                      "typeString": "int_const 10000000"
+                                      "typeIdentifier": "t_rational_100000000000000000000_by_1",
+                                      "typeString": "int_const 100000000000000000000"
                                     },
                                     {
                                       "typeIdentifier": "t_uint256",
@@ -3611,28 +3611,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "type(struct MockBandProtocol.ReferenceData storage pointer)",
                                   "value": "ReferenceData"
                                 },
-                                "id": 2604,
+                                "id": 2795,
                                 "name": "Identifier",
                                 "src": "457:13:13"
                               },
                               {
                                 "attributes": {
-                                  "hexvalue": "3130303030303030",
+                                  "hexvalue": "313030303030303030303030303030303030303030",
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "token": "number",
-                                  "type": "int_const 10000000",
-                                  "value": "10000000"
+                                  "type": "int_const 100000000000000000000",
+                                  "value": "100000000000000000000"
                                 },
-                                "id": 2605,
+                                "id": 2796,
                                 "name": "Literal",
-                                "src": "471:8:13"
+                                "src": "471:21:13"
                               },
                               {
                                 "attributes": {
@@ -3653,14 +3653,14 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2606,
+                                    "id": 2797,
                                     "name": "Identifier",
-                                    "src": "481:5:13"
+                                    "src": "494:5:13"
                                   }
                                 ],
-                                "id": 2607,
+                                "id": 2798,
                                 "name": "MemberAccess",
-                                "src": "481:15:13"
+                                "src": "494:15:13"
                               },
                               {
                                 "attributes": {
@@ -3681,19 +3681,19 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2608,
+                                    "id": 2799,
                                     "name": "Identifier",
-                                    "src": "498:5:13"
+                                    "src": "511:5:13"
                                   }
                                 ],
-                                "id": 2609,
+                                "id": 2800,
                                 "name": "MemberAccess",
-                                "src": "498:15:13"
+                                "src": "511:15:13"
                               }
                             ],
-                            "id": 2610,
+                            "id": 2801,
                             "name": "FunctionCall",
-                            "src": "457:57:13"
+                            "src": "457:70:13"
                           },
                           {
                             "attributes": {
@@ -3714,8 +3714,8 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_rational_20000000_by_1",
-                                      "typeString": "int_const 20000000"
+                                      "typeIdentifier": "t_rational_200000000000000000000_by_1",
+                                      "typeString": "int_const 200000000000000000000"
                                     },
                                     {
                                       "typeIdentifier": "t_uint256",
@@ -3729,28 +3729,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "type(struct MockBandProtocol.ReferenceData storage pointer)",
                                   "value": "ReferenceData"
                                 },
-                                "id": 2611,
+                                "id": 2802,
                                 "name": "Identifier",
-                                "src": "529:13:13"
+                                "src": "542:13:13"
                               },
                               {
                                 "attributes": {
-                                  "hexvalue": "3230303030303030",
+                                  "hexvalue": "323030303030303030303030303030303030303030",
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "token": "number",
-                                  "type": "int_const 20000000",
-                                  "value": "20000000"
+                                  "type": "int_const 200000000000000000000",
+                                  "value": "200000000000000000000"
                                 },
-                                "id": 2612,
+                                "id": 2803,
                                 "name": "Literal",
-                                "src": "543:8:13"
+                                "src": "556:21:13"
                               },
                               {
                                 "attributes": {
@@ -3771,14 +3771,14 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2613,
+                                    "id": 2804,
                                     "name": "Identifier",
-                                    "src": "553:5:13"
+                                    "src": "579:5:13"
                                   }
                                 ],
-                                "id": 2614,
+                                "id": 2805,
                                 "name": "MemberAccess",
-                                "src": "553:15:13"
+                                "src": "579:15:13"
                               },
                               {
                                 "attributes": {
@@ -3799,19 +3799,19 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2615,
+                                    "id": 2806,
                                     "name": "Identifier",
-                                    "src": "570:5:13"
+                                    "src": "596:5:13"
                                   }
                                 ],
-                                "id": 2616,
+                                "id": 2807,
                                 "name": "MemberAccess",
-                                "src": "570:15:13"
+                                "src": "596:15:13"
                               }
                             ],
-                            "id": 2617,
+                            "id": 2808,
                             "name": "FunctionCall",
-                            "src": "529:57:13"
+                            "src": "542:70:13"
                           },
                           {
                             "attributes": {
@@ -3832,8 +3832,8 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_rational_30000000_by_1",
-                                      "typeString": "int_const 30000000"
+                                      "typeIdentifier": "t_rational_300000000000000000000_by_1",
+                                      "typeString": "int_const 300000000000000000000"
                                     },
                                     {
                                       "typeIdentifier": "t_uint256",
@@ -3847,28 +3847,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "type(struct MockBandProtocol.ReferenceData storage pointer)",
                                   "value": "ReferenceData"
                                 },
-                                "id": 2618,
+                                "id": 2809,
                                 "name": "Identifier",
-                                "src": "601:13:13"
+                                "src": "627:13:13"
                               },
                               {
                                 "attributes": {
-                                  "hexvalue": "3330303030303030",
+                                  "hexvalue": "333030303030303030303030303030303030303030",
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "token": "number",
-                                  "type": "int_const 30000000",
-                                  "value": "30000000"
+                                  "type": "int_const 300000000000000000000",
+                                  "value": "300000000000000000000"
                                 },
-                                "id": 2619,
+                                "id": 2810,
                                 "name": "Literal",
-                                "src": "615:8:13"
+                                "src": "641:21:13"
                               },
                               {
                                 "attributes": {
@@ -3889,14 +3889,14 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2620,
+                                    "id": 2811,
                                     "name": "Identifier",
-                                    "src": "625:5:13"
+                                    "src": "664:5:13"
                                   }
                                 ],
-                                "id": 2621,
+                                "id": 2812,
                                 "name": "MemberAccess",
-                                "src": "625:15:13"
+                                "src": "664:15:13"
                               },
                               {
                                 "attributes": {
@@ -3917,19 +3917,19 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2622,
+                                    "id": 2813,
                                     "name": "Identifier",
-                                    "src": "642:5:13"
+                                    "src": "681:5:13"
                                   }
                                 ],
-                                "id": 2623,
+                                "id": 2814,
                                 "name": "MemberAccess",
-                                "src": "642:15:13"
+                                "src": "681:15:13"
                               }
                             ],
-                            "id": 2624,
+                            "id": 2815,
                             "name": "FunctionCall",
-                            "src": "601:57:13"
+                            "src": "627:70:13"
                           },
                           {
                             "attributes": {
@@ -3950,8 +3950,8 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_rational_40000000_by_1",
-                                      "typeString": "int_const 40000000"
+                                      "typeIdentifier": "t_rational_400000000000000000000_by_1",
+                                      "typeString": "int_const 400000000000000000000"
                                     },
                                     {
                                       "typeIdentifier": "t_uint256",
@@ -3965,28 +3965,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "type(struct MockBandProtocol.ReferenceData storage pointer)",
                                   "value": "ReferenceData"
                                 },
-                                "id": 2625,
+                                "id": 2816,
                                 "name": "Identifier",
-                                "src": "673:13:13"
+                                "src": "712:13:13"
                               },
                               {
                                 "attributes": {
-                                  "hexvalue": "3430303030303030",
+                                  "hexvalue": "343030303030303030303030303030303030303030",
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "token": "number",
-                                  "type": "int_const 40000000",
-                                  "value": "40000000"
+                                  "type": "int_const 400000000000000000000",
+                                  "value": "400000000000000000000"
                                 },
-                                "id": 2626,
+                                "id": 2817,
                                 "name": "Literal",
-                                "src": "687:8:13"
+                                "src": "726:21:13"
                               },
                               {
                                 "attributes": {
@@ -4007,14 +4007,14 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2627,
+                                    "id": 2818,
                                     "name": "Identifier",
-                                    "src": "697:5:13"
+                                    "src": "749:5:13"
                                   }
                                 ],
-                                "id": 2628,
+                                "id": 2819,
                                 "name": "MemberAccess",
-                                "src": "697:15:13"
+                                "src": "749:15:13"
                               },
                               {
                                 "attributes": {
@@ -4035,19 +4035,19 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2629,
+                                    "id": 2820,
                                     "name": "Identifier",
-                                    "src": "714:5:13"
+                                    "src": "766:5:13"
                                   }
                                 ],
-                                "id": 2630,
+                                "id": 2821,
                                 "name": "MemberAccess",
-                                "src": "714:15:13"
+                                "src": "766:15:13"
                               }
                             ],
-                            "id": 2631,
+                            "id": 2822,
                             "name": "FunctionCall",
-                            "src": "673:57:13"
+                            "src": "712:70:13"
                           },
                           {
                             "attributes": {
@@ -4068,8 +4068,8 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_rational_50000000_by_1",
-                                      "typeString": "int_const 50000000"
+                                      "typeIdentifier": "t_rational_500000000000000000000_by_1",
+                                      "typeString": "int_const 500000000000000000000"
                                     },
                                     {
                                       "typeIdentifier": "t_uint256",
@@ -4083,28 +4083,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "type(struct MockBandProtocol.ReferenceData storage pointer)",
                                   "value": "ReferenceData"
                                 },
-                                "id": 2632,
+                                "id": 2823,
                                 "name": "Identifier",
-                                "src": "756:13:13"
+                                "src": "808:13:13"
                               },
                               {
                                 "attributes": {
-                                  "hexvalue": "3530303030303030",
+                                  "hexvalue": "353030303030303030303030303030303030303030",
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "token": "number",
-                                  "type": "int_const 50000000",
-                                  "value": "50000000"
+                                  "type": "int_const 500000000000000000000",
+                                  "value": "500000000000000000000"
                                 },
-                                "id": 2633,
+                                "id": 2824,
                                 "name": "Literal",
-                                "src": "770:8:13"
+                                "src": "822:21:13"
                               },
                               {
                                 "attributes": {
@@ -4125,14 +4125,14 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2634,
+                                    "id": 2825,
                                     "name": "Identifier",
-                                    "src": "780:5:13"
+                                    "src": "845:5:13"
                                   }
                                 ],
-                                "id": 2635,
+                                "id": 2826,
                                 "name": "MemberAccess",
-                                "src": "780:15:13"
+                                "src": "845:15:13"
                               },
                               {
                                 "attributes": {
@@ -4153,19 +4153,19 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2636,
+                                    "id": 2827,
                                     "name": "Identifier",
-                                    "src": "797:5:13"
+                                    "src": "862:5:13"
                                   }
                                 ],
-                                "id": 2637,
+                                "id": 2828,
                                 "name": "MemberAccess",
-                                "src": "797:15:13"
+                                "src": "862:15:13"
                               }
                             ],
-                            "id": 2638,
+                            "id": 2829,
                             "name": "FunctionCall",
-                            "src": "756:57:13"
+                            "src": "808:70:13"
                           },
                           {
                             "attributes": {
@@ -4186,8 +4186,8 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_rational_60000000_by_1",
-                                      "typeString": "int_const 60000000"
+                                      "typeIdentifier": "t_rational_600000000000000000000_by_1",
+                                      "typeString": "int_const 600000000000000000000"
                                     },
                                     {
                                       "typeIdentifier": "t_uint256",
@@ -4201,28 +4201,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2583,
+                                  "referencedDeclaration": 2774,
                                   "type": "type(struct MockBandProtocol.ReferenceData storage pointer)",
                                   "value": "ReferenceData"
                                 },
-                                "id": 2639,
+                                "id": 2830,
                                 "name": "Identifier",
-                                "src": "839:13:13"
+                                "src": "904:13:13"
                               },
                               {
                                 "attributes": {
-                                  "hexvalue": "3630303030303030",
+                                  "hexvalue": "363030303030303030303030303030303030303030",
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "token": "number",
-                                  "type": "int_const 60000000",
-                                  "value": "60000000"
+                                  "type": "int_const 600000000000000000000",
+                                  "value": "600000000000000000000"
                                 },
-                                "id": 2640,
+                                "id": 2831,
                                 "name": "Literal",
-                                "src": "853:8:13"
+                                "src": "918:21:13"
                               },
                               {
                                 "attributes": {
@@ -4243,14 +4243,14 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2641,
+                                    "id": 2832,
                                     "name": "Identifier",
-                                    "src": "863:5:13"
+                                    "src": "941:5:13"
                                   }
                                 ],
-                                "id": 2642,
+                                "id": 2833,
                                 "name": "MemberAccess",
-                                "src": "863:15:13"
+                                "src": "941:15:13"
                               },
                               {
                                 "attributes": {
@@ -4271,33 +4271,33 @@
                                       "type": "block",
                                       "value": "block"
                                     },
-                                    "id": 2643,
+                                    "id": 2834,
                                     "name": "Identifier",
-                                    "src": "880:5:13"
+                                    "src": "958:5:13"
                                   }
                                 ],
-                                "id": 2644,
+                                "id": 2835,
                                 "name": "MemberAccess",
-                                "src": "880:15:13"
+                                "src": "958:15:13"
                               }
                             ],
-                            "id": 2645,
+                            "id": 2836,
                             "name": "FunctionCall",
-                            "src": "839:57:13"
+                            "src": "904:70:13"
                           }
                         ],
-                        "id": 2646,
+                        "id": 2837,
                         "name": "TupleExpression",
-                        "src": "442:465:13"
+                        "src": "442:543:13"
                       }
                     ],
-                    "id": 2647,
+                    "id": 2838,
                     "name": "VariableDeclarationStatement",
-                    "src": "409:498:13"
+                    "src": "409:576:13"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2591
+                      "functionReturnParameters": 2782
                     },
                     "children": [
                       {
@@ -4314,56 +4314,56 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2603,
+                              "referencedDeclaration": 2794,
                               "type": "struct MockBandProtocol.ReferenceData memory[6] memory",
                               "value": "values"
                             },
-                            "id": 2648,
+                            "id": 2839,
                             "name": "Identifier",
-                            "src": "925:6:13"
+                            "src": "1003:6:13"
                           },
                           {
                             "attributes": {
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2593,
+                              "referencedDeclaration": 2784,
                               "type": "uint256",
                               "value": "pick"
                             },
-                            "id": 2649,
+                            "id": 2840,
                             "name": "Identifier",
-                            "src": "932:4:13"
+                            "src": "1010:4:13"
                           }
                         ],
-                        "id": 2650,
+                        "id": 2841,
                         "name": "IndexAccess",
-                        "src": "925:12:13"
+                        "src": "1003:12:13"
                       }
                     ],
-                    "id": 2651,
+                    "id": 2842,
                     "name": "Return",
-                    "src": "918:19:13"
+                    "src": "996:19:13"
                   }
                 ],
-                "id": 2652,
+                "id": 2843,
                 "name": "Block",
-                "src": "359:586:13"
+                "src": "359:664:13"
               }
             ],
-            "id": 2653,
+            "id": 2844,
             "name": "FunctionDefinition",
-            "src": "245:700:13"
+            "src": "245:778:13"
           }
         ],
-        "id": 2654,
+        "id": 2845,
         "name": "ContractDefinition",
-        "src": "81:869:13"
+        "src": "81:947:13"
       }
     ],
-    "id": 2655,
+    "id": 2846,
     "name": "SourceUnit",
-    "src": "33:919:13"
+    "src": "33:997:13"
   },
   "compiler": {
     "name": "solc",
@@ -4387,12 +4387,12 @@
         }
       },
       "links": {},
-      "address": "0x5571C53C5301CC1E072061F4742D66d5dbC33d8c",
-      "transactionHash": "0x422c198e353481401e11ab1e06ac402d4a90153a8d52ba328d2b6ebce1dd854e"
+      "address": "0xC27be3E83DA16610A4e3c768318bD6f8244975a4",
+      "transactionHash": "0x00463b77941855407c7e49525fc0bf622747bb6d761537277d2af1a08ab216c5"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-02-12T06:02:33.433Z",
+  "updatedAt": "2021-02-12T20:42:14.225Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

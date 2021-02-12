@@ -3,11 +3,8 @@ import { AppThunk, RootState } from '../store';
 import { utils } from 'ethers';
 import { ERC20PresetMinterPauser } from '../contracts/external';
 import { updateBalances, ValidToken } from './walletSlice';
-import { TokenChopPair } from '../contracts';
 
 export type ApprovalStatus = 'Approved' | 'Pending' | 'NotApproved';
-export type ChopStatus = 'Complete' | 'Pending' | 'NotStarted';
-export type ChopType = 'high' | 'low';
 
 interface TokenProperties {
   name: string;
@@ -18,10 +15,6 @@ interface TokenProperties {
   approval: {
     status: ApprovalStatus;
     amountInWei: string;
-  },
-  chop: {
-    status: ChopStatus,
-    type?: ChopType
   }
 }
 
@@ -34,8 +27,7 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' },
-    chop: { status: 'NotStarted' }
+    approval: { status: 'NotApproved', amountInWei: '0' }
   },
   ETH: {
     name: 'ETH',
@@ -43,8 +35,7 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' },
-    chop: { status: 'NotStarted' }
+    approval: { status: 'NotApproved', amountInWei: '0' }
   },
   BTC: {
     name: 'BTC',
@@ -52,8 +43,7 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' },
-    chop: { status: 'NotStarted' }
+    approval: { status: 'NotApproved', amountInWei: '0' }
   },
   XRP: {
     name: 'XRP',
@@ -61,8 +51,7 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' },
-    chop: { status: 'NotStarted' }
+    approval: { status: 'NotApproved', amountInWei: '0' }
   },
   DAI: {
     name: 'DAI',
@@ -70,8 +59,7 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' },
-    chop: { status: 'NotStarted' }
+    approval: { status: 'NotApproved', amountInWei: '0' }
   }
 };
 
@@ -93,12 +81,6 @@ interface TokenApproval {
   amountInWei: string;
 }
 
-interface TokenChop {
-  name: string;
-  status: ChopStatus;
-  type?: ChopType;
-}
-
 export const tokenSlice = createSlice({
   name: 'token',
   initialState,
@@ -108,7 +90,7 @@ export const tokenSlice = createSlice({
       if (!name) return;
       const token = state[name]
         ? { ...state[name], ...action.payload }
-        : { ...action.payload, balanceOf: '0', approval: { status: 'NotApproved' as ApprovalStatus, amountInWei: '0'}, chop: { status: 'NotStarted' as ChopStatus } };
+        : { ...action.payload, balanceOf: '0', approval: { status: 'NotApproved' as ApprovalStatus, amountInWei: '0'} };
       return { ...state, [name]: token };
     },
     updateBalanceOf: (state, action: PayloadAction<TokenBalanceOf>) => {
@@ -128,17 +110,10 @@ export const tokenSlice = createSlice({
       if (!state[name]) return;
       const token = { ...state[name], approval: { status, amountInWei }};
       return { ...state, [name]: token };
-    },
-    updateChop: (state, action: PayloadAction<TokenChop>) => {
-      const { name, status, type } = action.payload;
-      if (!name) return;
-      if (!state[name]) return;
-      const token = { ...state[name], chop: { status, type }};
-      return { ...state, [name]: token };
-    }    
+    }
   }
 });
-const { updateApproval, updateChop, updateDetails, updateBalanceOf } = tokenSlice.actions;
+const { updateApproval, updateDetails, updateBalanceOf } = tokenSlice.actions;
 
 export const getDetailsAsync = (contract: ERC20PresetMinterPauser): AppThunk => async dispatch => {
   const [name, symbol, decimals, totalSupply] = await Promise.all([
@@ -180,6 +155,7 @@ export const approveAsync = (contract: ERC20PresetMinterPauser, account: string,
   let result;
   try {
     const filter = contract.filters.Approval(account, tokenChopAddress, null);
+    contract.provider
     contract.on(filter, (address, account, amount) => {
       dispatch(updateApproval({name, status: 'Approved', amountInWei: approveAmount}));
     });
@@ -191,37 +167,6 @@ export const approveAsync = (contract: ERC20PresetMinterPauser, account: string,
     }
     debugger;
   }
-};
-
-export const chopAsync = (contract: TokenChopPair, name: ValidToken, amount: string, type: ChopType ): AppThunk => async dispatch => {
-  dispatch(updateChop({ name, status: 'Pending', type }));
-  const tokenChopAddress = '0xeFFEa4030f19C9588c7cE864ae5553745717766B';
-  const chopAmount = utils.parseEther(amount).toString();
-  let result;
-  try {
-    // const filter = contract.filters.Transfer(account, tokenChopAddress, null);
-    // contract.on(filter, (address, account, amount) => {
-    //   dispatch(updateChop({name, status: 'Approved', amountInWei: approveAmount}));
-    // });
-    result = type === 'high'
-       ? await contract.mintLowToken(name, chopAmount)
-       : await contract.mintHighToken(name, chopAmount);
-  } catch (err) {
-    if (err.code === "4001") {
-      // user cancelled
-      return;
-    }
-    debugger;
-  }
-};
-
-
-export const mintAsync = (contract: ERC20PresetMinterPauser, account: string, tokenName: string): AppThunk => async dispatch => {
-  const amount = utils.parseEther('2').toString();
-  const result = await contract.mint(account, amount);
-  await result.wait();
-  const balanceOf = await contract.balanceOf(account);
-  dispatch(updateBalanceOf({ name: tokenName, balanceOf: balanceOf.toString()}));
 };
 
 export const selectToken = (tokenName: string) => (state: RootState) => {

@@ -23,22 +23,9 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "setBandAddress",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"base\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"quote\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"sister\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"setBandAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/tokenchop/contracts/interfaces/ITokenChopToken.sol\":\"ITokenChopToken\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/tokenchop/contracts/interfaces/ITokenChopToken.sol\":{\"keccak256\":\"0x5cd807384a4a1989d8aeb7d53e86e2f9fd79d4638f570b8688a64c7af2264baf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://20a97e47f083abe9ce5a41a49ee59072cc536fbdd6adc49eaaa7d6db643e68ac\",\"dweb:/ipfs/QmQhXnjVWd3QEtj7rgjKcwa7AQFpN1nzxX87iuN5E9hQvM\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"base\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"quote\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"sister\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/tokenchop/contracts/interfaces/ITokenChopToken.sol\":\"ITokenChopToken\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/tokenchop/contracts/interfaces/ITokenChopToken.sol\":{\"keccak256\":\"0xe67e47abcc72018fa08408f1f6e8ecad6e7ab11e86dc20c563eb79a252d653a2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://77e17c1f919eba6f7772f56ada1a0abeb0dda9a08e3931842993c628ec1a0db1\",\"dweb:/ipfs/QmdyiK1tPM14GhU3XcmvmCk3MUcMFM7UVCBXv2dUMBv73P\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -46,21 +33,21 @@
   "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity =0.7.6;\r\n\r\ninterface ITokenChopToken {\r\n    function initialize(address base, address quote, address sister) external;\r\n    function setBandAddress(address) external;\r\n}\r\n",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity =0.7.6;\r\n\r\ninterface ITokenChopToken {\r\n    function initialize(address base, address quote, address sister) external;\r\n}\r\n",
   "sourcePath": "C:\\Repos\\tokenchop\\contracts\\interfaces\\ITokenChopToken.sol",
   "ast": {
     "absolutePath": "/C/Repos/tokenchop/contracts/interfaces/ITokenChopToken.sol",
     "exportedSymbols": {
       "ITokenChopToken": [
-        2309
+        2446
       ]
     },
-    "id": 2310,
+    "id": 2447,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2294,
+        "id": 2436,
         "literals": [
           "solidity",
           "=",
@@ -76,32 +63,32 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 2309,
+        "id": 2446,
         "linearizedBaseContracts": [
-          2309
+          2446
         ],
         "name": "ITokenChopToken",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "c0c53b8b",
-            "id": 2303,
+            "id": 2445,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "initialize",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2301,
+              "id": 2443,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2296,
+                  "id": 2438,
                   "mutability": "mutable",
                   "name": "base",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2303,
+                  "scope": 2445,
                   "src": "113:12:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -110,7 +97,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2295,
+                    "id": 2437,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "113:7:9",
@@ -124,11 +111,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2298,
+                  "id": 2440,
                   "mutability": "mutable",
                   "name": "quote",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2303,
+                  "scope": 2445,
                   "src": "127:13:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -137,7 +124,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2297,
+                    "id": 2439,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "127:7:9",
@@ -151,11 +138,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2300,
+                  "id": 2442,
                   "mutability": "mutable",
                   "name": "sister",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2303,
+                  "scope": 2445,
                   "src": "142:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -164,7 +151,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2299,
+                    "id": 2441,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "142:7:9",
@@ -180,84 +167,30 @@
               "src": "112:45:9"
             },
             "returnParameters": {
-              "id": 2302,
+              "id": 2444,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "166:0:9"
             },
-            "scope": 2309,
+            "scope": 2446,
             "src": "93:74:9",
-            "stateMutability": "nonpayable",
-            "virtual": false,
-            "visibility": "external"
-          },
-          {
-            "functionSelector": "2e4e3d11",
-            "id": 2308,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setBandAddress",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 2306,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 2305,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 2308,
-                  "src": "197:7:9",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 2304,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "197:7:9",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "visibility": "internal"
-                }
-              ],
-              "src": "196:9:9"
-            },
-            "returnParameters": {
-              "id": 2307,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "214:0:9"
-            },
-            "scope": 2309,
-            "src": "173:42:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2310,
-        "src": "60:158:9"
+        "scope": 2447,
+        "src": "60:110:9"
       }
     ],
-    "src": "33:187:9"
+    "src": "33:139:9"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/C/Repos/tokenchop/contracts/interfaces/ITokenChopToken.sol",
       "exportedSymbols": {
         "ITokenChopToken": [
-          2309
+          2446
         ]
       },
       "license": "MIT"
@@ -272,7 +205,7 @@
             ".6"
           ]
         },
-        "id": 2294,
+        "id": 2436,
         "name": "PragmaDirective",
         "src": "33:23:9"
       },
@@ -288,10 +221,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            2309
+            2446
           ],
           "name": "ITokenChopToken",
-          "scope": 2310
+          "scope": 2447
         },
         "children": [
           {
@@ -304,7 +237,7 @@
                 null
               ],
               "name": "initialize",
-              "scope": 2309,
+              "scope": 2446,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -317,7 +250,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "base",
-                      "scope": 2303,
+                      "scope": 2445,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -330,12 +263,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2295,
+                        "id": 2437,
                         "name": "ElementaryTypeName",
                         "src": "113:7:9"
                       }
                     ],
-                    "id": 2296,
+                    "id": 2438,
                     "name": "VariableDeclaration",
                     "src": "113:12:9"
                   },
@@ -344,7 +277,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "quote",
-                      "scope": 2303,
+                      "scope": 2445,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -357,12 +290,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2297,
+                        "id": 2439,
                         "name": "ElementaryTypeName",
                         "src": "127:7:9"
                       }
                     ],
-                    "id": 2298,
+                    "id": 2440,
                     "name": "VariableDeclaration",
                     "src": "127:13:9"
                   },
@@ -371,7 +304,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "sister",
-                      "scope": 2303,
+                      "scope": 2445,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -384,17 +317,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2299,
+                        "id": 2441,
                         "name": "ElementaryTypeName",
                         "src": "142:7:9"
                       }
                     ],
-                    "id": 2300,
+                    "id": 2442,
                     "name": "VariableDeclaration",
                     "src": "142:14:9"
                   }
                 ],
-                "id": 2301,
+                "id": 2443,
                 "name": "ParameterList",
                 "src": "112:45:9"
               },
@@ -405,90 +338,24 @@
                   ]
                 },
                 "children": [],
-                "id": 2302,
+                "id": 2444,
                 "name": "ParameterList",
                 "src": "166:0:9"
               }
             ],
-            "id": 2303,
+            "id": 2445,
             "name": "FunctionDefinition",
             "src": "93:74:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "2e4e3d11",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "setBandAddress",
-              "scope": 2309,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "",
-                      "scope": 2308,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "address",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "address",
-                          "stateMutability": "nonpayable",
-                          "type": "address"
-                        },
-                        "id": 2304,
-                        "name": "ElementaryTypeName",
-                        "src": "197:7:9"
-                      }
-                    ],
-                    "id": 2305,
-                    "name": "VariableDeclaration",
-                    "src": "197:7:9"
-                  }
-                ],
-                "id": 2306,
-                "name": "ParameterList",
-                "src": "196:9:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2307,
-                "name": "ParameterList",
-                "src": "214:0:9"
-              }
-            ],
-            "id": 2308,
-            "name": "FunctionDefinition",
-            "src": "173:42:9"
           }
         ],
-        "id": 2309,
+        "id": 2446,
         "name": "ContractDefinition",
-        "src": "60:158:9"
+        "src": "60:110:9"
       }
     ],
-    "id": 2310,
+    "id": 2447,
     "name": "SourceUnit",
-    "src": "33:187:9"
+    "src": "33:139:9"
   },
   "compiler": {
     "name": "solc",
@@ -496,7 +363,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-02-12T06:02:21.938Z",
+  "updatedAt": "2021-02-12T20:42:02.876Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
