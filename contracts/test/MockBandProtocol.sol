@@ -13,12 +13,12 @@ contract MockBandProtocol {
     function getReferenceData(string memory _base, string memory _quote) external view returns (ReferenceData memory) {
         uint pick = block.number % 6;
         ReferenceData[6] memory values = [
-            ReferenceData(10000000, block.timestamp, block.timestamp),
-            ReferenceData(20000000, block.timestamp, block.timestamp),
-            ReferenceData(30000000, block.timestamp, block.timestamp),
-            ReferenceData(40000000, block.timestamp, block.timestamp),           
-            ReferenceData(50000000, block.timestamp, block.timestamp),           
-            ReferenceData(60000000, block.timestamp, block.timestamp)
+            ReferenceData(100000000000000000000, block.timestamp, block.timestamp),
+            ReferenceData(200000000000000000000, block.timestamp, block.timestamp),
+            ReferenceData(300000000000000000000, block.timestamp, block.timestamp),
+            ReferenceData(400000000000000000000, block.timestamp, block.timestamp),           
+            ReferenceData(500000000000000000000, block.timestamp, block.timestamp),           
+            ReferenceData(600000000000000000000, block.timestamp, block.timestamp)
         ];
         return values[pick];
     }

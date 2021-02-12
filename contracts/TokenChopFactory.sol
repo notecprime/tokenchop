@@ -23,7 +23,7 @@ contract TokenChopFactory is ITokenChopFactory {
     function allPairsLength() external view override returns (uint) {
         return allStable.length;
     }
-
+    
     // base/quote. i.e. ETH/USD = 1200, One ETH is 1200 USD
     function createPair(address _base, address _quote) external override returns (address stable, address spec) {
         require(_base != _quote, 'TokenChop: IDENTICAL_ADDRESSES');
@@ -43,9 +43,9 @@ contract TokenChopFactory is ITokenChopFactory {
             specToken := create2(0, add(specBytecode, 32), mload(specBytecode), specSalt)
         }
         ITokenChopToken(stableToken).initialize(_base, _quote, specToken);
-        //ITokenChopToken(stableToken).setBandAddress(bandAddr);
+        ITokenChopToken(stableToken).setBandAddress(bandAddr);
         ITokenChopToken(specToken).initialize(_base, _quote, stableToken);
-        //ITokenChopToken(specToken).setBandAddress(bandAddr);
+        ITokenChopToken(specToken).setBandAddress(bandAddr);
         getStableAddress[_base][_quote] = stableToken;
         getSpecAddress[_base][_quote] = specToken;
         allStable.push(stableToken);
