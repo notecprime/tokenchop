@@ -9,6 +9,14 @@ const math = require('./helpers/math');
 const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
 
+const log = (stage, value) => {
+  console.log(`${stage} ${math.toEth(value).toString()}`);
+}
+
+const assertNearly = (actual, expected) => {
+  assert.isTrue(math.nearly(actual, expected));
+}
+
 contract("TokenChopStable", accounts => {
   it("should have a name", async () => {
     const factory = await TokenChopFactory.deployed();
@@ -52,13 +60,13 @@ contract("TokenChopStable", accounts => {
     const stableAddr = await factory.allStable(0);
     const instance = await TokenChopStable.at(stableAddr);
     const bnbInstance = await IBEP20.at(BNB);
-    const amount = web3.utils.toBN(web3.utils.toWei('0.0001'));
+    const amount = math.fromEth('0.0001');
     let bnbBalance = await bnbInstance.balanceOf(accounts[0]);
     let collateral = await instance.collateral();
     let balance = await instance.balanceOf(accounts[0]);
-    console.log('BNBBalanceStart: ' + bnbBalance.toString());
-    console.log('CollateralStart: ' + collateral.toString());
-    console.log('BalanceStart: ' + balance.toString());
+    log('BNBBalanceStart:', bnbBalance);
+    log('CollateralStart:', collateral);
+    log('BalanceStart:', balance);
     await bnbInstance.approve(stableAddr, amount);
     await instance.mintAtBaseAmount(amount);
     let afterMintBnbBalance = await bnbInstance.balanceOf(accounts[0]);
@@ -66,22 +74,23 @@ contract("TokenChopStable", accounts => {
     let afterMintBalance = await instance.balanceOf(accounts[0]);
     let afterMintPrice = await instance.price();
     let quote = math.baseToQuote(afterMintPrice, amount);
-    console.log('BNBBalanceAfterMint: ' + afterMintBnbBalance.toString());    
-    console.log('CollateralAfterMint: ' + afterMintCollateral.toString());      
-    console.log('BalanceAfterMint: ' + afterMintBalance.toString());    
-    console.log('PriceAfterMint: ' + web3.utils.fromWei(afterMintPrice).toString());    
-    assert.isTrue(afterMintBnbBalance.eq(bnbBalance.sub(amount)));
-    assert.isTrue(afterMintCollateral.eq(collateral.add(amount)));
-    assert.isTrue(afterMintBalance.eq(balance.add(quote)));
+    log('BNBBalanceAfterMint:', afterMintBnbBalance);    
+    log('CollateralAfterMint:', afterMintCollateral);      
+    log('BalanceAfterMint:', afterMintBalance);    
+    log('PriceAfterMint:', afterMintPrice);
+    assertNearly(afterMintBnbBalance, bnbBalance.sub(amount));
+    assertNearly(afterMintCollateral, collateral.add(amount));
+    assertNearly(afterMintBalance, balance.add(quote));
     await instance.burn(quote);
     let afterWithdrawBnbBalance = await bnbInstance.balanceOf(accounts[0]);
     let afterWithdrawCollateral = await instance.collateral();
     let afterWithdrawBalance = await instance.balanceOf(accounts[0]);
-    console.log('BNBBalanceAfterWithdraw: ' + afterWithdrawBnbBalance.toString());    
-    console.log('CollateralAfterWithdraw: ' + afterWithdrawCollateral.toString());    
-    console.log('BalanceAfterWithdraw: ' + afterWithdrawBalance.toString());    
-    // assert.isTrue(afterWithdrawBnbBalance.eq(afterMintBnbBalance.add(amount)));
-    // assert.isTrue(afterWithdrawCollateral.eq(afterMintCollateral.sub(amount)));
-    // assert.isTrue(afterWithdrawBalance.eq(afterMintBalance.sub(amount)));
+    log('BNBBalanceAfterWithdraw:', afterWithdrawBnbBalance);    
+    log('CollateralAfterWithdraw:', afterWithdrawCollateral);    
+    log('BalanceAfterWithdraw:', afterWithdrawBalance);    
+    assertNearly(afterWithdrawBnbBalance, afterMintBnbBalance.add(amount));
+    assertNearly(afterWithdrawCollateral, afterMintCollateral.sub(amount));
+    assertNearly(afterWithdrawBalance, afterMintBalance.sub(amount));
   });
+
 });

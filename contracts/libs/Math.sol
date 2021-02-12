@@ -14,9 +14,8 @@ library Math {
     }    
 
     function mulDiv(uint256 value, uint256 numerator, uint256 denominator) internal pure returns (uint256) {
-        require(value < 2**128);
-        require(numerator < 2**128);
-        require(numerator <= denominator);
+        require(value < 2**128, "Value too large");
+        require(numerator < 2**128, "Numerator too large ");
         return (value * numerator) / denominator;
     }
 
