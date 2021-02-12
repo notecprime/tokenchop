@@ -12,6 +12,9 @@ function baseToQuote(price, base) {
 
 function toEth(wei, decimals) {
     decimals = decimals || 8;
+    if (typeof wei === 'string') {
+        wei = web3.utils.toBN(wei);
+    }
     const divr = web3.utils.toBN(10**(18-decimals));
     return web3.utils.fromWei(wei.div(divr).mul(divr));
 };
