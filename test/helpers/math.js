@@ -20,6 +20,9 @@ function toEth(wei, decimals) {
 };
 
 function fromEth(ether) {
+    if (typeof ether === 'number') {
+        ether = ether.toString();
+    }
     return web3.utils.toBN(web3.utils.toWei(ether));
 };
 

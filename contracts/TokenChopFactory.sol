@@ -43,7 +43,7 @@ contract TokenChopFactory is ITokenChopFactory {
             specToken := create2(0, add(specBytecode, 32), mload(specBytecode), specSalt)
         }
         ITokenChopToken(stableToken).initialize(_base, _quote, specToken);
-        //ITokenChopToken(stableToken).setBandAddress(bandAddr);
+        TokenChopStable(stableToken).setBandAddress(bandAddr);
         ITokenChopToken(specToken).initialize(_base, _quote, stableToken);
         getStableAddress[_base][_quote] = stableToken;
         getSpecAddress[_base][_quote] = specToken;

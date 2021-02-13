@@ -1,5 +1,12 @@
 const TokenChopFactory = artifacts.require("TokenChopFactory");
+const TokenChopStable = artifacts.require("TokenChopStable");
+const TokenChopSpec = artifacts.require("TokenChopSpec");
+const MockBandProtocol = artifacts.require("MockBandProtocol");
+const IBEP20 = artifacts.require("IBEP20");
+const math = require('./helpers/math');
+const testcases = require('./data/testcases.json')
 
+const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
 const ETH = '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378';
 
@@ -53,73 +60,69 @@ contract("TokenChopFactory", accounts => {
     assert.equal(result, address);
   });  
 
+  const testCase = data => {
 
-  // it("mintHighToken can transfer once funds approved", async () => {
-  //   const instance = await TokenChopFactory.deployed();
-  //   const pairAddr = await instance.allPairs(0);
-  //   const pairInstance = await TokenChopPair.at(pairAddr);
-  //   const ethInstance = await IERC20.at(ETH);
-  //   const amount = web3.utils.toBN(web3.utils.toWei('0.0001'));
-  //   let ethBalance = await ethInstance.balanceOf(accounts[0]);
-  //   let pairBalance = await pairInstance.highBalanceOf(accounts[0]);    
-  //   //console.log('EthBalanceStart: ' + ethBalance.toString());
-  //   //console.log('PairBalanceStart: ' + pairBalance.toString());
-  //   await ethInstance.approve(pairAddr, amount);
-  //   await pairInstance.mintHighToken(amount);
-  //   afterMintEthBalance = await ethInstance.balanceOf(accounts[0]);
-  //   afterMintPairBalance = await pairInstance.highBalanceOf(accounts[0]);    
-  //   assert.isTrue(afterMintEthBalance.eq(ethBalance.sub(amount)));
-  //   assert.isTrue(afterMintPairBalance.eq(pairBalance.add(amount)));
-  //   //console.log('EthBalanceAfterMint: ' + ethBalance.toString());    
-  //   //console.log('PairBalanceAfterMint: ' + pairBalance.toString());    
-  //   await pairInstance.withdrawHigh(amount);
-  //   afterWithdrawEthBalance = await ethInstance.balanceOf(accounts[0]);
-  //   afterWithdrawPairBalance = await pairInstance.highBalanceOf(accounts[0]);
-  //   assert.isTrue(afterWithdrawEthBalance.eq(afterMintEthBalance.add(amount)));
-  //   assert.isTrue(afterWithdrawPairBalance.eq(afterMintPairBalance.sub(amount)));
-  //   //console.log('EthBalanceAfterWithdraw: ' + ethBalance.toString());    
-  //   //console.log('PairBalanceAfterWithdraw: ' + pairBalance.toString());    
-  // });
+  }
 
-  // it("mintLowToken can transfer once funds approved", async () => {
-  //   const instance = await TokenChopFactory.deployed();
-  //   const pairAddr = await instance.allPairs(0);
-  //   const pairInstance = await TokenChopPair.at(pairAddr);
-  //   const ethInstance = await IERC20.at(ETH);
-  //   const amount = web3.utils.toBN(web3.utils.toWei('0.0001'));
-  //   let ethBalance = await ethInstance.balanceOf(accounts[0]);
-  //   let pairBalance = await pairInstance.lowBalanceOf(accounts[0]);    
-  //   //console.log('EthBalanceStart: ' + ethBalance.toString());
-  //   //console.log('PairBalanceStart: ' + pairBalance.toString());
-  //   await ethInstance.approve(pairAddr, amount);
-  //   await pairInstance.mintLowToken(amount);
-  //   afterMintEthBalance = await ethInstance.balanceOf(accounts[0]);
-  //   afterMintPairBalance = await pairInstance.lowBalanceOf(accounts[0]);    
-  //   assert.isTrue(afterMintEthBalance.eq(ethBalance.sub(amount)));
-  //   assert.isTrue(afterMintPairBalance.eq(pairBalance.add(amount)));
-  //   //console.log('EthBalanceAfterMint: ' + ethBalance.toString());    
-  //   //console.log('PairBalanceAfterMint: ' + pairBalance.toString());    
-  //   await pairInstance.withdrawLow(amount);
-  //   afterWithdrawEthBalance = await ethInstance.balanceOf(accounts[0]);
-  //   afterWithdrawPairBalance = await pairInstance.lowBalanceOf(accounts[0]);
-  //   assert.isTrue(afterWithdrawEthBalance.eq(afterMintEthBalance.add(amount)));
-  //   assert.isTrue(afterWithdrawPairBalance.eq(afterMintPairBalance.sub(amount)));
-  //   //console.log('EthBalanceAfterWithdraw: ' + ethBalance.toString());    
-  //   //console.log('PairBalanceAfterWithdraw: ' + pairBalance.toString());    
-  // });
 
-  // it("should throw if setClosePrice called with 0", async () => {
-  //   const tokenChopPairInstance = await TokenChopPair.deployed();
-  //   await expectedThrow(tokenChopPairInstance.setClosePrice(0));
-  // });
+  it("Runs 10 test cases", async () => {
+    const SCALE_FACTOR = web3.utils.toBN(10000)
+    const bnbInstance = await IBEP20.at(BNB);
+    const bandInstance = await MockBandProtocol.deployed();
+    const factory = await TokenChopFactory.deployed();
+    const stableAddr = await factory.allStable(0);
+    const stable = await TokenChopStable.at(stableAddr);
+    const specAddr = await factory.allSpec(0);
+    const spec = await TokenChopSpec.at(specAddr);
+    const mintStable = async amountStr => {
+      const amountBn = web3.utils.toBN(amountStr).div(SCALE_FACTOR);      
+      await bnbInstance.approve(stableAddr, amountBn);
+      await stable.mintAtBaseAmount(amountBn);  
+    };
+    const mintSpec = async amountStr => {
+      const amountBn = web3.utils.toBN(amountStr).div(SCALE_FACTOR);      
+      await bnbInstance.approve(specAddr, amountBn);
+      await spec.mintAtBaseAmount(amountBn);
+    };
+    const burn = async (contract, amountStr) => {
+      const priceBn = await contract.price();
+      const amountBn = web3.utils.toBN(amountStr).div(SCALE_FACTOR);
+      const quote = math.baseToQuote(priceBn, amountBn);
+      await contract.burn(quote);
+    };
 
-  // it("setClosePrice should work", async () => {
-  //   let tokenChopPairInstance = await TokenChopPair.deployed();
-  //   let closePrice = await tokenChopPairInstance.closePrice.call();
-  //   assert.equal(closePrice.toString(), '0', "starting closePrice should be 0");
-  //   await tokenChopPairInstance.setClosePrice(utils.parseUnits("625", 18))
-  //   closePrice = await tokenChopPairInstance.closePrice.call();
-  //   assert.equal(closePrice.toString(), utils.parseUnits("625", 18), "new closePrice should be 625*10**18");
-  // });
+    const setPrice = async price => {
+      await bandInstance.setPrice(math.fromEth(price));
+    }
+    const checkStableAssertions = async expected => {
+      const supplyBn = web3.utils.toBN(expected.supply_stable).div(SCALE_FACTOR);
+      const collateralBn = web3.utils.toBN(expected.collateral_stable).div(SCALE_FACTOR);
+      assert.equal(supplyBn, await stable.totalSupply())
+      assert.equal(collateralBn, await stable.collateral())
+    }
+    const checkSpecAssertions = async expected => {
+      const supplyBn = web3.utils.toBN(expected.supply_spec).div(SCALE_FACTOR);
+      const collateralBn = web3.utils.toBN(expected.collateral_spec).div(SCALE_FACTOR);
+      assert.equal(supplyBn, await spec.totalSupply())
+      assert.equal(collateralBn, await spec.collateral())
+    }
+    testcases.slice(0, 10).forEach(
+      async testcase => {
+        const { price, pool, action, amount } = testcase;
+        await setPrice(price);
+        // if (pool === 1) {
+        //   action === 1 ? await mintStable(amount) : await burn(stable, amount);
+        //   const { supply_stable, collateral_stable } = testcase;
+        //   await checkStableAssertions({ supply_stable, collateral_stable });
+        // } else {
+        //   action === 1 ? await mintSpec(amount) : await burn(spec, amount);
+        //   const { supply_spec, collateral_spec } = testcase;
+        //   await checkSpecAssertions({ supply_spec, collateral_spec });          
+        // }
+      }
+    )
+  });  
+
+
 
 });

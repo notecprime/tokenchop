@@ -127,7 +127,10 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         require(!_updateCollateralInProgress, "Update collateral in progress");
         _updateCollateralInProgress = true;
         uint256 quoteCollateral = Math.baseToQuote(price, collateral);
-        if (quoteCollateral == totalSupply) return;
+        if (quoteCollateral == totalSupply) {
+            _updateCollateralInProgress = false;
+            return;
+        }
         if (quoteCollateral < totalSupply) {
             uint256 required = totalSupply.sub(quoteCollateral);
             uint256 obtained = getCollateralFromSister(required);
@@ -178,11 +181,10 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         updatePrice();
         updateCollateral();
         require(quoteAmount <= balanceOf[msg.sender], "Bad quote amount");
-        emit PriceUpdate(4, 4);
         balanceOf[msg.sender] = balanceOf[msg.sender].sub(quoteAmount);
         uint256 baseAmount = Math.quoteToBase(price, quoteAmount);
-        collateral = IBEP20(base).balanceOf(address(this));
         _safeTransfer(base, msg.sender, baseAmount);
+        collateral = IBEP20(base).balanceOf(address(this));        
         emit Transfer(msg.sender, address(0), quoteAmount);
         emit CollateralTransfer(address(this), msg.sender, baseAmount);
         return true;

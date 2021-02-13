@@ -24,8 +24,6 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
     address public sister;
     address public factory;
     uint256 public collateral;
-    uint256 public previousPrice;
-    uint256 public price;
     uint256 public override totalSupply;
 
     event CollateralTransfer(address indexed from, address indexed to, uint256 value);
@@ -64,6 +62,11 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
 
     function decimals() external override pure returns (uint8) {
         return 18;
+    }
+
+    function price() external view returns (uint256) {
+        if (collateral == 0) return 0;
+        return Math.mulDiv(totalSupply, uint256(10**18), collateral);
     }
 
     function transfer(address _recipient, uint256 _amount) external override returns (bool) {

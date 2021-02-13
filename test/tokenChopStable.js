@@ -1,5 +1,6 @@
 const TokenChopStable = artifacts.require("TokenChopStable");
 const TokenChopFactory = artifacts.require("TokenChopFactory");
+const MockBandProtocol = artifacts.require("MockBandProtocol");
 const IBEP20 = artifacts.require("IBEP20");
 
 const utils = require('ethers').utils
@@ -13,8 +14,19 @@ const log = (stage, value) => {
   console.log(`${stage} ${math.toEth(value).toString()}`);
 }
 
+const printLogs = tx => {
+  const logs = tx.logs.map(log => ({
+    event: log.event,
+    args: { ...log.args}
+  }));
+  logs.forEach(log => {
+    console.log(log);
+    console.log(log.args.value && log.args.value.toString())
+  });
+}
+
 const assertNearly = (actual, expected) => {
-  assert.isTrue(math.nearly(actual, expected));
+  assert.isTrue(math.nearly(actual, expected), `${actual.toString()} is not ${expected.toString()}`);
 }
 
 contract("TokenChopStable", accounts => {
@@ -59,14 +71,16 @@ contract("TokenChopStable", accounts => {
     const factory = await TokenChopFactory.deployed();
     const stableAddr = await factory.allStable(0);
     const instance = await TokenChopStable.at(stableAddr);
+    const bandInstance = await MockBandProtocol.deployed();
+    await bandInstance.setPrice(math.fromEth('199'));
     const bnbInstance = await IBEP20.at(BNB);
-    const amount = math.fromEth('0.0001');
+    const amount = math.fromEth('0.2');
     let bnbBalance = await bnbInstance.balanceOf(accounts[0]);
     let collateral = await instance.collateral();
     let balance = await instance.balanceOf(accounts[0]);
-    log('BNBBalanceStart:', bnbBalance);
-    log('CollateralStart:', collateral);
-    log('BalanceStart:', balance);
+    //log('BNBBalanceStart:', bnbBalance);
+    //log('CollateralStart:', collateral);
+    //log('BalanceStart:', balance);
     await bnbInstance.approve(stableAddr, amount);
     await instance.mintAtBaseAmount(amount);
     let afterMintBnbBalance = await bnbInstance.balanceOf(accounts[0]);
@@ -74,23 +88,24 @@ contract("TokenChopStable", accounts => {
     let afterMintBalance = await instance.balanceOf(accounts[0]);
     let afterMintPrice = await instance.price();
     let quote = math.baseToQuote(afterMintPrice, amount);
-    log('BNBBalanceAfterMint:', afterMintBnbBalance);    
-    log('CollateralAfterMint:', afterMintCollateral);      
-    log('BalanceAfterMint:', afterMintBalance);    
-    log('PriceAfterMint:', afterMintPrice);
+    //log('BNBBalanceAfterMint:', afterMintBnbBalance);    
+    //log('CollateralAfterMint:', afterMintCollateral);      
+    //log('BalanceAfterMint:', afterMintBalance);    
+    //log('PriceAfterMint:', afterMintPrice);
     assertNearly(afterMintBnbBalance, bnbBalance.sub(amount));
     assertNearly(afterMintCollateral, collateral.add(amount));
     assertNearly(afterMintBalance, balance.add(quote));
-    await instance.burn(quote);
+    const result = await instance.burn(quote);
+    //printLogs(result);
     let afterWithdrawBnbBalance = await bnbInstance.balanceOf(accounts[0]);
     let afterWithdrawCollateral = await instance.collateral();
     let afterWithdrawBalance = await instance.balanceOf(accounts[0]);
-    log('BNBBalanceAfterWithdraw:', afterWithdrawBnbBalance);    
-    log('CollateralAfterWithdraw:', afterWithdrawCollateral);    
-    log('BalanceAfterWithdraw:', afterWithdrawBalance);    
+    //log('BNBBalanceAfterWithdraw:', afterWithdrawBnbBalance);    
+    //log('CollateralAfterWithdraw:', afterWithdrawCollateral);    
+    //log('BalanceAfterWithdraw:', afterWithdrawBalance);    
     assertNearly(afterWithdrawBnbBalance, afterMintBnbBalance.add(amount));
     assertNearly(afterWithdrawCollateral, afterMintCollateral.sub(amount));
-    assertNearly(afterWithdrawBalance, afterMintBalance.sub(amount));
+    assertNearly(afterWithdrawBalance, afterMintBalance.sub(quote));
   });
 
 });
