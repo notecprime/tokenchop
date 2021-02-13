@@ -23,9 +23,9 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
     uint8   public constant typeId = 1;
     address public base;
     address public quote;
+    uint256 private _quotePrice;
     address public sister;
     address public factory;
-    uint256 public collateral;
     uint256 public override totalSupply;
 
     event CollateralTransfer(address indexed from, address indexed to, uint256 value);
@@ -48,6 +48,10 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         _;
     }
 
+    function collateral() external view returns (uint256) {
+        return IBEP20(base).balanceOf(address(this));
+    }
+
     function initialize(address _base, address _quote, address _sister) external override onlyFactory {
         base = _base;
         quote = _quote;
@@ -67,8 +71,9 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
     }
 
     function price() external view returns (uint256) {
-        if (collateral == 0) return 0;
-        return Math.mulDiv(totalSupply, uint256(10**18), collateral);
+        uint256 _collateral = IBEP20(base).balanceOf(address(this));
+        if (_collateral == 0) return 0;
+        return Math.mulDiv(totalSupply, uint256(10**18), _collateral);
     }
 
     function transfer(address _recipient, uint256 _amount) external override returns (bool) {
@@ -116,61 +121,61 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         emit Approval(_owner, _spender, _amount);
     }
 
-    function updatePrice() internal {
-        TokenChopStable(sister).updatePriceBySister();
+    function collateralFromSister() external onlySister {
+        //collateral = IBEP20(base).balanceOf(address(this));        
     }
 
-    function updateCollateral() internal {
-        collateral = IBEP20(base).balanceOf(address(this));
+    function refreshSister() internal {
+        TokenChopStable(sister).refresh();
+        _quotePrice = TokenChopStable(sister).price();
+        //collateral = IBEP20(base).balanceOf(address(this));                
     }
 
     function sendCollateralToSister(uint256 baseRequested) public onlySister returns (uint256 sent) {
-        uint baseSent = collateral < baseRequested ? collateral : baseRequested;
+        uint256 _collateral = IBEP20(base).balanceOf(address(this));
+        uint baseSent = _collateral < baseRequested ? _collateral : baseRequested;
         _safeTransfer(base, sister, baseSent);
-        collateral = IBEP20(base).balanceOf(address(this));
         emit CollateralTransfer(address(this), sister, baseSent);
         return baseSent;
     }
 
     function mintAtBaseAmount(uint256 baseAmount) public returns (bool) {
-        updatePrice();
-        collateral = IBEP20(base).balanceOf(address(this));
+        refreshSister();
+        uint256 _collateral = IBEP20(base).balanceOf(address(this));        
         uint256 supplyAmount;
-        if (collateral == 0 || totalSupply == 0) {
+        if (_collateral == 0 || totalSupply == 0) {
             for (uint256 i = 0; i < _balanceKeysLength; i++) {
                 address key = _balanceKeys[i];
                 balanceOf[key] = 0;
             }
-            uint256 _newPrice = TokenChopStable(sister).price();
-            supplyAmount = Math.baseToQuote(_newPrice, baseAmount);
+            supplyAmount = Math.baseToQuote(_quotePrice, baseAmount);
         } else {
-            supplyAmount = Math.baseToSupply(totalSupply, collateral, baseAmount);
+            supplyAmount = Math.baseToSupply(totalSupply, _collateral, baseAmount);
         }      
         _safeTransferFrom(base, msg.sender, address(this), baseAmount);        
         balanceOf[msg.sender] = balanceOf[msg.sender].add(supplyAmount);
         totalSupply = totalSupply.add(supplyAmount);
-        collateral = IBEP20(base).balanceOf(address(this));
+        //collateral = IBEP20(base).balanceOf(address(this));
         emit Transfer(address(0), msg.sender, supplyAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);
         return true;
     }
 
     function burn(uint256 supplyAmount) public returns (bool) {
-        require(supplyAmount <= balanceOf[msg.sender]);
+        require(supplyAmount <= balanceOf[msg.sender], "bad supply amount");
         balanceOf[msg.sender] = balanceOf[msg.sender].sub(supplyAmount);
-        updatePrice();
-        collateral = IBEP20(base).balanceOf(address(this));
-        uint256 baseAmount = Math.supplyToBase(totalSupply, collateral, supplyAmount);
+        refreshSister();
+        uint256 baseAmount = Math.supplyToBase(totalSupply, IBEP20(base).balanceOf(address(this)), supplyAmount);
+        totalSupply = totalSupply.sub(supplyAmount);
         _safeTransfer(base, msg.sender, baseAmount);
-        collateral = IBEP20(base).balanceOf(address(this));
+        //collateral = IBEP20(base).balanceOf(address(this));
         emit Transfer(msg.sender, address(0), supplyAmount);
         emit CollateralTransfer(address(this), msg.sender, baseAmount);        
         return true;
     }
 
     function refresh() public {
-        updatePrice();
-        collateral = IBEP20(base).balanceOf(address(this));
+        refreshSister();
     }
 
     function _safeTransfer(address _token, address _to, uint _value) private {

@@ -87,16 +87,32 @@ contract("TokenChopFactory", accounts => {
       await bnbInstance.approve(specAddr, amountBn);
       await spec.mintAtBaseAmount(amountBn);
     };
-    const burn = async (contract, amount) => {
-      console.log(`Burn ${amount}`)
-      const priceBn = await contract.price();
+    const burnStable = async (amount, price) => {
+      const priceBn = math.fromEth(price);
       const amountBn = amountToBN(amount).div(SCALE_FACTOR);      
       const quote = math.baseToQuote(priceBn, amountBn);
-      await contract.burn(quote);
+      await stable.burn(quote);
     };
-
+    const burnSpec = async (amount, supplyPrice) => {
+      const priceBn = supplyPrice;
+      const amountBn = amountToBN(amount).div(SCALE_FACTOR);      
+      const supply = math.baseToQuote(priceBn, amountBn);
+      await spec.burn(supply);
+    };
     const setPrice = async price => {
       await bandInstance.setPrice(math.fromEth(price));
+    }
+
+    const roundTo4 = value => {
+      return value.div(web3.utils.toBN(10**9))
+           .add(web3.utils.toBN(5))
+           .div(web3.utils.toBN(10))
+           .mul(web3.utils.toBN(10**10))
+    }
+
+    const assertNearly = (expected, actual) => {
+      const diff = expected.gt(actual) ? expected.sub(actual) : actual.sub(expected);
+      assert.isTrue(diff.lte(web3.utils.toBN(10**14)));
     }
 
     const checkAssertions = async expected => {
@@ -104,21 +120,21 @@ contract("TokenChopFactory", accounts => {
       const collateralStableBn = amountToBN(expected.collateral_stable).div(SCALE_FACTOR);
       const supplySpecBn = amountToBN(expected.supply_spec).div(SCALE_FACTOR);
       const collateralSpecBn = amountToBN(expected.collateral_spec).div(SCALE_FACTOR);
-      const supply_stable = await stable.totalSupply();
-      const collateral_stable = await stable.collateral();
-      const supply_spec = await spec.totalSupply();
-      const collateral_spec = await spec.collateral();
+      const supply_stable = roundTo4(await stable.totalSupply());
+      const collateral_stable = roundTo4(await stable.collateral());
+      const supply_spec = roundTo4(await spec.totalSupply());
+      const collateral_spec = roundTo4(await spec.collateral());
       console.log(`supply_stable: ${math.toEth(supply_stable.mul(SCALE_FACTOR))}`);
       console.log(`collateral_stable: ${math.toEth(collateral_stable.mul(SCALE_FACTOR))}`);
       console.log(`supply_spec: ${math.toEth(supply_spec.mul(SCALE_FACTOR))}`);
       console.log(`collateral_spec: ${math.toEth(collateral_spec.mul(SCALE_FACTOR))}`);
-      assert.isTrue(supplyStableBn.eq(supply_stable));
-      assert.isTrue(collateralStableBn.eq(collateral_stable));
-      assert.isTrue(supplySpecBn.eq(supply_spec));
-      assert.isTrue(collateralSpecBn.eq(collateral_spec));
+      assertNearly(supplyStableBn, supply_stable);
+      assertNearly(collateralStableBn, collateral_stable);
+      assertNearly(supplySpecBn, supply_spec);
+      assertNearly(collateralSpecBn, collateral_spec);
     }  
 
-    for (let i=0;i<2;i++) {
+    for (let i=0;i<10;i++) {
       let testcase = testcases[i];
       const { price, pool, action, amount } = testcase;
       console.log(testcase);
@@ -126,9 +142,15 @@ contract("TokenChopFactory", accounts => {
       const amountBn = amountToBN(amount).div(SCALE_FACTOR);
       await bnbInstance.approve(stableAddr, amountBn);
       if (pool === 1) {
-        action === 1 ? await mintStable(amount) : await burn(stable, amount);
+        action === 1 ? await mintStable(amount) : await burnStable(amount, price);
       } else {
-        action === 1 ? await mintSpec(amount) : await burn(spec, amount);
+        if (action === 1) {
+          await mintSpec(amount);
+        } else {
+          await stable.refresh();
+          const supplyPrice = await spec.price();
+          await burnSpec(amount, supplyPrice);
+        }
       }
       await checkAssertions(testcase);      
     }

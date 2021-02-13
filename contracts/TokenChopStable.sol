@@ -24,7 +24,6 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     address public quote;
     address public sister;
     address public factory;
-    uint256 public collateral;
     uint256 public previousPrice;
     uint256 public price;
     uint8   public constant priceDecimals = 18;
@@ -77,6 +76,10 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         return 18;
     }
 
+    function collateral() external view returns (uint256) {
+        return IBEP20(base).balanceOf(address(this));
+    }
+
     function transfer(address _recipient, uint256 _amount) external override returns (bool) {
         _transfer(msg.sender, _recipient, _amount);
         return true;
@@ -126,42 +129,33 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     function updateCollateral() internal {
         require(!_updateCollateralInProgress, "Update collateral in progress");
         _updateCollateralInProgress = true;
-        uint256 quoteCollateral = Math.baseToQuote(price, collateral);
-        if (quoteCollateral == totalSupply) {
+        uint256 _baseTotalSupply = Math.quoteToBase(price, totalSupply);
+        uint256 _collateral = IBEP20(base).balanceOf(address(this));
+        if (_collateral == _baseTotalSupply) {
             _updateCollateralInProgress = false;
             return;
         }
-        if (quoteCollateral < totalSupply) {
-            uint256 required = totalSupply.sub(quoteCollateral);
-            uint256 obtained = getCollateralFromSister(required);
-            if (obtained < required) {
-                uint newTotalSupply = totalSupply.sub(required).add(obtained);
-                emit InsufficientCollateral(required, obtained);
+        if (_collateral < _baseTotalSupply) {
+            uint256 _baseRequired = _baseTotalSupply.sub(_collateral);
+            uint256 _baseObtained = TokenChopSpec(sister).sendCollateralToSister(_baseRequired);
+            if (_baseObtained < _baseRequired) {
+                uint256 _shortfall = Math.baseToQuote(price, _baseRequired.sub(_baseObtained));
+                uint newTotalSupply = totalSupply.sub(_shortfall);
+                emit InsufficientCollateral(_baseRequired, _baseObtained);
+                require(false, 'shortfall');
                 //dealWithShortfall(newTotalSupply) - Have to rebalance all of the individual balances
             }
         } else {
-            uint256 surplus = quoteCollateral.sub(totalSupply);
-            sendStableCollateralToSpec(surplus);
+            uint256 _surplus = _collateral.sub(_baseTotalSupply);
+            sendStableCollateralToSpec(_surplus);
+            //TokenChopSpec(sister).collateralFromSister();
         }
-        collateral = IBEP20(base).balanceOf(address(this));
         _updateCollateralInProgress = false;
     }
 
-    function updatePriceBySister() external onlySister {
-        updatePrice();
-    }
-
-    function getCollateralFromSister(uint256 _quoteAmount) internal returns (uint256 quoteReceived) {
-        uint baseAmount = Math.quoteToBase(price, _quoteAmount);
-        TokenChopSpec _sisterContract = TokenChopSpec(sister);
-        uint baseReceived = _sisterContract.sendCollateralToSister(baseAmount);
-        return Math.baseToQuote(price, baseReceived);
-    }
-
-    function sendStableCollateralToSpec(uint256 _quoteAmount) internal {
-        uint256 baseAmount = Math.quoteToBase(price, _quoteAmount);
-        _safeTransfer(base, sister, baseAmount);
-        emit CollateralTransfer(address(this), sister, baseAmount);
+    function sendStableCollateralToSpec(uint256 _baseAmount) internal {
+        _safeTransfer(base, sister, _baseAmount);
+        emit CollateralTransfer(address(this), sister, _baseAmount);
     }
 
     function mintAtBaseAmount(uint256 baseAmount) public returns (bool) {
@@ -171,7 +165,6 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         uint256 quoteAmount = Math.baseToQuote(price, baseAmount);
         balanceOf[msg.sender] = balanceOf[msg.sender].add(quoteAmount);
         totalSupply = totalSupply.add(quoteAmount);
-        collateral = IBEP20(base).balanceOf(address(this));  
         emit Transfer(address(0), msg.sender, quoteAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);
         return true;
@@ -182,9 +175,9 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         updateCollateral();
         require(quoteAmount <= balanceOf[msg.sender], "Bad quote amount");
         balanceOf[msg.sender] = balanceOf[msg.sender].sub(quoteAmount);
+        totalSupply = totalSupply.sub(quoteAmount);
         uint256 baseAmount = Math.quoteToBase(price, quoteAmount);
         _safeTransfer(base, msg.sender, baseAmount);
-        collateral = IBEP20(base).balanceOf(address(this));        
         emit Transfer(msg.sender, address(0), quoteAmount);
         emit CollateralTransfer(address(this), msg.sender, baseAmount);
         return true;
