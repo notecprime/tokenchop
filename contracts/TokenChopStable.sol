@@ -172,6 +172,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         balanceOf[msg.sender] = balanceOf[msg.sender].add(quoteAmount);
         totalSupply = totalSupply.add(quoteAmount);
         collateral = IBEP20(base).balanceOf(address(this));
+        require(false, "Itis20");        
         emit Transfer(address(0), msg.sender, quoteAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);
         return true;
