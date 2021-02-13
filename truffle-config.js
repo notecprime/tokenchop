@@ -10,7 +10,8 @@ module.exports = {
       host: "127.0.0.1",
       port: 8545,
       network_id: "*",
-      gas: 160928184      
+      gas: 160928184,
+      disableConfirmationListener: true            
      },
      testnet: {
       provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545`),

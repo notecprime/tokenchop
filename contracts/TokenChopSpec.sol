@@ -143,12 +143,14 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
                 address key = _balanceKeys[i];
                 balanceOf[key] = 0;
             }
+            totalSupply = 0;
             supplyAmount = Math.baseToQuote(_quotePrice, baseAmount);
         } else {
             supplyAmount = Math.baseToSupply(totalSupply, _collateral, baseAmount);
         }      
         _safeTransferFrom(base, msg.sender, address(this), baseAmount);        
         balanceOf[msg.sender] = balanceOf[msg.sender].add(supplyAmount);
+        _addToBalanceKeys(msg.sender);        
         totalSupply = totalSupply.add(supplyAmount);
         emit Transfer(address(0), msg.sender, supplyAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);

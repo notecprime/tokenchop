@@ -1,0 +1,62 @@
+[
+  {
+    "price": 72.3,
+    "pool": 1,
+    "action": 1,
+    "amount": 20,
+    "supply_stable": 1446,
+    "collateral_stable": 20,
+    "supply_spec": 0,
+    "collateral_spec": 0
+  },
+  {
+    "price": 72.3,
+    "pool": 0,
+    "action": 1,
+    "amount": 20,
+    "supply_stable": 1446,
+    "collateral_stable": 20,
+    "supply_spec": 1446,
+    "collateral_spec": 20
+  },
+  {
+    "price": 30.00,
+    "pool": 1,
+    "action": 1,
+    "amount": 8.5,
+    "supply_stable": 1455,
+    "collateral_stable": 48.5,
+    "supply_spec": 1446,
+    "collateral_spec": 0
+  },
+  {
+    "price": 72.19,
+    "pool": 1,
+    "action": -1,
+    "amount": 3,
+    "supply_stable": 3284.645,
+    "collateral_stable": 45.5,
+    "supply_spec": 1446,
+    "collateral_spec": 0
+  },
+  {
+    "price": 72.42,
+    "pool": 0,
+    "action": 1,
+    "amount": 3,
+    "supply_stable": 3295.11,
+    "collateral_stable": 45.5,
+    "supply_spec": 217.26,
+    "collateral_spec": 3
+  },
+  {
+    "price": 72.26,
+    "pool": 1,
+    "action": 1,
+    "amount": 6.9,
+    "supply_stable": 3793.704,
+    "collateral_stable": 52.5007,
+    "supply_spec": 217.26,
+    "collateral_spec": 2.8993
+  }
+]

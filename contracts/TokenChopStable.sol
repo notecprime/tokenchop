@@ -13,6 +13,8 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     using SafeMath for uint256;
     mapping(address => uint256) public override balanceOf;
     mapping(address => mapping(address => uint256)) public override allowance;
+    address[] private _balanceKeys;
+    uint private _balanceKeysLength;
 
     string  public override name;
     string  public override symbol;
@@ -31,6 +33,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     address public bandProtocol;
 
     event CollateralTransfer(address indexed from, address indexed to, uint256 value);
+    event CollateralCapitalize(uint256 prevTotalSupply, uint256 newTotalSupply);
     event InsufficientCollateral(uint256 required, uint256 obtained);
     event PriceUpdate(uint256 oldPrice, uint256 newPrice);
 
@@ -104,6 +107,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         
         balanceOf[_sender] = balanceOf[_sender].sub(_amount);
         balanceOf[_recipient] = balanceOf[_recipient].add(_amount);
+        _addToBalanceKeys(_recipient);        
 
         emit Transfer(_sender, _recipient, _amount);
     }
@@ -114,6 +118,14 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
 
         allowance[_owner][_spender] = _amount;
         emit Approval(_owner, _spender, _amount);
+    }
+
+    function _addToBalanceKeys(address _key) internal {
+        for (uint i = 0; i < _balanceKeysLength; i++) {
+            if (_balanceKeys[i] == _key) return;
+        }
+        _balanceKeys.push(_key);
+        _balanceKeysLength++;
     }
 
     function updatePrice() internal {
@@ -142,14 +154,28 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
                 uint256 _shortfall = Math.baseToQuote(price, _baseRequired.sub(_baseObtained));
                 uint newTotalSupply = totalSupply.sub(_shortfall);
                 emit InsufficientCollateral(_baseRequired, _baseObtained);
-                require(false, 'shortfall');
-                //dealWithShortfall(newTotalSupply) - Have to rebalance all of the individual balances
+                rebalanceAccounts(totalSupply, newTotalSupply);
+                totalSupply = newTotalSupply;
             }
         } else {
-            uint256 _surplus = _collateral.sub(_baseTotalSupply);
-            sendStableCollateralToSpec(_surplus);
+            if (TokenChopSpec(sister).collateral() == 0) { // Nothing in sister contract add collateral to totalSupply
+                uint newTotalSupply = Math.baseToQuote(price, _collateral);
+                emit CollateralCapitalize(totalSupply, newTotalSupply);
+                rebalanceAccounts(totalSupply, newTotalSupply);
+                totalSupply = newTotalSupply;                
+            } else {
+                uint256 _surplus = _collateral.sub(_baseTotalSupply);                
+                sendStableCollateralToSpec(_surplus);
+            }
         }
         _updateCollateralInProgress = false;
+    }
+
+    function rebalanceAccounts(uint256 _prevTotalSupply, uint256 _newTotalSupply) internal {
+        for (uint256 i = 0; i < _balanceKeysLength; i++) {
+            address key = _balanceKeys[i];
+            balanceOf[key] = Math.mulDiv(balanceOf[key], _newTotalSupply, _prevTotalSupply);
+        }
     }
 
     function sendStableCollateralToSpec(uint256 _baseAmount) internal {
@@ -163,6 +189,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         _safeTransferFrom(base, msg.sender, address(this), baseAmount);
         uint256 quoteAmount = Math.baseToQuote(price, baseAmount);
         balanceOf[msg.sender] = balanceOf[msg.sender].add(quoteAmount);
+        _addToBalanceKeys(msg.sender);        
         totalSupply = totalSupply.add(quoteAmount);
         emit Transfer(address(0), msg.sender, quoteAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);
