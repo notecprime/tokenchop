@@ -12,6 +12,8 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
     using SafeMath for uint256;
     mapping(address => uint256) public override balanceOf;
     mapping(address => mapping(address => uint256)) public override allowance;
+    address[] private _balanceKeys;
+    uint private _balanceKeysLength;
 
     string  public override name;
     string  public override symbol;
@@ -93,8 +95,17 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         
         balanceOf[_sender] = balanceOf[_sender].sub(_amount);
         balanceOf[_recipient] = balanceOf[_recipient].add(_amount);
+        _addToBalanceKeys(_recipient);
 
         emit Transfer(_sender, _recipient, _amount);
+    }
+
+    function _addToBalanceKeys(address _key) internal {
+        for (uint i = 0; i < _balanceKeysLength; i++) {
+            if (_balanceKeys[i] == _key) return;
+        }
+        _balanceKeys.push(_key);
+        _balanceKeysLength++;
     }
 
     function _approve(address _owner, address _spender, uint256 _amount) internal {
@@ -124,7 +135,17 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
     function mintAtBaseAmount(uint256 baseAmount) public returns (bool) {
         updatePrice();
         collateral = IBEP20(base).balanceOf(address(this));
-        uint256 supplyAmount = Math.baseToSupply(totalSupply, collateral, baseAmount);       
+        uint256 supplyAmount;
+        if (collateral == 0 || totalSupply == 0) {
+            for (uint256 i = 0; i < _balanceKeysLength; i++) {
+                address key = _balanceKeys[i];
+                balanceOf[key] = 0;
+            }
+            uint256 _newPrice = TokenChopStable(sister).price();
+            supplyAmount = Math.baseToQuote(_newPrice, baseAmount);
+        } else {
+            supplyAmount = Math.baseToSupply(totalSupply, collateral, baseAmount);
+        }      
         _safeTransferFrom(base, msg.sender, address(this), baseAmount);        
         balanceOf[msg.sender] = balanceOf[msg.sender].add(supplyAmount);
         totalSupply = totalSupply.add(supplyAmount);

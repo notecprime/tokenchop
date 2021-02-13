@@ -33,7 +33,7 @@ library Math {
     }
 
     function baseToSupply(uint256 totalSupply, uint256 totalCollateral, uint256 baseAmount) internal pure returns (uint256) {
-        if (totalCollateral == 0 || totalSupply == 0) return baseAmount;
+        require(totalCollateral != 0, "totalCollateral must not be 0");
         return Math.mulDiv(baseAmount, totalSupply, totalCollateral);
     }
 }
