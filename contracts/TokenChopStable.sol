@@ -148,7 +148,6 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         } else {
             uint256 _surplus = _collateral.sub(_baseTotalSupply);
             sendStableCollateralToSpec(_surplus);
-            //TokenChopSpec(sister).collateralFromSister();
         }
         _updateCollateralInProgress = false;
     }

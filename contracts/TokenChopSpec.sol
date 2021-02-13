@@ -121,14 +121,9 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         emit Approval(_owner, _spender, _amount);
     }
 
-    function collateralFromSister() external onlySister {
-        //collateral = IBEP20(base).balanceOf(address(this));        
-    }
-
     function refreshSister() internal {
         TokenChopStable(sister).refresh();
         _quotePrice = TokenChopStable(sister).price();
-        //collateral = IBEP20(base).balanceOf(address(this));                
     }
 
     function sendCollateralToSister(uint256 baseRequested) public onlySister returns (uint256 sent) {
@@ -155,7 +150,6 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         _safeTransferFrom(base, msg.sender, address(this), baseAmount);        
         balanceOf[msg.sender] = balanceOf[msg.sender].add(supplyAmount);
         totalSupply = totalSupply.add(supplyAmount);
-        //collateral = IBEP20(base).balanceOf(address(this));
         emit Transfer(address(0), msg.sender, supplyAmount);
         emit CollateralTransfer(msg.sender, address(this), baseAmount);
         return true;
@@ -168,7 +162,6 @@ contract TokenChopSpec is IBEP20, ITokenChopToken {
         uint256 baseAmount = Math.supplyToBase(totalSupply, IBEP20(base).balanceOf(address(this)), supplyAmount);
         totalSupply = totalSupply.sub(supplyAmount);
         _safeTransfer(base, msg.sender, baseAmount);
-        //collateral = IBEP20(base).balanceOf(address(this));
         emit Transfer(msg.sender, address(0), supplyAmount);
         emit CollateralTransfer(address(this), msg.sender, baseAmount);        
         return true;

@@ -124,20 +124,21 @@ contract("TokenChopFactory", accounts => {
       const collateral_stable = roundTo4(await stable.collateral());
       const supply_spec = roundTo4(await spec.totalSupply());
       const collateral_spec = roundTo4(await spec.collateral());
-      console.log(`supply_stable: ${math.toEth(supply_stable.mul(SCALE_FACTOR))}`);
-      console.log(`collateral_stable: ${math.toEth(collateral_stable.mul(SCALE_FACTOR))}`);
-      console.log(`supply_spec: ${math.toEth(supply_spec.mul(SCALE_FACTOR))}`);
-      console.log(`collateral_spec: ${math.toEth(collateral_spec.mul(SCALE_FACTOR))}`);
+      //console.log(`supply_stable: ${math.toEth(supply_stable.mul(SCALE_FACTOR))}`);
+      //console.log(`collateral_stable: ${math.toEth(collateral_stable.mul(SCALE_FACTOR))}`);
+      //console.log(`supply_spec: ${math.toEth(supply_spec.mul(SCALE_FACTOR))}`);
+      //console.log(`collateral_spec: ${math.toEth(collateral_spec.mul(SCALE_FACTOR))}`);
       assertNearly(supplyStableBn, supply_stable);
       assertNearly(collateralStableBn, collateral_stable);
       assertNearly(supplySpecBn, supply_spec);
       assertNearly(collateralSpecBn, collateral_spec);
     }  
 
-    for (let i=0;i<10;i++) {
+    for (let i=0;i<90;i++) {
       let testcase = testcases[i];
       const { price, pool, action, amount } = testcase;
-      console.log(testcase);
+      console.log(`Transaction ${i+1} of ${testcases.length}`);
+      //console.log(testcase);
       await setPrice(price);
       const amountBn = amountToBN(amount).div(SCALE_FACTOR);
       await bnbInstance.approve(stableAddr, amountBn);
