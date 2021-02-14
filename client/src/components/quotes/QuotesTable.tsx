@@ -19,6 +19,7 @@ import { useERC20Contract } from '../../hooks/useERC20Contract';
 import { getBalanceOfsAsync } from '../../slices/tokenSlice';
 import { ERC20PresetMinterPauser } from '../../contracts/external';
 import { selectWallet, ValidToken } from '../../slices/walletSlice';
+import { usePoolsContracts } from '../../hooks/usePoolsContracts';
 // #3f51b5
 const useStyles = makeStyles({
   table: {
@@ -72,7 +73,7 @@ export default function QuotesTable() {
   const { balances } = useSelector(selectWallet);
   useEffect(() => {
     const newRows = [
-      createData(1, 'BNB', prices.BNB, balances.BNB),
+      createData(1, 'WBNB', prices.WBNB, balances.WBNB),
       createData(2, 'ETH', prices.ETH, balances.ETH),
       createData(3, 'BTC', prices.BTC, balances.BTC),
       createData(4, 'XRP', prices.XRP, balances.XRP),
@@ -90,9 +91,9 @@ export default function QuotesTable() {
     }, []
   );
   // Get balances for the contracts
-  const tokens = ['BNB','ETH','BTC','XRP','DAI'];
+  const tokens = ['WBNB','ETH','BTC','XRP','DAI'];
   const contracts = [
-    useERC20Contract('BNB'),
+    useERC20Contract('WBNB'),
     useERC20Contract('ETH'),
     useERC20Contract('BTC'),
     useERC20Contract('XRP'),
@@ -106,7 +107,25 @@ export default function QuotesTable() {
       dispatch(getBalanceOfsAsync(tokens, contracts, account));
     }
   },[account, library]);
+  // Get details of the pools
+  const poolContracts = [
+    usePoolsContracts('WBNB'),
+    usePoolsContracts('ETH'),
+    usePoolsContracts('BTC'),
+    usePoolsContracts('XRP'),
+    usePoolsContracts('DAI'),
+  ];
+  if (contracts.some(c => c == null)) {
+    throw new Error('There should not be an empty contract here');
+  }
+  useEffect(() => {
+    if (account != null){
+      dispatch(getPoolsDetailsAsync(tokens, contracts, account));
+    }
+  },[account, library]);
   
+
+
   return (
       <>
     <TableContainer component={Paper}>

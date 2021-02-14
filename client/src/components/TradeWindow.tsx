@@ -62,7 +62,7 @@ export default function TradeWindow() {
 <button type="button" onClick={() => dispatch(approveAsync(wbnbContract))}>Approve</button>
 <button type="button" onClick={() => dispatch(sendAsync(tokenChopContract))}>Send</button>
 <button type="button" onClick={() => dispatch(revertAsync(tokenChopContract))}>Revert</button>
-<ChainLink symbol="BNB"></ChainLink>
+<ChainLink symbol="WBNB"></ChainLink>
 <ChainLink symbol="BTC"></ChainLink>
 <ChainLink symbol="ETH"></ChainLink>
 <Token name="First Token"></Token>

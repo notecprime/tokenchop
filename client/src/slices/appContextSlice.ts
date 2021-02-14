@@ -17,7 +17,7 @@ interface AppContextState {
 
 export const initialState: AppContextState = {
     mainWindowStage: 'AwaitingConnection',
-    stepperStage: 0,
+    stepperStage: 0
 };
 
 interface UpdateStageDetails {

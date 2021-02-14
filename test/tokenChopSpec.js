@@ -5,7 +5,7 @@
 // const utils = require('ethers').utils
 // const expectedThrow = require('./helpers/expectedThrow');
 
-// const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
+// const WBNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 // const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
 
 // contract("TokenChopSpec", accounts => {

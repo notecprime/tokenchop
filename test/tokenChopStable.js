@@ -7,7 +7,7 @@
 // const expectedThrow = require('./helpers/expectedThrow');
 // const math = require('./helpers/math');
 
-// const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
+// const WBNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 // const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
 
 // const log = (stage, value) => {
@@ -34,7 +34,7 @@
 //     const factory = await TokenChopFactory.deployed();
 //     const instance = await TokenChopStable.at(await factory.allStable(0));
 //     const name = await instance.name();
-//     assert.equal(name, 'TokenChop: BNB/BUSD Stable');
+//     assert.equal(name, 'TokenChop: WBNB/BUSD Stable');
 //   });
 
 //   it("should have a symbol", async () => {
@@ -56,7 +56,7 @@
 //     const factory = await TokenChopFactory.deployed();
 //     const instance = await TokenChopStable.at(await factory.allStable(0));
 //     const base = await instance.baseSymbol();
-//     assert.equal(base, 'BNB');
+//     assert.equal(base, 'WBNB');
 //   });  
 
 //   it("should have a quoteSymbol", async () => {
@@ -73,7 +73,7 @@
 //     const instance = await TokenChopStable.at(stableAddr);
 //     const bandInstance = await MockBandProtocol.deployed();
 //     await bandInstance.setPrice(math.fromEth('199'));
-//     const bnbInstance = await IBEP20.at(BNB);
+//     const bnbInstance = await IBEP20.at(WBNB);
 //     const amount = math.fromEth('0.2');
 //     let bnbBalance = await bnbInstance.balanceOf(accounts[0]);
 //     let collateral = await instance.collateral();

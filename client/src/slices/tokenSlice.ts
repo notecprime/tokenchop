@@ -3,6 +3,7 @@ import { AppThunk, RootState } from '../store';
 import { utils } from 'ethers';
 import { ERC20PresetMinterPauser } from '../contracts/external';
 import { updateBalances, ValidToken } from './walletSlice';
+import { TokenChopSpec, TokenChopStable } from '../contracts';
 
 export type ApprovalStatus = 'Approved' | 'Pending' | 'NotApproved';
 
@@ -21,8 +22,8 @@ interface TokenProperties {
 export type TokenState = Record<string, TokenProperties>;
 
 export const initialState: TokenState = {
-  BNB: {
-    name: 'BNB',
+  WBNB: {
+    name: 'WBNB',
     symbol: '',
     decimals: 18,
     totalSupply: '',
@@ -76,7 +77,7 @@ interface TokenBalanceOf {
 }
 
 interface TokenApproval {
-  name: string;
+  name: ValidToken;
   status: ApprovalStatus;
   amountInWei: string;
 }
@@ -140,7 +141,7 @@ export const getBalanceOfsAsync = (tokenNames: string[], contracts: ERC20PresetM
     async c => await c.balanceOf(account)
   ));
   dispatch(updateBalances({
-    BNB: utils.formatUnits(balances[0], 18),
+    WBNB: utils.formatUnits(balances[0], 18),
     ETH: utils.formatUnits(balances[1], 18),
     BTC: utils.formatUnits(balances[2], 18),
     XRP: utils.formatUnits(balances[3], 18),
@@ -148,18 +149,22 @@ export const getBalanceOfsAsync = (tokenNames: string[], contracts: ERC20PresetM
   }));  
 };
 
-export const approveAsync = (contract: ERC20PresetMinterPauser, account: string, amount: string, name: ValidToken): AppThunk => async dispatch => {
+export const approveAsync = (
+  poolContract: TokenChopStable | TokenChopSpec,
+  contract: ERC20PresetMinterPauser,
+  account: string,
+  amount: string,
+  name: ValidToken
+): AppThunk => async dispatch => {
   dispatch(updateApproval({ name, status: 'Pending', amountInWei: '0'}));  
-  const tokenChopAddress = '0xeFFEa4030f19C9588c7cE864ae5553745717766B';
   const approveAmount = utils.parseEther(amount).toString();
   let result;
   try {
-    const filter = contract.filters.Approval(account, tokenChopAddress, null);
-    contract.provider
+    const filter = contract.filters.Approval(account, poolContract.address, null);
     contract.on(filter, (address, account, amount) => {
       dispatch(updateApproval({name, status: 'Approved', amountInWei: approveAmount}));
     });
-    result = await contract.approve(tokenChopAddress, approveAmount);
+    result = await contract.approve(poolContract.address, approveAmount);
   } catch (err) {
     if (err.code === "4001") {
       // user cancelled

@@ -3,35 +3,35 @@ import { AppThunk, RootState } from '../store';
 import { utils } from 'ethers';
 import { ERC20PresetMinterPauser } from '../contracts/external';
 import { updateBalances, ValidToken } from './walletSlice';
-import { TokenChopFactory } from '../contracts';
+import { TokenChopStable, TokenChopSpec } from '../contracts';
 
 export type ChopStatus = 'Complete' | 'Pending' | 'NotStarted';
-export type ChopType = 'spec' | 'stable';
+export type PoolType = 'spec' | 'stable';
 
-export interface FactoryState {
+export interface PoolsState {
   chop: {
     status: ChopStatus,
-    type?: ChopType
+    type?: PoolType
   }
 }
 
-export const initialState: FactoryState = {
+export const initialState: PoolsState = {
     chop: { status: 'NotStarted' }
 };
 
-interface FactoryDetails {
+interface PoolsDetails {
   name: string;
   symbol: string;
   decimals: number;
   totalSupply: string;
 }
 
-interface FactoryBalanceOf {
+interface PoolsBalanceOf {
   name: string;
   balanceOf: string;
 }
 
-interface FactoryChop {
+interface PoolsChop {
   name: string;
   status: ChopStatus;
   type?: ChopType;
@@ -41,13 +41,13 @@ export const tokenSlice = createSlice({
   name: 'token',
   initialState,
   reducers: {
-    updateDetails: (state, action: PayloadAction<FactoryDetails>) => {
+    updateDetails: (state, action: PayloadAction<PoolsDetails>) => {
       const { name } = action.payload;
     },
-    updateBalanceOf: (state, action: PayloadAction<FactoryBalanceOf>) => {
+    updateBalanceOf: (state, action: PayloadAction<PoolsBalanceOf>) => {
       const { name, balanceOf } = action.payload;
     },
-    updateChop: (state, action: PayloadAction<FactoryChop>) => {
+    updateChop: (state, action: PayloadAction<PoolsChop>) => {
       const { name, status, type } = action.payload;
       if (!name) return;
       return { ...state };
@@ -56,7 +56,7 @@ export const tokenSlice = createSlice({
 });
 const { updateChop, updateDetails, updateBalanceOf } = tokenSlice.actions;
 
-export const getDetailsAsync = (contract: ERC20PresetMinterPauser): AppThunk => async dispatch => {
+export const getPoolsDetailsAsync = (contract: ERC20PresetMinterPauser): AppThunk => async dispatch => {
   const [name, symbol, decimals, totalSupply] = await Promise.all([
     await contract.name(),
     await contract.symbol(),
@@ -81,7 +81,7 @@ export const getBalanceOfsAsync = (tokenNames: string[], contracts: ERC20PresetM
     async c => await c.balanceOf(account)
   ));
   dispatch(updateBalances({
-    BNB: utils.formatUnits(balances[0], 18),
+    WBNB: utils.formatUnits(balances[0], 18),
     ETH: utils.formatUnits(balances[1], 18),
     BTC: utils.formatUnits(balances[2], 18),
     XRP: utils.formatUnits(balances[3], 18),
@@ -89,7 +89,7 @@ export const getBalanceOfsAsync = (tokenNames: string[], contracts: ERC20PresetM
   }));  
 };
 
-export const chopAsync = (contract: TokenChopFactory, name: ValidToken, amount: string, type: ChopType ): AppThunk => async dispatch => {
+export const chopAsync = (contract: TokenChopPools, name: ValidToken, amount: string, type: ChopType ): AppThunk => async dispatch => {
   
   
   
@@ -125,7 +125,7 @@ export const mintAsync = (contract: ERC20PresetMinterPauser, account: string, to
   dispatch(updateBalanceOf({ name: tokenName, balanceOf: balanceOf.toString()}));
 };
 
-export const selectFactory = (tokenName: string) => (state: RootState) => {
+export const selectPools = (tokenName: string) => (state: RootState) => {
   return state.factory || {};
 }
 

@@ -5,7 +5,7 @@ import { IStdReference } from '../contracts';
 
 interface BandProtocolState {
   prices: {
-    BNB: string,
+    WBNB: string,
     ETH: string,
     BTC: string,
     XRP: string,
@@ -15,7 +15,7 @@ interface BandProtocolState {
 
 export const initialState: BandProtocolState = {
   prices: {
-    BNB: '0',
+    WBNB: '0',
     ETH: '0',
     BTC: '0',
     XRP: '0',
@@ -24,7 +24,7 @@ export const initialState: BandProtocolState = {
 };
 
 interface BandProtocolDetails {
-  BNB: string,
+  WBNB: string,
   ETH: string,
   BTC: string,
   XRP: string,
@@ -36,8 +36,8 @@ export const bandProtocolSlice = createSlice({
   initialState,
   reducers: {
     updateDetails: (state, action: PayloadAction<BandProtocolDetails>) => {
-      const { BNB, ETH, BTC, XRP, DAI } = action.payload;
-      state.prices = { BNB, ETH, BTC, XRP, DAI };
+      const { WBNB, ETH, BTC, XRP, DAI } = action.payload;
+      state.prices = { WBNB, ETH, BTC, XRP, DAI };
     }    
   }
 });
@@ -48,7 +48,7 @@ export const getDetailsAsync = (contract: IStdReference): AppThunk => async disp
     await contract.getReferenceDataBulk(['BNB', 'ETH', 'BTC', 'XRP', 'DAI'],['BUSD','BUSD','BUSD','BUSD','BUSD'])
   ]);
   dispatch(updateDetails({
-    BNB: utils.formatUnits(rates[0].rate, 18),
+    WBNB: utils.formatUnits(rates[0].rate, 18),
     ETH: utils.formatUnits(rates[1].rate, 18),
     BTC: utils.formatUnits(rates[2].rate, 18),
     XRP: utils.formatUnits(rates[3].rate, 18),

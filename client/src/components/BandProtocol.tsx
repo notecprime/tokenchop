@@ -12,7 +12,7 @@ export const BandProtocol = () => {
     const contract = useBandProtocolContract();
     return connected && contract ? (
         <div>
-            <CurrencyDisplay value={prices.BNB}></CurrencyDisplay>
+            <CurrencyDisplay value={prices.WBNB}></CurrencyDisplay>
             <button type="button" onClick={() => dispatch(getDetailsAsync(contract))}>Get Details</button>
         </div>
     ) : null

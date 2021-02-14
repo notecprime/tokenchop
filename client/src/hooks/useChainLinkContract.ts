@@ -9,7 +9,7 @@ export function useChainLinkContract(symbol: ChainLinkSymbols): AggregatorV3Inte
   let address;
   if (chainId) {
     switch(symbol) {
-      case 'BNB': {
+      case 'WBNB': {
         address = CHAINLINK_BNBUSD_PROTOCOL_ADDRESS[chainId];
         break;
       }

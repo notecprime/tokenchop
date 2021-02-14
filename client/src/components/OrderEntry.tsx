@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useERC20Contract } from "../hooks/useERC20Contract";
 import { selectAppContext } from "../slices/appContextSlice";
 import { approveAsync, selectToken } from "../slices/tokenSlice";
-import { selectWallet, ValidToken } from "../slices/walletSlice";
-import { useTokenChopFactoryContract } from "../hooks/useTokenChopFactoryContract";
-import { chopAsync, ChopType, selectFactory } from "../slices/factorySlice";
+import { mintSpecAsync, mintStableAsync, Pool, selectWallet, ValidToken } from "../slices/walletSlice";
+import { usePoolsContracts } from "../hooks/usePoolsContracts";
+import { PoolType } from "../slices/poolsSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,17 +45,21 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+type FormValues = {
+    amount: string,
+    type: PoolType
+}
+
 export default function OrderEntry(){
     const classes = useStyles();
     const dispatch = useDispatch();    
-    const { stepperStage, selectedToken } = useSelector(selectAppContext);
+    const { stepperStage, selectedToken = 'WBNB' } = useSelector(selectAppContext);
     const { account } = useWeb3React<Web3Provider>()      
     const contract = useERC20Contract(selectedToken);
-    const chopContract = useTokenChopFactoryContract();
-    const { approval } = useSelector(selectToken(selectedToken || 'BNB'));
-    const { chop } = useSelector(selectFactory(selectedToken || 'BNB'));
+    const { spec, stable } = usePoolsContracts(selectedToken);
+    const { approval } = useSelector(selectToken(selectedToken || 'WBNB'));
     const { balances } = useSelector(selectWallet);
-    const [formValues, setFormValues] = React.useState({ amount: '0', type: 'low' });
+    const [formValues, setFormValues] = React.useState<FormValues>({ amount: '0', type: 'stable' });
     const [disableApprove, setDisableApprove] = React.useState(true);
     const [error, setError] = React.useState({ amount: false}); 
     const [helperText, setHelperText] = React.useState({
@@ -64,7 +68,7 @@ export default function OrderEntry(){
         chop: ''
     });
     function handleRadioChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const value = (event.target as HTMLInputElement).value;
+        const value = (event.target as HTMLInputElement).value as Pool;
         setFormValues({ ...formValues, type: value });
     };      
     function handleAmountChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -115,15 +119,25 @@ export default function OrderEntry(){
         if (account == null) return;
         if (approval?.status === 'Pending') return;
         setDisableApprove(true);
-        dispatch(approveAsync(contract, account, formValues.amount, selectedToken || 'BNB'));
+        const { amount, type } = formValues;
+        if (type == 'stable') {
+            dispatch(approveAsync(stable, contract, account, amount, selectedToken));            
+        }
+        if (type == 'spec') {
+            dispatch(approveAsync(spec, contract, account, amount, selectedToken));
+        }
       };
 
       const handleChop = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        if (chopContract == null) return;
         if (account == null) return;
         if (approval?.status !== 'Approved') return;
-        if (chop?.status === 'Pending') return;
-        dispatch(chopAsync(chopContract, selectedToken || 'BNB', formValues.amount, formValues.type as ChopType));
+        const { amount, type } = formValues;
+        if (type == 'stable') {
+            dispatch(mintStableAsync(stable, amount));
+        }
+        if (type == 'spec') {
+            dispatch(mintSpecAsync(spec, amount));
+        }
       };
 
       const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -150,8 +164,8 @@ export default function OrderEntry(){
                 />
                 <FormHelperText className={classes.helperText}>{helperText.amount}</FormHelperText>                                
                 <RadioGroup name="tokenType" value={formValues.type} onChange={handleRadioChange}>
-                    <FormControlLabel labelPlacement="start" value="high" control={<Radio color="primary" />} label="Buy Spec Pool" className={classes.radioButton}/>
-                    <FormControlLabel labelPlacement="start" value="low" control={<Radio color="primary" />} label="Buy Stable Pool" className={classes.radioButton}/>
+                    <FormControlLabel labelPlacement="start" value="spec" control={<Radio color="primary" />} label="Buy Spec Pool" className={classes.radioButton}/>
+                    <FormControlLabel labelPlacement="start" value="stable" control={<Radio color="primary" />} label="Buy Stable Pool" className={classes.radioButton}/>
                 </RadioGroup>
                 <Button type="submit" variant="outlined" color="primary" onClick={handleApprove}
                     disabled={disableApprove || approval?.status === 'Approved'} className={classes.button}>{ approval?.status === "Pending" ? <CircularProgress size={24}/> : 'APPROVAL' }</Button>

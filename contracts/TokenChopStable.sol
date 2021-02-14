@@ -66,7 +66,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         symbolLookup["BTCB"] = "BTC";
         symbolLookup["XRP"] = "XRP";
         symbolLookup["DAI"] = "DAI";
-        symbolLookup["WBNB"] = "BNB";
+        symbolLookup["WBNB"] = "WBNB";
         baseSymbol = IBEP20(base).symbol();
         quoteSymbol = IBEP20(quote).symbol();
         name = string(abi.encodePacked(bytes("TokenChop: "), bytes(baseSymbol), bytes("/"), bytes(quoteSymbol), bytes(" Stable")));

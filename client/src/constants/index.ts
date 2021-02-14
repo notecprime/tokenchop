@@ -4,7 +4,7 @@ export * from './chainId';
 export type AddressByChain = Record<number, string>;
 export const NetworkContextName = 'NETWORK';
 export const TOKEN_ADDRESS: Record<string, AddressByChain> = {
-    "BNB": {
+    "WBNB": {
         [ChainId.BSC_TEST]: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',        
         [ChainId.LOCAL]: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'
     },
@@ -29,9 +29,51 @@ export const TOKEN_ADDRESS: Record<string, AddressByChain> = {
         [ChainId.LOCAL]: '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee'
     }
 }
-export const TOKENCHOP_PAIR_ADDRESS: AddressByChain = {
-    [ChainId.BSC_TEST]: '0xeFFEa4030f19C9588c7cE864ae5553745717766B',
-    [ChainId.LOCAL]: '0xeFFEa4030f19C9588c7cE864ae5553745717766B'
+
+export const SPEC_POOL_ADDRESS: Record<string, AddressByChain> = {
+    "WBNB": {
+        [ChainId.BSC_TEST]: '0x4E02e6BF75c1894C805e59433C26D76CbB1E9950',
+        [ChainId.LOCAL]: '0x4E02e6BF75c1894C805e59433C26D76CbB1E9950'
+    },
+    "ETH": {
+        [ChainId.BSC_TEST]: '0x1b7CF1a8088Ab8738A4C38BebD3c34515f125bf9',        
+        [ChainId.LOCAL]: '0x1b7CF1a8088Ab8738A4C38BebD3c34515f125bf9'
+    },
+    "BTC": {
+        [ChainId.BSC_TEST]: '0xf7FD68F477F31EE88e6e55191E95f8Da8e79F500',        
+        [ChainId.LOCAL]: '0xf7FD68F477F31EE88e6e55191E95f8Da8e79F500'
+    },
+    "XRP": {
+        [ChainId.BSC_TEST]: '0x01096bb743CB1A86147ab8ef2b4b744ADc79639d',        
+        [ChainId.LOCAL]: '0x01096bb743CB1A86147ab8ef2b4b744ADc79639d'
+    },
+    "DAI": {
+        [ChainId.BSC_TEST]: '0xe407E9A7EF6b875A40aB2eB59Ace72Dadc00eBC8',        
+        [ChainId.LOCAL]: '0xe407E9A7EF6b875A40aB2eB59Ace72Dadc00eBC8'
+    }
+}
+
+export const STABLE_POOL_ADDRESS: Record<string, AddressByChain> = {
+    "WBNB": {
+        [ChainId.BSC_TEST]: '0x68bc4408Cc0Cd5C9A84c40f95553df50D54F5d2E',        
+        [ChainId.LOCAL]: '0x68bc4408Cc0Cd5C9A84c40f95553df50D54F5d2E'
+    },
+    "ETH": {
+        [ChainId.BSC_TEST]: '0xb9A5e888192713c9E4d6005Da9D441bbd431D442',        
+        [ChainId.LOCAL]: '0xb9A5e888192713c9E4d6005Da9D441bbd431D442'
+    },
+    "BTC": {
+        [ChainId.BSC_TEST]: '0xDD6021CfB0dc12b287d42A44cB09361ABbf6234b',        
+        [ChainId.LOCAL]: '0xDD6021CfB0dc12b287d42A44cB09361ABbf6234b'
+    },
+    "XRP": {
+        [ChainId.BSC_TEST]: '0xe1F603dDdC524c1ac6D9728D8AC580960a9FC25C',        
+        [ChainId.LOCAL]: '0xe1F603dDdC524c1ac6D9728D8AC580960a9FC25C'
+    },
+    "DAI": {
+        [ChainId.BSC_TEST]: '0xAf5A68f6461eD3C19d8BaF789d08d41e219c99a1',        
+        [ChainId.LOCAL]: '0xAf5A68f6461eD3C19d8BaF789d08d41e219c99a1'
+    }
 }
 
 export const TOKENCHOP_FACTORY_ADDRESS: AddressByChain = {
@@ -44,7 +86,7 @@ export const BAND_PROTOCOL_ADDRESS: AddressByChain = {
     [ChainId.LOCAL]: '0xDA7a001b254CD22e46d3eAB04d937489c93174C3'
 }
 
-export type ChainLinkSymbols = 'BNB' | 'BTC' | 'ETH';
+export type ChainLinkSymbols = 'WBNB' | 'BTC' | 'ETH';
 
 export const CHAINLINK_BNBUSD_PROTOCOL_ADDRESS: AddressByChain = {
     [ChainId.LOCAL]: '0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE'

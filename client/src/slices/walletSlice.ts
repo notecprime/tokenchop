@@ -1,20 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { AbstractConnector } from '@web3-react/abstract-connector';
-import { ChainId, SUPPORTED_CHAIN_IDS, TOKENCHOP_PAIR_ADDRESS } from '../constants';
+import { SUPPORTED_CHAIN_IDS } from '../constants';
 import { AppThunk, RootState } from '../store';
 import { BscConnector } from '@binance-chain/bsc-connector';
-import { ERC20PresetMinterPauser } from '../contracts/external';
 import { utils } from 'ethers';
-import { TokenChopPair } from '../contracts';
 import { updateStage } from './appContextSlice';
+import { TokenChopSpec, TokenChopStable } from '../contracts';
 
-export type ValidToken = 'BNB' | 'ETH' | 'BTC' | 'XRP' | 'DAI';
+export type ValidToken = 'WBNB' | 'ETH' | 'BTC' | 'XRP' | 'DAI';
 
 interface WalletState {
     connected: boolean;
     balances: {
-      BNB: string,
+      WBNB: string,
       ETH: string,
       BTC: string,
       XRP: string,
@@ -25,7 +24,7 @@ interface WalletState {
 export const initialState: WalletState = {
     connected: false,
     balances: {
-      BNB: '0',
+      WBNB: '0',
       ETH: '0',
       BTC: '0',
       XRP: '0',
@@ -34,7 +33,7 @@ export const initialState: WalletState = {
 };
 
 interface BalancesDetails {
-  BNB: string,
+  WBNB: string,
   ETH: string,
   BTC: string,
   XRP: string,
@@ -89,15 +88,27 @@ export const disconnectAsync = (connector?: AbstractConnector ): AppThunk => asy
   dispatch(updateStage({ mainWindowStage: 'AwaitingConnection' }));  
 };
 
-export const sendAsync = (contract: TokenChopPair): AppThunk => async dispatch => {
-  const result = await contract.buyHigh();
-  console.log(result);
+export const mintStableAsync = (contract: TokenChopStable, amount: string): AppThunk => async dispatch => {
+  const baseAmount = utils.parseEther(amount).toString();
+  const result = await contract.mintAtBaseAmount(baseAmount);
   dispatch(updateConnected(true));
 };
 
-export const revertAsync = (contract: TokenChopPair): AppThunk => async dispatch => {
-  const result = await contract.cancel();
-  console.log(result);  
+export const mintSpecAsync = (contract: TokenChopSpec, amount: string): AppThunk => async dispatch => {
+  const baseAmount = utils.parseEther(amount).toString();
+  const result = await contract.mintAtBaseAmount(baseAmount);
+  dispatch(updateConnected(true));
+};
+
+export const burnStableAsync = (contract: TokenChopStable, amount: string): AppThunk => async dispatch => {
+  const supplyAmount = utils.parseEther(amount).toString();
+  const result = await contract.burn(supplyAmount);
+  dispatch(updateConnected(true));
+};
+
+export const burnSpecAsync = (contract: TokenChopSpec, amount: string): AppThunk => async dispatch => {
+  const supplyAmount = utils.parseEther(amount).toString();  
+  const result = await contract.burn(supplyAmount);
   dispatch(updateConnected(true));
 };
 
