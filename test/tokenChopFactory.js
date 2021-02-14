@@ -1,4 +1,5 @@
 const TokenChopFactory = artifacts.require("TokenChopFactory");
+const TokenChopStableFactory = artifacts.require("TokenChopStableFactory");
 const TokenChopStable = artifacts.require("TokenChopStable");
 const TokenChopSpec = artifacts.require("TokenChopSpec");
 const MockBandProtocol = artifacts.require("MockBandProtocol");
@@ -6,6 +7,7 @@ const IBEP20 = artifacts.require("IBEP20");
 const math = require('./helpers/math');
 const testcases = require('./data/testcases.json')
 const testlowcollateral = require('./data/testlowcollateral.json')
+const realBandProtocolAddr = '0xDA7a001b254CD22e46d3eAB04d937489c93174C3';
 
 const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
@@ -84,13 +86,18 @@ const checkAssertions = async expected => {
 
 contract("TokenChopFactory", accounts => {
 
-  it("feeToSetter should be account[0]", async () => {
+  it("poolFactorySetter should be account[0]", async () => {
     const instance = await TokenChopFactory.deployed();
-    assert.equal(await instance.feeToSetter(), accounts[0], "Should be account[0]");
+    assert.equal(await instance.poolFactorySetter(), accounts[0], "Should be account[0]");
   });
 
-  it("createPair should create a pair ETH/BUSD", async () => {
+  it("createPair should create a pair ETH/BUSD", async () => {   
     const instance = await TokenChopFactory.deployed();
+    const stableFactory = await TokenChopStableFactory.deployed();;
+    if (await stableFactory.bandAddr() == realBandProtocolAddr) {
+      console.log('Skipping test as pair already deployed');
+      return;
+    }
     const startLength = await instance.allPairsLength();    
     assert.equal(startLength.toString(), '1', "expected no pairs to start with");
     const pair = await instance.createPair(ETH, BUSD);
@@ -134,13 +141,18 @@ contract("TokenChopFactory", accounts => {
   });  
 
   it("Runs 90 test cases", async () => {
-    bnbInstance = await IBEP20.at(BNB);
-    bandInstance = await MockBandProtocol.deployed();
     const factory = await TokenChopFactory.deployed();
     stableAddr = await factory.allStable(0);
     stable = await TokenChopStable.at(stableAddr);
     specAddr = await factory.allSpec(0);
     spec = await TokenChopSpec.at(specAddr);
+    stable = await TokenChopStable.at(stableAddr);
+    if (await stable.bandProtocol() == realBandProtocolAddr) {
+      console.log('Skipping MockBandProtocol tests');
+      return;
+    }
+    bnbInstance = await IBEP20.at(BNB);
+    bandInstance = await MockBandProtocol.deployed();
 
     for (let i=0;i<testcases.length;i++) {
       let testcase = testcases[i];
@@ -177,6 +189,10 @@ contract("TokenChopFactoryLowCollateral", accounts => {
     stable = await TokenChopStable.at(stableAddr);
     specAddr = await factory.allSpec(0);
     spec = await TokenChopSpec.at(specAddr);
+    if (await stable.bandProtocol() == realBandProtocolAddr) {
+      console.log('Skipping MockBandProtocol tests');
+      return;
+    }
 
     for (let i=0;i<6;i++) {
       let testcase = testlowcollateral[i];

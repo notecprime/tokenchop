@@ -13,6 +13,13 @@ module.exports = {
       gas: 160928184,
       disableConfirmationListener: true            
      },
+     staging: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*",
+      gas: 160928184,
+      disableConfirmationListener: true            
+     },     
      testnet: {
       provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545`),
       network_id: 97,
@@ -31,5 +38,8 @@ module.exports = {
     solc: {
       version: "0.7.6"
     }
-  }
+  },
+  plugins: [
+    'truffle-contract-size'
+  ]  
 };

@@ -23,23 +23,14 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 interface ITokenChopTokenInterface extends ethers.utils.Interface {
   functions: {
     "initialize(address,address,address)": FunctionFragment;
-    "setBandAddress(address)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "initialize",
     values: [string, string, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "setBandAddress",
-    values: [string]
-  ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setBandAddress",
-    data: BytesLike
-  ): Result;
 
   events: {};
 }
@@ -71,16 +62,6 @@ export class ITokenChopToken extends Contract {
       sister: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
-
-    setBandAddress(
-      arg0: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "setBandAddress(address)"(
-      arg0: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
   };
 
   initialize(
@@ -97,16 +78,6 @@ export class ITokenChopToken extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  setBandAddress(
-    arg0: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "setBandAddress(address)"(
-    arg0: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     initialize(
       base: string,
@@ -119,13 +90,6 @@ export class ITokenChopToken extends Contract {
       base: string,
       quote: string,
       sister: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setBandAddress(arg0: string, overrides?: CallOverrides): Promise<void>;
-
-    "setBandAddress(address)"(
-      arg0: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -146,13 +110,6 @@ export class ITokenChopToken extends Contract {
       sister: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
-
-    setBandAddress(arg0: string, overrides?: Overrides): Promise<BigNumber>;
-
-    "setBandAddress(address)"(
-      arg0: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -167,16 +124,6 @@ export class ITokenChopToken extends Contract {
       base: string,
       quote: string,
       sister: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    setBandAddress(
-      arg0: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "setBandAddress(address)"(
-      arg0: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
   };

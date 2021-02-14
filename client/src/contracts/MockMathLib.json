@@ -27,40 +27,40 @@
           "type": "uint256"
         }
       ],
-      "stateMutability": "view",
+      "stateMutability": "pure",
       "type": "function",
       "constant": true
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"numerator\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"denominator\",\"type\":\"uint256\"}],\"name\":\"mulDiv\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Repos/tokenchop/contracts/test/MockMathLib.sol\":\"MockMathLib\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Repos/tokenchop/contracts/libs/Math.sol\":{\"keccak256\":\"0xd0a261cdd29d9c11ace46c87314c8d12a4c24917efd9233327c57a2fa1452470\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://118c5ea1a491145bf8c6189f10b77f4bc8535e4a047379bfb8b68ce4fcad1115\",\"dweb:/ipfs/QmWYEvjEc1pfYT64ZvMm1uuTURC1Sgyyn1FEeQ8acWF7ge\"]},\"/C/Repos/tokenchop/contracts/libs/SafeMath.sol\":{\"keccak256\":\"0xda1b9e8e73c47e9bc1f90f35d314592a1d667495f04f7a5bc3e3884e36cd6a5a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6a771a5db9c8c33ae84e6184315e07413f7678cde99cee451cc09bce051e8000\",\"dweb:/ipfs/QmVYNae9NnGAP32sEXUdgxBjHq26fVJnveqnA2zgiwRamr\"]},\"/C/Repos/tokenchop/contracts/test/MockMathLib.sol\":{\"keccak256\":\"0x244575768bcb9d7248e9b82a932924353b25dfdeaee27130bed24e8c4746ecf8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://510cbc2b9c4d49af60caf8efb679ff9a2f34443ead51ad6892542281186e8ad7\",\"dweb:/ipfs/QmR8uMgB8xQMsGgxWraKhSiMsAYVkn2iwSx1NxVEr9q942\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5061026e806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063aa9a091214610030575b600080fd5b6100706004803603606081101561004657600080fd5b81019080803590602001909291908035906020019092919080359060200190929190505050610086565b6040518082815260200191505060405180910390f35b600061009384848461009c565b90509392505050565b60007001000000000000000000000000000000008410610124576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f56616c756520746f6f206c61726765000000000000000000000000000000000081525060200191505060405180910390fd5b70010000000000000000000000000000000083106101aa576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f4e756d657261746f7220746f6f206c617267652000000000000000000000000081525060200191505060405180910390fd5b6101cf826101c185876101d890919063ffffffff16565b61021290919063ffffffff16565b90509392505050565b6000808314156101eb576000905061020c565b60008284029050828482816101fc57fe5b041461020757600080fd5b809150505b92915050565b600080821161022057600080fd5b600082848161022b57fe5b049050809150509291505056fea2646970667358221220e25ddaa6ccfe2d8577bb970c51fd42ad1839483c3e63c314164c27bfea0e376164736f6c63430007060033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c8063aa9a091214610030575b600080fd5b6100706004803603606081101561004657600080fd5b81019080803590602001909291908035906020019092919080359060200190929190505050610086565b6040518082815260200191505060405180910390f35b600061009384848461009c565b90509392505050565b60007001000000000000000000000000000000008410610124576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f56616c756520746f6f206c61726765000000000000000000000000000000000081525060200191505060405180910390fd5b70010000000000000000000000000000000083106101aa576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f4e756d657261746f7220746f6f206c617267652000000000000000000000000081525060200191505060405180910390fd5b6101cf826101c185876101d890919063ffffffff16565b61021290919063ffffffff16565b90509392505050565b6000808314156101eb576000905061020c565b60008284029050828482816101fc57fe5b041461020757600080fd5b809150505b92915050565b600080821161022057600080fd5b600082848161022b57fe5b049050809150509291505056fea2646970667358221220e25ddaa6ccfe2d8577bb970c51fd42ad1839483c3e63c314164c27bfea0e376164736f6c63430007060033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"numerator\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"denominator\",\"type\":\"uint256\"}],\"name\":\"mulDiv\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/repos/tokenchop/contracts/test/MockMathLib.sol\":\"MockMathLib\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/repos/tokenchop/contracts/libs/Math.sol\":{\"keccak256\":\"0x760ff7afba9f9f41ec42f788da90d76ab33e7f4798838db1c6486afff70248dc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://678073ec28cd48053ed726fe87e879424329bb0b3a077ec1962e9c333a97c4d4\",\"dweb:/ipfs/QmRW4Huwe7w9ECxEMaHSPPgBaxW6PmCcxSevKZePHHxsQV\"]},\"/C/repos/tokenchop/contracts/libs/SafeMath.sol\":{\"keccak256\":\"0xda1b9e8e73c47e9bc1f90f35d314592a1d667495f04f7a5bc3e3884e36cd6a5a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6a771a5db9c8c33ae84e6184315e07413f7678cde99cee451cc09bce051e8000\",\"dweb:/ipfs/QmVYNae9NnGAP32sEXUdgxBjHq26fVJnveqnA2zgiwRamr\"]},\"/C/repos/tokenchop/contracts/test/MockMathLib.sol\":{\"keccak256\":\"0xb0c8021e2dc6ad64788cca6ddd49e3a3f49637249f1243e15ba89be76ba5e448\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://86b158dbc6fa8dbfc1b217760f3aa91dec3538335d6aa54b7aa4cad96e0f0246\",\"dweb:/ipfs/QmbFo9kzo7GJ7PCaHEKfMgvgUzHk79ATuZvZ9WcRi4cdpF\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061026e806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063aa9a091214610030575b600080fd5b6100706004803603606081101561004657600080fd5b81019080803590602001909291908035906020019092919080359060200190929190505050610086565b6040518082815260200191505060405180910390f35b600061009384848461009c565b90509392505050565b60007001000000000000000000000000000000008410610124576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f56616c756520746f6f206c61726765000000000000000000000000000000000081525060200191505060405180910390fd5b70010000000000000000000000000000000083106101aa576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f4e756d657261746f7220746f6f206c617267652000000000000000000000000081525060200191505060405180910390fd5b6101cf826101c185876101d890919063ffffffff16565b61021290919063ffffffff16565b90509392505050565b6000808314156101eb576000905061020c565b60008284029050828482816101fc57fe5b041461020757600080fd5b809150505b92915050565b600080821161022057600080fd5b600082848161022b57fe5b049050809150509291505056fea26469706673582212208b5682330fea4b7c3088b77bd2f832fe8e78edc45a4aaefe78ff014af559946a64736f6c63430007060033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c8063aa9a091214610030575b600080fd5b6100706004803603606081101561004657600080fd5b81019080803590602001909291908035906020019092919080359060200190929190505050610086565b6040518082815260200191505060405180910390f35b600061009384848461009c565b90509392505050565b60007001000000000000000000000000000000008410610124576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f56616c756520746f6f206c61726765000000000000000000000000000000000081525060200191505060405180910390fd5b70010000000000000000000000000000000083106101aa576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f4e756d657261746f7220746f6f206c617267652000000000000000000000000081525060200191505060405180910390fd5b6101cf826101c185876101d890919063ffffffff16565b61021290919063ffffffff16565b90509392505050565b6000808314156101eb576000905061020c565b60008284029050828482816101fc57fe5b041461020757600080fd5b809150505b92915050565b600080821161022057600080fd5b600082848161022b57fe5b049050809150509291505056fea26469706673582212208b5682330fea4b7c3088b77bd2f832fe8e78edc45a4aaefe78ff014af559946a64736f6c63430007060033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "90:206:13:-:0;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "90:206:13:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;120:171;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;214:7;241:42;253:5;260:9;271:11;241;:42::i;:::-;234:49;;120:171;;;;;:::o;470:281:10:-;564:7;600:6;592:5;:14;584:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;657:6;645:9;:18;637:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;706:37;731:11;706:20;716:9;706:5;:9;;:20;;;;:::i;:::-;:24;;:37;;;;:::i;:::-;699:44;;470:281;;;;;:::o;86:185:11:-;144:7;169:1;164;:6;160:37;;;188:1;181:8;;;;160:37;205:9;221:1;217;:5;205:17;;246:1;241;237;:5;;;;;;:10;229:19;;;;;;264:1;257:8;;;86:185;;;;;:::o;277:191::-;335:7;363:1;359;:5;351:14;;;;;;430:9;446:1;442;:5;;;;;;430:17;;461:1;454:8;;;277:191;;;;:::o",
-  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity =0.7.6;\r\n\r\nimport \"../libs/Math.sol\";\r\n\r\ncontract MockMathLib {\r\n\r\n    function mulDiv(uint256 value, uint256 numerator, uint256 denominator) external view returns (uint256) {\r\n        return Math.mulDiv(value, numerator, denominator);\r\n    }\r\n\r\n}\r\n",
-  "sourcePath": "C:/Repos/tokenchop/contracts/test/MockMathLib.sol",
+  "sourceMap": "90:206:16:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "90:206:16:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;120:171;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;214:7;241:42;253:5;260:9;271:11;241;:42::i;:::-;234:49;;120:171;;;;;:::o;470:281:13:-;564:7;600:6;592:5;:14;584:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;657:6;645:9;:18;637:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;706:37;731:11;706:20;716:9;706:5;:9;;:20;;;;:::i;:::-;:24;;:37;;;;:::i;:::-;699:44;;470:281;;;;;:::o;86:185:14:-;144:7;169:1;164;:6;160:37;;;188:1;181:8;;;;160:37;205:9;221:1;217;:5;205:17;;246:1;241;237;:5;;;;;;:10;229:19;;;;;;264:1;257:8;;;86:185;;;;;:::o;277:191::-;335:7;363:1;359;:5;351:14;;;;;;430:9;446:1;442;:5;;;;;;430:17;;461:1;454:8;;;277:191;;;;:::o",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity =0.7.6;\r\n\r\nimport \"../libs/Math.sol\";\r\n\r\ncontract MockMathLib {\r\n\r\n    function mulDiv(uint256 value, uint256 numerator, uint256 denominator) external pure returns (uint256) {\r\n        return Math.mulDiv(value, numerator, denominator);\r\n    }\r\n\r\n}\r\n",
+  "sourcePath": "C:/repos/tokenchop/contracts/test/MockMathLib.sol",
   "ast": {
-    "absolutePath": "/C/Repos/tokenchop/contracts/test/MockMathLib.sol",
+    "absolutePath": "/C/repos/tokenchop/contracts/test/MockMathLib.sol",
     "exportedSymbols": {
       "Math": [
-        2629
+        3028
       ],
       "MockMathLib": [
-        2861
+        3220
       ],
       "SafeMath": [
-        2757
+        3156
       ]
     },
-    "id": 2862,
+    "id": 3221,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2840,
+        "id": 3199,
         "literals": [
           "solidity",
           "=",
@@ -68,16 +68,16 @@
           ".6"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:23:13"
+        "src": "33:23:16"
       },
       {
-        "absolutePath": "/C/Repos/tokenchop/contracts/libs/Math.sol",
+        "absolutePath": "/C/repos/tokenchop/contracts/libs/Math.sol",
         "file": "../libs/Math.sol",
-        "id": 2841,
+        "id": 3200,
         "nodeType": "ImportDirective",
-        "scope": 2862,
-        "sourceUnit": 2630,
-        "src": "60:26:13",
+        "scope": 3221,
+        "sourceUnit": 3029,
+        "src": "60:26:16",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -87,53 +87,53 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 2861,
+        "id": 3220,
         "linearizedBaseContracts": [
-          2861
+          3220
         ],
         "name": "MockMathLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 2859,
+              "id": 3218,
               "nodeType": "Block",
-              "src": "223:68:13",
+              "src": "223:68:16",
               "statements": [
                 {
                   "expression": {
                     "arguments": [
                       {
-                        "id": 2854,
+                        "id": 3213,
                         "name": "value",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2843,
-                        "src": "253:5:13",
+                        "referencedDeclaration": 3202,
+                        "src": "253:5:16",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         }
                       },
                       {
-                        "id": 2855,
+                        "id": 3214,
                         "name": "numerator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2845,
-                        "src": "260:9:13",
+                        "referencedDeclaration": 3204,
+                        "src": "260:9:16",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         }
                       },
                       {
-                        "id": 2856,
+                        "id": 3215,
                         "name": "denominator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2847,
-                        "src": "271:11:13",
+                        "referencedDeclaration": 3206,
+                        "src": "271:11:16",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -156,32 +156,32 @@
                         }
                       ],
                       "expression": {
-                        "id": 2852,
+                        "id": 3211,
                         "name": "Math",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2629,
-                        "src": "241:4:13",
+                        "referencedDeclaration": 3028,
+                        "src": "241:4:16",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Math_$2629_$",
+                          "typeIdentifier": "t_type$_t_contract$_Math_$3028_$",
                           "typeString": "type(library Math)"
                         }
                       },
-                      "id": 2853,
+                      "id": 3212,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "mulDiv",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2528,
-                      "src": "241:11:13",
+                      "referencedDeclaration": 2930,
+                      "src": "241:11:16",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                         "typeString": "function (uint256,uint256,uint256) pure returns (uint256)"
                       }
                     },
-                    "id": 2857,
+                    "id": 3216,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -189,39 +189,39 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "241:42:13",
+                    "src": "241:42:16",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 2851,
-                  "id": 2858,
+                  "functionReturnParameters": 3210,
+                  "id": 3217,
                   "nodeType": "Return",
-                  "src": "234:49:13"
+                  "src": "234:49:16"
                 }
               ]
             },
             "functionSelector": "aa9a0912",
-            "id": 2860,
+            "id": 3219,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "mulDiv",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2848,
+              "id": 3207,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2843,
+                  "id": 3202,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2860,
-                  "src": "136:13:13",
+                  "scope": 3219,
+                  "src": "136:13:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -229,10 +229,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2842,
+                    "id": 3201,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "136:7:13",
+                    "src": "136:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -242,12 +242,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2845,
+                  "id": 3204,
                   "mutability": "mutable",
                   "name": "numerator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2860,
-                  "src": "151:17:13",
+                  "scope": 3219,
+                  "src": "151:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -255,10 +255,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2844,
+                    "id": 3203,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "151:7:13",
+                    "src": "151:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -268,12 +268,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2847,
+                  "id": 3206,
                   "mutability": "mutable",
                   "name": "denominator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2860,
-                  "src": "170:19:13",
+                  "scope": 3219,
+                  "src": "170:19:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -281,10 +281,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2846,
+                    "id": 3205,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "170:7:13",
+                    "src": "170:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -293,20 +293,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "135:55:13"
+              "src": "135:55:16"
             },
             "returnParameters": {
-              "id": 2851,
+              "id": 3210,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2850,
+                  "id": 3209,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2860,
-                  "src": "214:7:13",
+                  "scope": 3219,
+                  "src": "214:7:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -314,10 +314,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2849,
+                    "id": 3208,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "214:7:13",
+                    "src": "214:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -326,33 +326,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "213:9:13"
+              "src": "213:9:16"
             },
-            "scope": 2861,
-            "src": "120:171:13",
-            "stateMutability": "view",
+            "scope": 3220,
+            "src": "120:171:16",
+            "stateMutability": "pure",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2862,
-        "src": "90:206:13"
+        "scope": 3221,
+        "src": "90:206:16"
       }
     ],
-    "src": "33:265:13"
+    "src": "33:265:16"
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/C/Repos/tokenchop/contracts/test/MockMathLib.sol",
+      "absolutePath": "/C/repos/tokenchop/contracts/test/MockMathLib.sol",
       "exportedSymbols": {
         "Math": [
-          2629
+          3028
         ],
         "MockMathLib": [
-          2861
+          3220
         ],
         "SafeMath": [
-          2757
+          3156
         ]
       },
       "license": "MIT"
@@ -367,24 +367,24 @@
             ".6"
           ]
         },
-        "id": 2840,
+        "id": 3199,
         "name": "PragmaDirective",
-        "src": "33:23:13"
+        "src": "33:23:16"
       },
       {
         "attributes": {
-          "SourceUnit": 2630,
-          "absolutePath": "/C/Repos/tokenchop/contracts/libs/Math.sol",
+          "SourceUnit": 3029,
+          "absolutePath": "/C/repos/tokenchop/contracts/libs/Math.sol",
           "file": "../libs/Math.sol",
-          "scope": 2862,
+          "scope": 3221,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 2841,
+        "id": 3200,
         "name": "ImportDirective",
-        "src": "60:26:13"
+        "src": "60:26:16"
       },
       {
         "attributes": {
@@ -398,10 +398,10 @@
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2861
+            3220
           ],
           "name": "MockMathLib",
-          "scope": 2862
+          "scope": 3221
         },
         "children": [
           {
@@ -414,8 +414,8 @@
                 null
               ],
               "name": "mulDiv",
-              "scope": 2861,
-              "stateMutability": "view",
+              "scope": 3220,
+              "stateMutability": "pure",
               "virtual": false,
               "visibility": "external"
             },
@@ -427,7 +427,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "value",
-                      "scope": 2860,
+                      "scope": 3219,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -439,21 +439,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2842,
+                        "id": 3201,
                         "name": "ElementaryTypeName",
-                        "src": "136:7:13"
+                        "src": "136:7:16"
                       }
                     ],
-                    "id": 2843,
+                    "id": 3202,
                     "name": "VariableDeclaration",
-                    "src": "136:13:13"
+                    "src": "136:13:16"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "numerator",
-                      "scope": 2860,
+                      "scope": 3219,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -465,21 +465,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2844,
+                        "id": 3203,
                         "name": "ElementaryTypeName",
-                        "src": "151:7:13"
+                        "src": "151:7:16"
                       }
                     ],
-                    "id": 2845,
+                    "id": 3204,
                     "name": "VariableDeclaration",
-                    "src": "151:17:13"
+                    "src": "151:17:16"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "denominator",
-                      "scope": 2860,
+                      "scope": 3219,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -491,19 +491,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2846,
+                        "id": 3205,
                         "name": "ElementaryTypeName",
-                        "src": "170:7:13"
+                        "src": "170:7:16"
                       }
                     ],
-                    "id": 2847,
+                    "id": 3206,
                     "name": "VariableDeclaration",
-                    "src": "170:19:13"
+                    "src": "170:19:16"
                   }
                 ],
-                "id": 2848,
+                "id": 3207,
                 "name": "ParameterList",
-                "src": "135:55:13"
+                "src": "135:55:16"
               },
               {
                 "children": [
@@ -512,7 +512,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 2860,
+                      "scope": 3219,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -524,25 +524,25 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2849,
+                        "id": 3208,
                         "name": "ElementaryTypeName",
-                        "src": "214:7:13"
+                        "src": "214:7:16"
                       }
                     ],
-                    "id": 2850,
+                    "id": 3209,
                     "name": "VariableDeclaration",
-                    "src": "214:7:13"
+                    "src": "214:7:16"
                   }
                 ],
-                "id": 2851,
+                "id": 3210,
                 "name": "ParameterList",
-                "src": "213:9:13"
+                "src": "213:9:16"
               },
               {
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2851
+                      "functionReturnParameters": 3210
                     },
                     "children": [
                       {
@@ -581,7 +581,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "mulDiv",
-                              "referencedDeclaration": 2528,
+                              "referencedDeclaration": 2930,
                               "type": "function (uint256,uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -590,87 +590,87 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2629,
+                                  "referencedDeclaration": 3028,
                                   "type": "type(library Math)",
                                   "value": "Math"
                                 },
-                                "id": 2852,
+                                "id": 3211,
                                 "name": "Identifier",
-                                "src": "241:4:13"
+                                "src": "241:4:16"
                               }
                             ],
-                            "id": 2853,
+                            "id": 3212,
                             "name": "MemberAccess",
-                            "src": "241:11:13"
+                            "src": "241:11:16"
                           },
                           {
                             "attributes": {
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2843,
+                              "referencedDeclaration": 3202,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2854,
+                            "id": 3213,
                             "name": "Identifier",
-                            "src": "253:5:13"
+                            "src": "253:5:16"
                           },
                           {
                             "attributes": {
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2845,
+                              "referencedDeclaration": 3204,
                               "type": "uint256",
                               "value": "numerator"
                             },
-                            "id": 2855,
+                            "id": 3214,
                             "name": "Identifier",
-                            "src": "260:9:13"
+                            "src": "260:9:16"
                           },
                           {
                             "attributes": {
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2847,
+                              "referencedDeclaration": 3206,
                               "type": "uint256",
                               "value": "denominator"
                             },
-                            "id": 2856,
+                            "id": 3215,
                             "name": "Identifier",
-                            "src": "271:11:13"
+                            "src": "271:11:16"
                           }
                         ],
-                        "id": 2857,
+                        "id": 3216,
                         "name": "FunctionCall",
-                        "src": "241:42:13"
+                        "src": "241:42:16"
                       }
                     ],
-                    "id": 2858,
+                    "id": 3217,
                     "name": "Return",
-                    "src": "234:49:13"
+                    "src": "234:49:16"
                   }
                 ],
-                "id": 2859,
+                "id": 3218,
                 "name": "Block",
-                "src": "223:68:13"
+                "src": "223:68:16"
               }
             ],
-            "id": 2860,
+            "id": 3219,
             "name": "FunctionDefinition",
-            "src": "120:171:13"
+            "src": "120:171:16"
           }
         ],
-        "id": 2861,
+        "id": 3220,
         "name": "ContractDefinition",
-        "src": "90:206:13"
+        "src": "90:206:16"
       }
     ],
-    "id": 2862,
+    "id": 3221,
     "name": "SourceUnit",
-    "src": "33:265:13"
+    "src": "33:265:16"
   },
   "compiler": {
     "name": "solc",
@@ -680,12 +680,12 @@
     "97": {
       "events": {},
       "links": {},
-      "address": "0xA5398b831649609d53EE1fE164FF61Cd5AF1B4DE",
-      "transactionHash": "0x720d377b58171fe404e8e22b456ba4ed2da184ff650b8515bdad0be6877b09bc"
+      "address": "0xCb27E7673e9a90f4b5d6D1c14b75F09c8D8e938F",
+      "transactionHash": "0xa6a156e9747e3b087e97ef41cecb967dbb385dac0cafb70cb7eca852f4c8fbdf"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-02-13T07:55:36.060Z",
+  "updatedAt": "2021-02-14T01:24:12.210Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

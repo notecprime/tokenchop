@@ -4,8 +4,7 @@ pragma solidity =0.7.6;
 interface ITokenChopFactory {
     event PairCreated(address indexed base, address indexed quote, address stable, address spec, uint256);
 
-    function feeTo() external view returns (address);
-    function feeToSetter() external view returns (address);
+    function poolFactorySetter() external view returns (address);
 
     function getStableAddress(address base, address quote) external view returns (address stable);
     function getSpecAddress(address base, address quote) external view returns (address spec);
@@ -15,6 +14,5 @@ interface ITokenChopFactory {
 
     function createPair(address base, address quote) external returns (address stable, address spec);
 
-    function setFeeTo(address) external;
-    function setFeeToSetter(address) external;
+    function setPoolFactories(address _stable, address _spec) external;
 }

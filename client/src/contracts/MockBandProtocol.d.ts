@@ -13,6 +13,7 @@ import {
 import {
   Contract,
   ContractTransaction,
+  Overrides,
   CallOverrides,
 } from "@ethersproject/contracts";
 import { BytesLike } from "@ethersproject/bytes";
@@ -21,18 +22,27 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface MockBandProtocolInterface extends ethers.utils.Interface {
   functions: {
+    "price()": FunctionFragment;
     "getReferenceData(string,string)": FunctionFragment;
+    "setPrice(uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "price", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getReferenceData",
     values: [string, string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "setPrice",
+    values: [BigNumberish]
+  ): string;
 
+  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getReferenceData",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setPrice", data: BytesLike): Result;
 
   events: {};
 }
@@ -51,9 +61,13 @@ export class MockBandProtocol extends Contract {
   interface: MockBandProtocolInterface;
 
   functions: {
+    price(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "price()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     getReferenceData(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -66,8 +80,8 @@ export class MockBandProtocol extends Contract {
     >;
 
     "getReferenceData(string,string)"(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -78,11 +92,25 @@ export class MockBandProtocol extends Contract {
         }
       ]
     >;
+
+    setPrice(
+      _price: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setPrice(uint256)"(
+      _price: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
   };
 
+  price(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "price()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   getReferenceData(
-    _base: string,
-    _quote: string,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -93,8 +121,8 @@ export class MockBandProtocol extends Contract {
   >;
 
   "getReferenceData(string,string)"(
-    _base: string,
-    _quote: string,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -104,10 +132,24 @@ export class MockBandProtocol extends Contract {
     }
   >;
 
+  setPrice(
+    _price: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setPrice(uint256)"(
+    _price: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   callStatic: {
+    price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "price()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     getReferenceData(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -118,8 +160,8 @@ export class MockBandProtocol extends Contract {
     >;
 
     "getReferenceData(string,string)"(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -128,35 +170,67 @@ export class MockBandProtocol extends Contract {
         lastUpdatedQuote: BigNumber;
       }
     >;
+
+    setPrice(_price: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    "setPrice(uint256)"(
+      _price: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
+    price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "price()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     getReferenceData(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "getReferenceData(string,string)"(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    setPrice(_price: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
+
+    "setPrice(uint256)"(
+      _price: BigNumberish,
+      overrides?: Overrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "price()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getReferenceData(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "getReferenceData(string,string)"(
-      _base: string,
-      _quote: string,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    setPrice(
+      _price: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setPrice(uint256)"(
+      _price: BigNumberish,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -27,7 +27,6 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
     "bandProtocol()": FunctionFragment;
     "base()": FunctionFragment;
     "baseSymbol()": FunctionFragment;
-    "collateral()": FunctionFragment;
     "factory()": FunctionFragment;
     "name()": FunctionFragment;
     "poolType()": FunctionFragment;
@@ -44,12 +43,13 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
     "setBandAddress(address)": FunctionFragment;
     "getOwner()": FunctionFragment;
     "decimals()": FunctionFragment;
+    "collateral()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "updateCollateralBySister()": FunctionFragment;
     "mintAtBaseAmount(uint256)": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "refresh()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -64,10 +64,6 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "base", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "baseSymbol",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "collateral",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "factory", values?: undefined): string;
@@ -105,6 +101,10 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "getOwner", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "collateral",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transfer",
     values: [string, BigNumberish]
   ): string;
@@ -117,14 +117,11 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateCollateralBySister",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "mintAtBaseAmount",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "refresh", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -134,7 +131,6 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "base", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseSymbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "collateral", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "poolType", data: BytesLike): Result;
@@ -166,6 +162,7 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "collateral", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
@@ -173,17 +170,15 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateCollateralBySister",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "mintAtBaseAmount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "refresh", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "CollateralCapitalize(uint256,uint256)": EventFragment;
     "CollateralTransfer(address,address,uint256)": EventFragment;
     "InsufficientCollateral(uint256,uint256)": EventFragment;
     "PriceUpdate(uint256,uint256)": EventFragment;
@@ -191,6 +186,7 @@ interface TokenChopStableInterface extends ethers.utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CollateralCapitalize"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CollateralTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "InsufficientCollateral"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PriceUpdate"): EventFragment;
@@ -241,10 +237,6 @@ export class TokenChopStable extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<[string]>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<[string]>;
-
-    collateral(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     factory(overrides?: CallOverrides): Promise<[string]>;
 
@@ -338,6 +330,10 @@ export class TokenChopStable extends Contract {
      */
     "decimals()"(overrides?: CallOverrides): Promise<[number]>;
 
+    collateral(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transfer(
       _recipient: string,
       _amount: BigNumberish,
@@ -376,14 +372,6 @@ export class TokenChopStable extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    updateCollateralBySister(
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "updateCollateralBySister()"(
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
     mintAtBaseAmount(
       baseAmount: BigNumberish,
       overrides?: Overrides
@@ -403,6 +391,10 @@ export class TokenChopStable extends Contract {
       quoteAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    refresh(overrides?: Overrides): Promise<ContractTransaction>;
+
+    "refresh()"(overrides?: Overrides): Promise<ContractTransaction>;
   };
 
   allowance(
@@ -435,10 +427,6 @@ export class TokenChopStable extends Contract {
   baseSymbol(overrides?: CallOverrides): Promise<string>;
 
   "baseSymbol()"(overrides?: CallOverrides): Promise<string>;
-
-  collateral(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   factory(overrides?: CallOverrides): Promise<string>;
 
@@ -532,6 +520,10 @@ export class TokenChopStable extends Contract {
    */
   "decimals()"(overrides?: CallOverrides): Promise<number>;
 
+  collateral(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   transfer(
     _recipient: string,
     _amount: BigNumberish,
@@ -570,12 +562,6 @@ export class TokenChopStable extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  updateCollateralBySister(overrides?: Overrides): Promise<ContractTransaction>;
-
-  "updateCollateralBySister()"(
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
   mintAtBaseAmount(
     baseAmount: BigNumberish,
     overrides?: Overrides
@@ -595,6 +581,10 @@ export class TokenChopStable extends Contract {
     quoteAmount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
+
+  refresh(overrides?: Overrides): Promise<ContractTransaction>;
+
+  "refresh()"(overrides?: Overrides): Promise<ContractTransaction>;
 
   callStatic: {
     allowance(
@@ -627,10 +617,6 @@ export class TokenChopStable extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<string>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<string>;
-
-    collateral(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<string>;
 
@@ -721,6 +707,10 @@ export class TokenChopStable extends Contract {
      */
     "decimals()"(overrides?: CallOverrides): Promise<number>;
 
+    collateral(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     transfer(
       _recipient: string,
       _amount: BigNumberish,
@@ -759,10 +749,6 @@ export class TokenChopStable extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    updateCollateralBySister(overrides?: CallOverrides): Promise<void>;
-
-    "updateCollateralBySister()"(overrides?: CallOverrides): Promise<void>;
-
     mintAtBaseAmount(
       baseAmount: BigNumberish,
       overrides?: CallOverrides
@@ -782,6 +768,10 @@ export class TokenChopStable extends Contract {
       quoteAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    refresh(overrides?: CallOverrides): Promise<void>;
+
+    "refresh()"(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -789,6 +779,11 @@ export class TokenChopStable extends Contract {
       owner: string | null,
       spender: string | null,
       value: null
+    ): EventFilter;
+
+    CollateralCapitalize(
+      prevTotalSupply: null,
+      newTotalSupply: null
     ): EventFilter;
 
     CollateralTransfer(
@@ -835,10 +830,6 @@ export class TokenChopStable extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    collateral(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -932,6 +923,10 @@ export class TokenChopStable extends Contract {
      */
     "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    collateral(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     transfer(
       _recipient: string,
       _amount: BigNumberish,
@@ -970,10 +965,6 @@ export class TokenChopStable extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    updateCollateralBySister(overrides?: Overrides): Promise<BigNumber>;
-
-    "updateCollateralBySister()"(overrides?: Overrides): Promise<BigNumber>;
-
     mintAtBaseAmount(
       baseAmount: BigNumberish,
       overrides?: Overrides
@@ -990,6 +981,10 @@ export class TokenChopStable extends Contract {
       quoteAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
+
+    refresh(overrides?: Overrides): Promise<BigNumber>;
+
+    "refresh()"(overrides?: Overrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1026,10 +1021,6 @@ export class TokenChopStable extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    collateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1123,6 +1114,10 @@ export class TokenChopStable extends Contract {
      */
     "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    collateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transfer(
       _recipient: string,
       _amount: BigNumberish,
@@ -1161,14 +1156,6 @@ export class TokenChopStable extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    updateCollateralBySister(
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "updateCollateralBySister()"(
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
     mintAtBaseAmount(
       baseAmount: BigNumberish,
       overrides?: Overrides
@@ -1188,5 +1175,9 @@ export class TokenChopStable extends Contract {
       quoteAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
+
+    refresh(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    "refresh()"(overrides?: Overrides): Promise<PopulatedTransaction>;
   };
 }

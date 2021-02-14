@@ -2,22 +2,20 @@
 pragma solidity =0.7.6;
 
 import './interfaces/ITokenChopFactory.sol';
-import './TokenChopStable.sol';
-import './TokenChopSpec.sol';
+import './interfaces/ITokenChopPoolFactory.sol';
 
 contract TokenChopFactory is ITokenChopFactory {
-    address public override feeTo;
-    address public override feeToSetter;
-    address public bandAddr;
+    address public override poolFactorySetter;
+    address public stableFactory;
+    address public specFactory;
 
     mapping(address => mapping(address => address)) public override getStableAddress;
     mapping(address => mapping(address => address)) public override getSpecAddress;
     address[] public override allStable;
     address[] public override allSpec;
 
-    constructor(address _feeToSetter, address _bandAddr) {
-        feeToSetter = _feeToSetter;
-        bandAddr = _bandAddr;
+    constructor(address _poolFactorySetter) {
+        poolFactorySetter = _poolFactorySetter;
     }
 
     function allPairsLength() external view override returns (uint) {
@@ -30,21 +28,10 @@ contract TokenChopFactory is ITokenChopFactory {
         require(_base != address(0) && _quote != address(0), 'TokenChop: ZERO_ADDRESS');
         require(getStableAddress[_base][_quote] == address(0), 'TokenChop: STABLE_EXISTS');
         require(getSpecAddress[_base][_quote] == address(0), 'TokenChop: SPEC_EXISTS');
-        bytes memory stableBytecode = type(TokenChopStable).creationCode;
-        bytes32 stableSalt = keccak256(abi.encodePacked("Stable", _base, _quote));
-        address stableToken;
-        assembly {
-            stableToken := create2(0, add(stableBytecode, 32), mload(stableBytecode), stableSalt)
-        }
-        address specToken;
-        bytes memory specBytecode = type(TokenChopSpec).creationCode;
-        bytes32 specSalt = keccak256(abi.encodePacked("Spec", _base, _quote));
-        assembly {
-            specToken := create2(0, add(specBytecode, 32), mload(specBytecode), specSalt)
-        }
-        ITokenChopToken(stableToken).initialize(_base, _quote, specToken);
-        TokenChopStable(stableToken).setBandAddress(bandAddr);
-        ITokenChopToken(specToken).initialize(_base, _quote, stableToken);
+        address stableToken = ITokenChopPoolFactory(stableFactory).createPool(_base, _quote);
+        address specToken = ITokenChopPoolFactory(specFactory).createPool(_base, _quote);
+        ITokenChopPoolFactory(stableFactory).initialize(_base, _quote, stableToken, specToken);
+        ITokenChopPoolFactory(specFactory).initialize(_base, _quote, specToken, stableToken);
         getStableAddress[_base][_quote] = stableToken;
         getSpecAddress[_base][_quote] = specToken;
         allStable.push(stableToken);
@@ -53,13 +40,10 @@ contract TokenChopFactory is ITokenChopFactory {
         return (stableToken, specToken);
     }
 
-    function setFeeTo(address _feeTo) external override {
-        require(msg.sender == feeToSetter, 'TokenChop: FORBIDDEN');
-        feeTo = _feeTo;
+    function setPoolFactories(address _stable, address _spec) external override {
+        require(msg.sender == poolFactorySetter, 'TokenChop: FORBIDDEN');
+        stableFactory = _stable;
+        specFactory = _spec;
     }
 
-    function setFeeToSetter(address _feeToSetter) external override {
-        require(msg.sender == feeToSetter, 'TokenChop: FORBIDDEN');
-        feeToSetter = _feeToSetter;
-    }
 }

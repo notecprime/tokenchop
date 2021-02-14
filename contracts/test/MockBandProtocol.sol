@@ -12,7 +12,7 @@ contract MockBandProtocol {
         uint256 lastUpdatedQuote;
     }
 
-    function getReferenceData(string memory _base, string memory _quote) external view returns (ReferenceData memory) {
+    function getReferenceData(string memory, string memory) external view returns (ReferenceData memory) {
         return ReferenceData(price, block.timestamp, block.timestamp);
     }
 

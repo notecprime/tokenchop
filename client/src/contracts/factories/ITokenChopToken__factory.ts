@@ -40,17 +40,4 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "setBandAddress",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
 ];

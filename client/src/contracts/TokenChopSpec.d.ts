@@ -24,31 +24,29 @@ interface TokenChopSpecInterface extends ethers.utils.Interface {
   functions: {
     "allowance(address,address)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "bandProtocol()": FunctionFragment;
     "base()": FunctionFragment;
     "baseSymbol()": FunctionFragment;
-    "collateral()": FunctionFragment;
     "factory()": FunctionFragment;
     "name()": FunctionFragment;
     "poolType()": FunctionFragment;
-    "previousPrice()": FunctionFragment;
-    "price()": FunctionFragment;
     "quote()": FunctionFragment;
     "quoteSymbol()": FunctionFragment;
     "sister()": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "typeId()": FunctionFragment;
+    "collateral()": FunctionFragment;
     "initialize(address,address,address)": FunctionFragment;
-    "setBandAddress(address)": FunctionFragment;
     "getOwner()": FunctionFragment;
     "decimals()": FunctionFragment;
+    "price()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "sendCollateralToSister(uint256)": FunctionFragment;
-    "mint(uint256)": FunctionFragment;
+    "mintAtBaseAmount(uint256)": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "refresh()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -56,27 +54,14 @@ interface TokenChopSpecInterface extends ethers.utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "bandProtocol",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "base", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "baseSymbol",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "collateral",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "factory", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "poolType", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "previousPrice",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "price", values?: undefined): string;
   encodeFunctionData(functionFragment: "quote", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "quoteSymbol",
@@ -90,15 +75,16 @@ interface TokenChopSpecInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "typeId", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "collateral",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values: [string, string, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "setBandAddress",
-    values: [string]
-  ): string;
   encodeFunctionData(functionFragment: "getOwner", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(functionFragment: "price", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transfer",
     values: [string, BigNumberish]
@@ -115,26 +101,20 @@ interface TokenChopSpecInterface extends ethers.utils.Interface {
     functionFragment: "sendCollateralToSister",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "mintAtBaseAmount",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "refresh", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "bandProtocol",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "base", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseSymbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "collateral", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "poolType", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "previousPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "quote", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "quoteSymbol",
@@ -147,13 +127,11 @@ interface TokenChopSpecInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "typeId", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "collateral", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setBandAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
@@ -164,8 +142,12 @@ interface TokenChopSpecInterface extends ethers.utils.Interface {
     functionFragment: "sendCollateralToSister",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mintAtBaseAmount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "refresh", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
@@ -213,10 +195,6 @@ export class TokenChopSpec extends Contract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    bandProtocol(overrides?: CallOverrides): Promise<[string]>;
-
-    "bandProtocol()"(overrides?: CallOverrides): Promise<[string]>;
-
     base(overrides?: CallOverrides): Promise<[string]>;
 
     "base()"(overrides?: CallOverrides): Promise<[string]>;
@@ -224,10 +202,6 @@ export class TokenChopSpec extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<[string]>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<[string]>;
-
-    collateral(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     factory(overrides?: CallOverrides): Promise<[string]>;
 
@@ -240,14 +214,6 @@ export class TokenChopSpec extends Contract {
     poolType(overrides?: CallOverrides): Promise<[string]>;
 
     "poolType()"(overrides?: CallOverrides): Promise<[string]>;
-
-    previousPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "previousPrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    price(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "price()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     quote(overrides?: CallOverrides): Promise<[string]>;
 
@@ -273,6 +239,10 @@ export class TokenChopSpec extends Contract {
 
     "typeId()"(overrides?: CallOverrides): Promise<[number]>;
 
+    collateral(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     initialize(
       _base: string,
       _quote: string,
@@ -284,16 +254,6 @@ export class TokenChopSpec extends Contract {
       _base: string,
       _quote: string,
       _sister: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    setBandAddress(
-      _bandAddr: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "setBandAddress(address)"(
-      _bandAddr: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -316,6 +276,10 @@ export class TokenChopSpec extends Contract {
      * Returns the token decimals.
      */
     "decimals()"(overrides?: CallOverrides): Promise<[number]>;
+
+    price(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "price()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
       _recipient: string,
@@ -365,25 +329,29 @@ export class TokenChopSpec extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    mint(
-      _collateralAmount: BigNumberish,
+    mintAtBaseAmount(
+      baseAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "mint(uint256)"(
-      _collateralAmount: BigNumberish,
+    "mintAtBaseAmount(uint256)"(
+      baseAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     burn(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "burn(uint256)"(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    refresh(overrides?: Overrides): Promise<ContractTransaction>;
+
+    "refresh()"(overrides?: Overrides): Promise<ContractTransaction>;
   };
 
   allowance(
@@ -405,10 +373,6 @@ export class TokenChopSpec extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  bandProtocol(overrides?: CallOverrides): Promise<string>;
-
-  "bandProtocol()"(overrides?: CallOverrides): Promise<string>;
-
   base(overrides?: CallOverrides): Promise<string>;
 
   "base()"(overrides?: CallOverrides): Promise<string>;
@@ -416,10 +380,6 @@ export class TokenChopSpec extends Contract {
   baseSymbol(overrides?: CallOverrides): Promise<string>;
 
   "baseSymbol()"(overrides?: CallOverrides): Promise<string>;
-
-  collateral(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   factory(overrides?: CallOverrides): Promise<string>;
 
@@ -432,14 +392,6 @@ export class TokenChopSpec extends Contract {
   poolType(overrides?: CallOverrides): Promise<string>;
 
   "poolType()"(overrides?: CallOverrides): Promise<string>;
-
-  previousPrice(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "previousPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  price(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "price()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   quote(overrides?: CallOverrides): Promise<string>;
 
@@ -465,6 +417,10 @@ export class TokenChopSpec extends Contract {
 
   "typeId()"(overrides?: CallOverrides): Promise<number>;
 
+  collateral(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   initialize(
     _base: string,
     _quote: string,
@@ -476,16 +432,6 @@ export class TokenChopSpec extends Contract {
     _base: string,
     _quote: string,
     _sister: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  setBandAddress(
-    _bandAddr: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "setBandAddress(address)"(
-    _bandAddr: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -508,6 +454,10 @@ export class TokenChopSpec extends Contract {
    * Returns the token decimals.
    */
   "decimals()"(overrides?: CallOverrides): Promise<number>;
+
+  price(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "price()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
     _recipient: string,
@@ -557,25 +507,29 @@ export class TokenChopSpec extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  mint(
-    _collateralAmount: BigNumberish,
+  mintAtBaseAmount(
+    baseAmount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "mint(uint256)"(
-    _collateralAmount: BigNumberish,
+  "mintAtBaseAmount(uint256)"(
+    baseAmount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   burn(
-    _tokenAmount: BigNumberish,
+    supplyAmount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "burn(uint256)"(
-    _tokenAmount: BigNumberish,
+    supplyAmount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
+
+  refresh(overrides?: Overrides): Promise<ContractTransaction>;
+
+  "refresh()"(overrides?: Overrides): Promise<ContractTransaction>;
 
   callStatic: {
     allowance(
@@ -597,10 +551,6 @@ export class TokenChopSpec extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bandProtocol(overrides?: CallOverrides): Promise<string>;
-
-    "bandProtocol()"(overrides?: CallOverrides): Promise<string>;
-
     base(overrides?: CallOverrides): Promise<string>;
 
     "base()"(overrides?: CallOverrides): Promise<string>;
@@ -608,10 +558,6 @@ export class TokenChopSpec extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<string>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<string>;
-
-    collateral(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<string>;
 
@@ -624,14 +570,6 @@ export class TokenChopSpec extends Contract {
     poolType(overrides?: CallOverrides): Promise<string>;
 
     "poolType()"(overrides?: CallOverrides): Promise<string>;
-
-    previousPrice(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "previousPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    price(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "price()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     quote(overrides?: CallOverrides): Promise<string>;
 
@@ -657,6 +595,10 @@ export class TokenChopSpec extends Contract {
 
     "typeId()"(overrides?: CallOverrides): Promise<number>;
 
+    collateral(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       _base: string,
       _quote: string,
@@ -668,13 +610,6 @@ export class TokenChopSpec extends Contract {
       _base: string,
       _quote: string,
       _sister: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setBandAddress(_bandAddr: string, overrides?: CallOverrides): Promise<void>;
-
-    "setBandAddress(address)"(
-      _bandAddr: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -697,6 +632,10 @@ export class TokenChopSpec extends Contract {
      * Returns the token decimals.
      */
     "decimals()"(overrides?: CallOverrides): Promise<number>;
+
+    price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "price()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       _recipient: string,
@@ -746,25 +685,29 @@ export class TokenChopSpec extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    mint(
-      _collateralAmount: BigNumberish,
+    mintAtBaseAmount(
+      baseAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "mint(uint256)"(
-      _collateralAmount: BigNumberish,
+    "mintAtBaseAmount(uint256)"(
+      baseAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     burn(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     "burn(uint256)"(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    refresh(overrides?: CallOverrides): Promise<void>;
+
+    "refresh()"(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -805,10 +748,6 @@ export class TokenChopSpec extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bandProtocol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "bandProtocol()"(overrides?: CallOverrides): Promise<BigNumber>;
-
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
     "base()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -816,10 +755,6 @@ export class TokenChopSpec extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    collateral(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -832,14 +767,6 @@ export class TokenChopSpec extends Contract {
     poolType(overrides?: CallOverrides): Promise<BigNumber>;
 
     "poolType()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    previousPrice(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "previousPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    price(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "price()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     quote(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -865,6 +792,10 @@ export class TokenChopSpec extends Contract {
 
     "typeId()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    collateral(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       _base: string,
       _quote: string,
@@ -876,16 +807,6 @@ export class TokenChopSpec extends Contract {
       _base: string,
       _quote: string,
       _sister: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    setBandAddress(
-      _bandAddr: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "setBandAddress(address)"(
-      _bandAddr: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
@@ -908,6 +829,10 @@ export class TokenChopSpec extends Contract {
      * Returns the token decimals.
      */
     "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "price()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       _recipient: string,
@@ -957,22 +882,26 @@ export class TokenChopSpec extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    mint(
-      _collateralAmount: BigNumberish,
+    mintAtBaseAmount(
+      baseAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "mint(uint256)"(
-      _collateralAmount: BigNumberish,
+    "mintAtBaseAmount(uint256)"(
+      baseAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    burn(_tokenAmount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
+    burn(supplyAmount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
 
     "burn(uint256)"(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
+
+    refresh(overrides?: Overrides): Promise<BigNumber>;
+
+    "refresh()"(overrides?: Overrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -998,10 +927,6 @@ export class TokenChopSpec extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    bandProtocol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "bandProtocol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "base()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1009,10 +934,6 @@ export class TokenChopSpec extends Contract {
     baseSymbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "baseSymbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    collateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "collateral()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1025,14 +946,6 @@ export class TokenChopSpec extends Contract {
     poolType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "poolType()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    previousPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "previousPrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "price()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     quote(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1058,6 +971,10 @@ export class TokenChopSpec extends Contract {
 
     "typeId()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    collateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "collateral()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     initialize(
       _base: string,
       _quote: string,
@@ -1069,16 +986,6 @@ export class TokenChopSpec extends Contract {
       _base: string,
       _quote: string,
       _sister: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    setBandAddress(
-      _bandAddr: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "setBandAddress(address)"(
-      _bandAddr: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
@@ -1101,6 +1008,10 @@ export class TokenChopSpec extends Contract {
      * Returns the token decimals.
      */
     "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "price()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
       _recipient: string,
@@ -1150,24 +1061,28 @@ export class TokenChopSpec extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    mint(
-      _collateralAmount: BigNumberish,
+    mintAtBaseAmount(
+      baseAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "mint(uint256)"(
-      _collateralAmount: BigNumberish,
+    "mintAtBaseAmount(uint256)"(
+      baseAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     burn(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "burn(uint256)"(
-      _tokenAmount: BigNumberish,
+      supplyAmount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
+
+    refresh(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    "refresh()"(overrides?: Overrides): Promise<PopulatedTransaction>;
   };
 }
