@@ -4,14 +4,18 @@ const TokenChopStable = artifacts.require("TokenChopStable");
 const TokenChopSpec = artifacts.require("TokenChopSpec");
 const MockBandProtocol = artifacts.require("MockBandProtocol");
 const IBEP20 = artifacts.require("IBEP20");
+const IStdReference = artifacts.require("IStdReference");
 const math = require('./helpers/math');
 const testcases = require('./data/testcases.json')
 const testlowcollateral = require('./data/testlowcollateral.json')
 const realBandProtocolAddr = '0xDA7a001b254CD22e46d3eAB04d937489c93174C3';
 
-const BNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 const BUSD = '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee';
 const ETH = '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378';
+const WBNB = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
+const BTC = '0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8';
+const XRP = '0xa83575490D7df4E2F47b7D38ef351a2722cA45b9';
+const DAI = '0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867';
 
 const SCALE_FACTOR = web3.utils.toBN(10000)
 let bnbInstance;
@@ -151,7 +155,7 @@ contract("TokenChopFactory", accounts => {
       console.log('Skipping MockBandProtocol tests');
       return;
     }
-    bnbInstance = await IBEP20.at(BNB);
+    bnbInstance = await IBEP20.at(WBNB);
     bandInstance = await MockBandProtocol.deployed();
 
     for (let i=0;i<testcases.length;i++) {
@@ -182,7 +186,7 @@ contract("TokenChopFactory", accounts => {
 contract("TokenChopFactoryLowCollateral", accounts => {
 
   it("Runs low collateral test cases", async () => {
-    bnbInstance = await IBEP20.at(BNB);
+    bnbInstance = await IBEP20.at(WBNB);
     bandInstance = await MockBandProtocol.deployed();
     const factory = await TokenChopFactory.deployed();
     stableAddr = await factory.allStable(0);
@@ -216,5 +220,136 @@ contract("TokenChopFactoryLowCollateral", accounts => {
       await checkAssertions(testcase);      
     }
   });  
+  
+});
 
+contract("TokenChopFactoryRealBandProtocol", accounts => {
+
+  it("Check it works with the pairs", async () => {
+    const stableFactory = await TokenChopStableFactory.deployed();
+    const factory = await TokenChopFactory.deployed();
+    const bandAddr = await stableFactory.bandAddr();
+    if (bandAddr != realBandProtocolAddr) {
+      console.log('Skipping RealBandProtocol tests');
+      return;
+    }
+
+    const stableLength = await factory.allPairsLength();
+    bandInstance = await IStdReference.at(bandAddr);
+    const items = [];
+    for (let i=0; i<stableLength; i++) {
+      const addr = await factory.allStable(i);
+      const instance = await TokenChopStable.at(addr);
+      const baseAddr = await instance.base(); 
+      const baseSymbol = await instance.baseSymbol();
+      const quoteSymbol = await instance.quoteSymbol();
+      const baseToUse = await instance.symbolLookup(baseSymbol);
+      const quoteToUse = await instance.symbolLookup(quoteSymbol);
+      const details = {
+        instance,
+        addr,
+        baseAddr, 
+        baseInstance: await IBEP20.at(await instance.base()),
+        baseSymbol,
+        quoteSymbol,
+        baseToUse,
+        quoteToUse
+      }
+      items.push(details);
+    }
+    let baseContract;
+    let stableContract;
+    let stableAddr;
+    let collateral;
+    let supply;
+    let price;
+    let refPrice;
+    const amountBn = amountToBN(7).div(SCALE_FACTOR);
+
+    baseContract = items[0].baseInstance;
+    stableContract = items[0].instance;
+    stableAddr = items[0].addr;
+    await baseContract.approve(stableAddr, amountBn);
+    await stableContract.mintAtBaseAmount(amountBn);
+    collateral = await baseContract.balanceOf(stableAddr);
+    supply = await stableContract.balanceOf(accounts[0]);
+    price = await stableContract.price();
+    refPrice = (await bandInstance.getReferenceData(items[0].baseToUse,items[0].quoteToUse)).rate;
+    // console.log(math.toEth(collateral));
+    // console.log(math.toEth(supply));
+    // console.log(math.toEth(price));
+    // console.log(math.toEth(refPrice));
+    assert.isTrue(collateral.eq(amountBn), 'bad collateral');
+    assert.isTrue(supply.eq(amountBn.mul(price).div(web3.utils.toBN(10**18))), 'bad supply');
+    assert.isTrue(price.eq(web3.utils.toBN(refPrice)), 'bad ref price');
+
+    baseContract = items[1].baseInstance;
+    stableContract = items[1].instance;
+    stableAddr = items[1].addr;
+    await baseContract.approve(stableAddr, amountBn);
+    await stableContract.mintAtBaseAmount(amountBn);
+    collateral = await baseContract.balanceOf(stableAddr);
+    supply = await stableContract.balanceOf(accounts[0]);
+    price = await stableContract.price();
+    refPrice = (await bandInstance.getReferenceData(items[1].baseToUse,items[1].quoteToUse)).rate;
+    // console.log(math.toEth(collateral));
+    // console.log(math.toEth(supply));
+    // console.log(math.toEth(price));
+    // console.log(math.toEth(refPrice));
+    assert.isTrue(collateral.eq(amountBn));
+    assert.isTrue(supply.eq(amountBn.mul(price).div(web3.utils.toBN(10**18))), 'bad supply');    
+    assert.isTrue(price.eq(web3.utils.toBN(refPrice)));
+
+    baseContract = items[2].baseInstance;
+    stableContract = items[2].instance;
+    stableAddr = items[2].addr;
+    await baseContract.approve(stableAddr, amountBn);
+    await stableContract.mintAtBaseAmount(amountBn);
+    collateral = await baseContract.balanceOf(stableAddr);
+    supply = await stableContract.balanceOf(accounts[0]);
+    price = await stableContract.price();
+    refPrice = (await bandInstance.getReferenceData(items[2].baseToUse,items[2].quoteToUse)).rate;
+    // console.log(math.toEth(collateral));
+    // console.log(math.toEth(supply));
+    // console.log(math.toEth(price));
+    // console.log(math.toEth(refPrice));
+    assert.isTrue(collateral.eq(amountBn));
+    assert.isTrue(supply.eq(amountBn.mul(price).div(web3.utils.toBN(10**18))), 'bad supply');    
+    assert.isTrue(price.eq(web3.utils.toBN(refPrice)));
+
+    baseContract = items[3].baseInstance;
+    stableContract = items[3].instance;
+    stableAddr = items[3].addr;
+    await baseContract.approve(stableAddr, amountBn);
+    await stableContract.mintAtBaseAmount(amountBn);
+    collateral = await baseContract.balanceOf(stableAddr);
+    supply = await stableContract.balanceOf(accounts[0]);
+    price = await stableContract.price();
+    refPrice = (await bandInstance.getReferenceData(items[3].baseToUse,items[3].quoteToUse)).rate;
+    // console.log(math.toEth(collateral));
+    // console.log(math.toEth(supply));
+    // console.log(math.toEth(price));
+    // console.log(math.toEth(refPrice));
+    assert.isTrue(collateral.eq(amountBn));
+    assert.isTrue(supply.eq(amountBn.mul(price).div(web3.utils.toBN(10**18))), 'bad supply');    
+    assert.isTrue(price.eq(web3.utils.toBN(refPrice)));
+
+    baseContract = items[4].baseInstance;
+    stableContract = items[4].instance;
+    stableAddr = items[4].addr;
+    await baseContract.approve(stableAddr, amountBn);
+    await stableContract.mintAtBaseAmount(amountBn);
+    collateral = await baseContract.balanceOf(stableAddr);
+    supply = await stableContract.balanceOf(accounts[0]);
+    price = await stableContract.price();
+    refPrice = (await bandInstance.getReferenceData(items[4].baseToUse,items[4].quoteToUse)).rate;
+    // console.log(math.toEth(collateral));
+    // console.log(math.toEth(supply));
+    // console.log(math.toEth(price));
+    // console.log(math.toEth(refPrice));
+    assert.isTrue(collateral.eq(amountBn));
+    assert.isTrue(supply.eq(amountBn.mul(price).div(web3.utils.toBN(10**18))), 'bad supply');    
+    assert.isTrue(price.eq(web3.utils.toBN(refPrice)));
+  });  
+  
 });

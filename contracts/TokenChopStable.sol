@@ -13,6 +13,7 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     using SafeMath for uint256;
     mapping(address => uint256) public override balanceOf;
     mapping(address => mapping(address => uint256)) public override allowance;
+    mapping(string => string) public symbolLookup;
     address[] private _balanceKeys;
     uint private _balanceKeysLength;
 
@@ -60,8 +61,13 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
         base = _base;
         quote = _quote;
         sister = _sister;
+        symbolLookup["BUSD"] = "USD";
+        symbolLookup["ETH"] = "ETH";
+        symbolLookup["BTCB"] = "BTC";
+        symbolLookup["XRP"] = "XRP";
+        symbolLookup["DAI"] = "DAI";
+        symbolLookup["WBNB"] = "BNB";
         baseSymbol = IBEP20(base).symbol();
-        baseSymbol = keccak256(abi.encodePacked(baseSymbol)) == keccak256(abi.encodePacked("WBNB")) ? "BNB" : baseSymbol;
         quoteSymbol = IBEP20(quote).symbol();
         name = string(abi.encodePacked(bytes("TokenChop: "), bytes(baseSymbol), bytes("/"), bytes(quoteSymbol), bytes(" Stable")));
         symbol = string(abi.encodePacked(bytes(baseSymbol), bytes(quoteSymbol), bytes('0')));
@@ -129,8 +135,10 @@ contract TokenChopStable is IBEP20, ITokenChopToken {
     }
 
     function updatePrice() internal {
+        string memory baseToUse = symbolLookup[baseSymbol];
+        string memory quoteToUse = symbolLookup[quoteSymbol];
         IStdReference bandProtocolContract = IStdReference(bandProtocol);
-        IStdReference.ReferenceData memory data = bandProtocolContract.getReferenceData(baseSymbol, quoteSymbol);
+        IStdReference.ReferenceData memory data = bandProtocolContract.getReferenceData(baseToUse, quoteToUse);
         uint256 newPrice = data.rate;
         require(newPrice != 0, "TokenChop: Price update Failed");
         emit PriceUpdate(price, newPrice);
