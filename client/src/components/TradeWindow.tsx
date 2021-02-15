@@ -2,8 +2,9 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectWallet } from '../slices/walletSlice';
-import OrderEntry from './OrderEntry';
+import BuyOrderEntry from './BuyOrderEntry';
 import QuotesTable from './quotes/QuotesTable';
+import SellOrderEntry from './SellOrderEntry';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -12,28 +13,22 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       flex: '1 1 auto',
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'column'
     },
     selectWindow: {
-      margin: '16px 30px 100px 30px',
+      margin: '30px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      flex: '0 0 390px',
       borderRadius: '4px'
     },
     mainWindow: {
-      margin: '16px 30px 16px 30px',      
+      margin: '0px 40px 0px 40px',      
       display: 'flex',      
-      flexDirection: 'column',
-      flex: '0 0 390px',
+      flexDirection: 'row',
       alignItems: 'flex-start',
-    },
-    confirmWindow: {
-      margin: '16px',      
-      paddingTop: '100px',
-      flex: '0 0 450px'
-    },   
+      justifyContent: 'space-around'
+    }
   }),
 );
 
@@ -46,24 +41,10 @@ export default function TradeWindow() {
         <QuotesTable></QuotesTable>
       </div>
       <div className={classes.mainWindow}>
-        <OrderEntry></OrderEntry>
-      </div>
-      <div className={classes.confirmWindow}>
-        
+        <BuyOrderEntry></BuyOrderEntry>
+        <SellOrderEntry></SellOrderEntry>
       </div>
   </div>
 
   );
 }
-
-
-/* <BandProtocol></BandProtocol>
-{/* <div>✅ <Balance chainId={chainId} account={account}></Balance></div>
-<button type="button" onClick={() => dispatch(approveAsync(wbnbContract))}>Approve</button>
-<button type="button" onClick={() => dispatch(sendAsync(tokenChopContract))}>Send</button>
-<button type="button" onClick={() => dispatch(revertAsync(tokenChopContract))}>Revert</button>
-<ChainLink symbol="WBNB"></ChainLink>
-<ChainLink symbol="BTC"></ChainLink>
-<ChainLink symbol="ETH"></ChainLink>
-<Token name="First Token"></Token>
-<Token name="Second Token"></Token> */

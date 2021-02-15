@@ -1,4 +1,4 @@
-import { Button, CircularProgress, createStyles, FormControl, FormControlLabel, FormHelperText, InputAdornment, makeStyles, Radio, RadioGroup, TextField, Theme } from "@material-ui/core";
+import { AppBar, Button, Card, CardContent, CardHeader, CircularProgress, createStyles, FormControl, FormControlLabel, FormHelperText, InputAdornment, makeStyles, Paper, Radio, RadioGroup, TextField, Theme, Toolbar, Typography } from "@material-ui/core";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from '@ethersproject/providers';
 import { BigNumber, ethers, utils } from "ethers";
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useERC20Contract } from "../hooks/useERC20Contract";
 import { selectAppContext } from "../slices/appContextSlice";
 import { approveAsync, selectToken } from "../slices/tokenSlice";
-import { mintSpecAsync, mintStableAsync, selectWallet, ValidToken } from "../slices/walletSlice";
+import { mintAsync, selectWallet, ValidToken } from "../slices/walletSlice";
 import { usePoolsContracts } from "../hooks/usePoolsContracts";
 import { isPoolType, PoolType } from "../slices/poolsSlice";
 
@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
     helperText: {
         textAlign: 'right',
         paddingRight: '8px'        
+    },
+    header: {
+        color: '#fff',
+        backgroundColor: '#3f51b5',
+        borderRadius: '20px 20px 0 0',
+        padding: '16px 20px'
     }
   }),
 );
@@ -57,14 +63,14 @@ export default function OrderEntry(){
     const { account } = useWeb3React<Web3Provider>()      
     const contract = useERC20Contract(selectedToken);
     const { spec, stable } = usePoolsContracts(selectedToken);
-    const { approval } = useSelector(selectToken(selectedToken || 'WBNB'));
+    const { approval, transfer } = useSelector(selectToken(selectedToken || 'WBNB'));
     const { balances } = useSelector(selectWallet);
     const [formValues, setFormValues] = React.useState<FormValues>({ amount: '0', type: 'stable' });
     const [disableApprove, setDisableApprove] = React.useState(true);
     const [error, setError] = React.useState({ amount: false}); 
     const [helperText, setHelperText] = React.useState({
         amount: '',
-        approve: 'You must approve the transaction first',
+        approve: 'Please approve the transaction first',
         chop: ''
     });
     function handleRadioChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -74,7 +80,8 @@ export default function OrderEntry(){
 
     function handleAmountChange(event: React.ChangeEvent<HTMLInputElement>) {
         let value = (event.target as HTMLInputElement).value;
-        value = value.replace(/^0+/, '');
+        value = value.replace(/^0{2,}/, '0');
+        value = value.replace(/^0[^\.].*/, value.slice(1));
         if (!value || value === '0') {
             setFormValues({ ...formValues, amount: '0' });
             setHelperText({ ...helperText, amount: ''});
@@ -132,13 +139,10 @@ export default function OrderEntry(){
       const handleChop = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (account == null) return;
         if (approval?.status !== 'Approved') return;
+        if (transfer?.status !== 'None') return;
         const { amount, type } = formValues;
-        if (type == 'stable') {
-            dispatch(mintStableAsync(stable, amount));
-        }
-        if (type == 'spec') {
-            dispatch(mintSpecAsync(spec, amount));
-        }
+        const contractToUse = (type == 'stable') ? stable : spec;
+        dispatch(mintAsync(contractToUse, amount, selectedToken, account));
       };
 
       const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -151,7 +155,10 @@ export default function OrderEntry(){
     if (selectedToken == null || contract == null || account == null) return null;
     if (stepperStage != 2) return null; 
     return (
-        <>
+        <Paper variant="outlined" elevation={4}>
+            <div className={classes.header}>
+                <Typography>BUY</Typography>
+            </div>
             <form onSubmit={handleSubmit}>
             <FormControl component="fieldset" error={error.amount} className={classes.formControl}>
                 <TextField error={error.amount} label="Amount" id="filled-start-adornment" value={formValues.amount}
@@ -165,17 +172,17 @@ export default function OrderEntry(){
                 />
                 <FormHelperText className={classes.helperText}>{helperText.amount}</FormHelperText>                                
                 <RadioGroup name="tokenType" value={formValues.type} onChange={handleRadioChange}>
-                    <FormControlLabel labelPlacement="start" value="spec" control={<Radio color="primary" />} label="Buy Spec Pool" className={classes.radioButton}/>
-                    <FormControlLabel labelPlacement="start" value="stable" control={<Radio color="primary" />} label="Buy Stable Pool" className={classes.radioButton}/>
+                    <FormControlLabel labelPlacement="start" value="spec" control={<Radio color="primary" />} label="Spec Pool" className={classes.radioButton}/>
+                    <FormControlLabel labelPlacement="start" value="stable" control={<Radio color="primary" />} label="Stable Pool" className={classes.radioButton}/>
                 </RadioGroup>
                 <Button type="submit" variant="outlined" color="primary" onClick={handleApprove}
                     disabled={disableApprove || approval?.status === 'Approved'} className={classes.button}>{ approval?.status === "Pending" ? <CircularProgress size={24}/> : 'APPROVAL' }</Button>
                 <FormHelperText className={classes.helperText}>{!disableApprove && helperText.approve}</FormHelperText>                                
                 <Button type="submit" variant="outlined" color="primary" onClick={handleChop}
-                    disabled={approval?.status !== 'Approved'} className={classes.button}>CHOP!</Button>
+                    disabled={approval?.status !== 'Approved' || transfer?.status == 'PendingSell'} className={classes.button}>{ transfer?.status === "PendingBuy" ? <CircularProgress size={24}/> : 'BUY' }</Button>
                 <FormHelperText className={classes.helperText}>{helperText.chop}</FormHelperText>                                
             </FormControl>
-            </form>        
-        </>
+            </form>      
+        </Paper>
     )
 }

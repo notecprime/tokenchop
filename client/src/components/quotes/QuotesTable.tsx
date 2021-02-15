@@ -10,13 +10,13 @@ import Paper from '@material-ui/core/Paper';
 import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectToken } from '../../slices/appContextSlice';
+import { selectAppContext, selectTokenAction } from '../../slices/appContextSlice';
 import { useBandProtocolContract } from '../../hooks/useBandProtocolContract';
 import { getDetailsAsync, selectBandProtocol } from '../../slices/bandProtocolSlice';
 import { PriceDisplay } from './PriceDisplay';
 import { BalanceDisplay } from './BalanceDisplay';
 import { useERC20Contract } from '../../hooks/useERC20Contract';
-import { getBalanceOfsAsync } from '../../slices/tokenSlice';
+import { getBalanceOfsAsync, selectToken } from '../../slices/tokenSlice';
 import { ERC20PresetMinterPauser } from '../../contracts/external';
 import { selectWallet, ValidToken } from '../../slices/walletSlice';
 import { usePoolsContracts } from '../../hooks/usePoolsContracts';
@@ -26,7 +26,7 @@ import { TotalPoolDisplay } from './TotalPoolDisplay';
 
 const useStyles = makeStyles({
   table: {
-    width: '390px'
+    width: '100%'
   },
   tableHead: {
     backgroundColor: 'rgb(63, 81, 181) !important'
@@ -40,9 +40,13 @@ const useStyles = makeStyles({
     color: 'white !important'
   },
   tableHeadCellBalance: {
-    width: '170px',
+    width: '140px',
     color: 'white !important'
   },      
+  tableHeadCellPool: {
+    width: '200px',
+    color: 'white !important'
+  },        
   tableRow: {
       '&:hover': {
           backgroundColor: 'rgb(63, 81, 181, 0.2) !important'
@@ -77,6 +81,8 @@ interface RowData {
 
 export default function QuotesTable() {
   const classes = useStyles();
+  const { selectedToken = 'WBNB' } = useSelector(selectAppContext);  
+  const { transfer } = useSelector(selectToken(selectedToken));
   const [state, setState] = useState(quotesTableState);
   const { rows, loading } = state;
   const { account, library } = useWeb3React<Web3Provider>();
@@ -119,7 +125,7 @@ export default function QuotesTable() {
     if (account != null){
       dispatch(getBalanceOfsAsync(tokens, contracts, account));
     }
-  },[account, library]);
+  },[account, library, transfer]);
   // Get details of the pools
   const poolContracts = [
     usePoolsContracts('WBNB'),
@@ -135,7 +141,7 @@ export default function QuotesTable() {
     if (account != null){
       dispatch(getPoolsDetailsAsync(tokens, poolContracts, account));
     }
-  },[account, library]);
+  },[account, library, transfer]);
   
 
 
@@ -148,22 +154,22 @@ export default function QuotesTable() {
             <TableCell className={classes.tableHeadCellSymbol}>Symbol</TableCell>
             <TableCell align="right" className={classes.tableHeadCellPrice}>Price(BUSD)</TableCell>
             <TableCell align="right" className={classes.tableHeadCellBalance}>Wallet</TableCell>
-            <TableCell align="right" className={classes.tableHeadCellBalance}>Spec</TableCell>
-            <TableCell align="right" className={classes.tableHeadCellBalance}>Stable</TableCell>
-            <TableCell align="right" className={classes.tableHeadCellBalance}>Total Spec</TableCell>
-            <TableCell align="right" className={classes.tableHeadCellBalance}>Total Stable</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Spec(BUSD)</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Stable(BUSD)</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellPool}>Spec Pool</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellPool}>Stable Pool</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.id} onClick={() => { dispatch(selectToken(row.base))}} className={classes.tableRow}>
+            <TableRow key={row.id} onClick={() => { dispatch(selectTokenAction(row.base))}} className={classes.tableRow}>
               <TableCell component="th" scope="row">{row.base}</TableCell>
               <TableCell align="right"><PriceDisplay value={row.price}/></TableCell>
               <TableCell align="right"><BalanceDisplay value={row.balance}/></TableCell>
               <TableCell align="right"><PoolBalanceDisplay {...row.spec}/></TableCell>
               <TableCell align="right"><PoolBalanceDisplay {...row.stable}/></TableCell>
-              <TableCell align="right"><TotalPoolDisplay {...row.spec} price={row.price}/></TableCell>
-              <TableCell align="right"><TotalPoolDisplay {...row.stable} price={row.price}/></TableCell>
+              <TableCell align="right"><TotalPoolDisplay {...row.spec} base={row.base}/></TableCell>
+              <TableCell align="right"><TotalPoolDisplay {...row.stable} base={row.base}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

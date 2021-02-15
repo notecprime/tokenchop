@@ -4,8 +4,9 @@ import { AbstractConnector } from '@web3-react/abstract-connector';
 import { SUPPORTED_CHAIN_IDS } from '../constants';
 import { AppThunk, RootState } from '../store';
 import { BscConnector } from '@binance-chain/bsc-connector';
-import { utils } from 'ethers';
+import { constants, utils } from 'ethers';
 import { updateStage } from './appContextSlice';
+import { updateTransfer } from './tokenSlice';
 import { TokenChopSpec, TokenChopStable } from '../contracts';
 
 const validTokens = ['WBNB', 'ETH', 'BTC', 'XRP', 'DAI'] as const;
@@ -96,28 +97,51 @@ export const disconnectAsync = (connector?: AbstractConnector ): AppThunk => asy
   dispatch(updateStage({ mainWindowStage: 'AwaitingConnection' }));  
 };
 
-export const mintStableAsync = (contract: TokenChopStable, amount: string): AppThunk => async dispatch => {
+export const mintAsync = (contract: TokenChopStable | TokenChopSpec, amount: string, name: ValidToken, account: string): AppThunk => async dispatch => {
+  dispatch(updateTransfer({ name, status: 'PendingBuy' }));
   const baseAmount = utils.parseEther(amount).toString();
-  const result = await contract.mintAtBaseAmount(baseAmount);
-  dispatch(updateConnected(true));
+  let result;
+  try {
+    const filter = contract.filters.Transfer(constants.AddressZero, account, null);
+    contract.on(filter, (address, account, amount) => {
+      dispatch(updateTransfer({name, status: 'None' }));
+    });
+    result = await contract.mintAtBaseAmount(baseAmount);    
+  } catch (err) {
+    if (err.code === "4001") {
+      // user cancelled
+      return;
+    }
+    if (err.code === "-32603") {
+      // nonce mismatch
+      throw new Error("tx mismatch. please reset metamask account");
+    }    
+  }
 };
 
-export const mintSpecAsync = (contract: TokenChopSpec, amount: string): AppThunk => async dispatch => {
-  const baseAmount = utils.parseEther(amount).toString();
-  const result = await contract.mintAtBaseAmount(baseAmount);
-  dispatch(updateConnected(true));
-};
-
-export const burnStableAsync = (contract: TokenChopStable, amount: string): AppThunk => async dispatch => {
-  const supplyAmount = utils.parseEther(amount).toString();
-  const result = await contract.burn(supplyAmount);
-  dispatch(updateConnected(true));
-};
-
-export const burnSpecAsync = (contract: TokenChopSpec, amount: string): AppThunk => async dispatch => {
-  const supplyAmount = utils.parseEther(amount).toString();  
-  const result = await contract.burn(supplyAmount);
-  dispatch(updateConnected(true));
+export const burnAsync = (contract: TokenChopStable | TokenChopSpec, amount: string, name: ValidToken, account: string, quoteToSupplyFactor: string): AppThunk => async dispatch => {
+  dispatch(updateTransfer({ name, status: 'PendingSell' }));
+  const scaleBN = utils.parseEther('1');  
+  const quoteAmountBN = utils.parseEther(amount);
+  const quoteToSupplyFactorBN = utils.parseEther(quoteToSupplyFactor);
+  const supplyAmount = quoteAmountBN.mul(scaleBN).div(quoteToSupplyFactorBN).toString();
+  let result;
+  try {
+    const filter = contract.filters.Transfer(account, constants.AddressZero, null);
+    contract.on(filter, (address, account, amount) => {
+      dispatch(updateTransfer({name, status: 'None' }));
+    });
+    result = await contract.burn(supplyAmount);
+  } catch (err) {
+    if (err.code === "4001") {
+      // user cancelled
+      return;
+    }
+    if (err.code === "-32603") {
+      // nonce mismatch
+      throw new Error("tx mismatch. please reset metamask account");
+    }    
+  }
 };
 
 export const selectWallet = (state: RootState) => state.wallet;

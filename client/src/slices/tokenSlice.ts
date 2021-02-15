@@ -6,6 +6,7 @@ import { isValidToken, updateBalances, ValidToken } from './walletSlice';
 import { TokenChopSpec, TokenChopStable } from '../contracts';
 
 export type ApprovalStatus = 'Approved' | 'Pending' | 'NotApproved';
+export type TransferStatus = 'None' | 'PendingBuy' | 'PendingSell' | 'Complete';
 
 interface TokenProperties {
   name: string;
@@ -16,6 +17,9 @@ interface TokenProperties {
   approval: {
     status: ApprovalStatus;
     amountInWei: string;
+  },
+  transfer: {
+    status: TransferStatus;
   }
 }
 
@@ -28,7 +32,8 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' }
+    approval: { status: 'NotApproved', amountInWei: '0' },
+    transfer: { status: 'None' }
   },
   ETH: {
     name: 'ETH',
@@ -36,7 +41,8 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' }
+    approval: { status: 'NotApproved', amountInWei: '0' },
+    transfer: { status: 'None' }    
   },
   BTC: {
     name: 'BTC',
@@ -44,7 +50,8 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' }
+    approval: { status: 'NotApproved', amountInWei: '0' },
+    transfer: { status: 'None' }    
   },
   XRP: {
     name: 'XRP',
@@ -52,7 +59,8 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' }
+    approval: { status: 'NotApproved', amountInWei: '0' },
+    transfer: { status: 'None' }    
   },
   DAI: {
     name: 'DAI',
@@ -60,7 +68,8 @@ export const initialState: TokenState = {
     decimals: 18,
     totalSupply: '',
     balanceOf: '',
-    approval: { status: 'NotApproved', amountInWei: '0' }
+    approval: { status: 'NotApproved', amountInWei: '0' },
+    transfer: { status: 'None' }    
   }
 };
 
@@ -80,6 +89,11 @@ interface TokenApproval {
   name: ValidToken;
   status: ApprovalStatus;
   amountInWei: string;
+}
+
+interface TokenTransfer {
+  name: ValidToken;
+  status: TransferStatus;
 }
 
 export const tokenSlice = createSlice({
@@ -111,10 +125,17 @@ export const tokenSlice = createSlice({
       if (!state[name]) return;
       const token = { ...state[name], approval: { status, amountInWei }};
       return { ...state, [name]: token };
+    },
+    updateTransfer: (state, action: PayloadAction<TokenTransfer>) => {
+      const { name, status } = action.payload;
+      if (!name) return;
+      if (!state[name]) return;
+      const token = { ...state[name], transfer: { status }};
+      return { ...state, [name]: token };
     }
   }
 });
-const { updateApproval, updateDetails, updateBalanceOf } = tokenSlice.actions;
+export const { updateApproval, updateDetails, updateBalanceOf, updateTransfer } = tokenSlice.actions;
 
 export const getDetailsAsync = (contract: ERC20PresetMinterPauser): AppThunk => async dispatch => {
   const [mightBeName, symbol, decimals, totalSupply] = await Promise.all([
@@ -174,7 +195,6 @@ export const approveAsync = (
       // nonce mismatch
       throw new Error("tx mismatch. please reset metamask account");
     }    
-    debugger;
   }
 };
 

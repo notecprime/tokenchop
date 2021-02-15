@@ -1,16 +1,27 @@
-import { utils } from 'ethers';
+import { makeStyles } from '@material-ui/core';
+import { BigNumber, utils } from 'ethers';
 import React from 'react';
 import { SinglePoolProperties } from '../../slices/poolsSlice';
+import { ValidToken } from '../../slices/walletSlice';
+import { roundTo4 } from '../../utils';
 
-const roundTo4 = (value: string) => {
-    let [left, right] = value.split('.');
-    right = !right ? '0000' : right + '0000';
-    return `${left}.${right.slice(0,4)}`;
-}
+const useStyles = makeStyles({
+    price: {
+        whiteSpace: 'nowrap'
+    }
+});
+  
+export const TotalPoolDisplay = (props: SinglePoolProperties & { base: ValidToken }) => {
+    const classes = useStyles();    
+    const { totalSupply, collateral, price, base } = props;
+    const collateralBN = utils.parseEther(collateral);
+    const priceBN = utils.parseEther(price);
+    const scaleBN = utils.parseEther('1');
+    const quote = utils.formatEther(collateralBN.mul(priceBN).div(scaleBN));
 
-export const TotalPoolDisplay = (props: SinglePoolProperties & { price: string }) => {
-    const { totalSupply, collateral, price } = props;
-    //const displayValue = utils.formatUnits(value, decimals);
-    return <div className="selectable">{roundTo4(collateral)}</div>
-    //return <div>balance</div>
+    const baseDisplay = `${roundTo4(collateral)} ${base}`;
+    return <div className="selectable">
+        <div className={classes.price}>{`${roundTo4(quote)} BUSD`}</div>
+        <div className={classes.price}>{`${baseDisplay}`}</div>
+    </div>
 }

@@ -11,7 +11,6 @@ import TradeWindow from './TradeWindow';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: '40px',
       width: '100%',
       height: '100%',
       display: 'flex',
@@ -51,13 +50,6 @@ export default function MainWindow() {
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={stepperStage} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
       <div className={classes.instructions}>
         {getStepContent(stepperStage, classes, errorReason)}
       </div>

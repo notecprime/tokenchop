@@ -2,6 +2,7 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
 export * from './getContract';
 export * from './getLibrary';
+export * from './roundTo4';
 
 export const getSigner: (library: Web3Provider, account: string) => JsonRpcSigner =
     (library, account) => library.getSigner(account).connectUnchecked();

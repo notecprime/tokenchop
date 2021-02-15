@@ -1,16 +1,18 @@
 import { utils } from 'ethers';
 import React from 'react';
 import { SinglePoolProperties } from '../../slices/poolsSlice';
-
-const roundTo4 = (value: string) => {
-    let [left, right] = value.split('.');
-    right = !right ? '0000' : right + '0000';
-    return `${left}.${right.slice(0,4)}`;
-}
+import { roundTo4 } from '../../utils';
 
 export const PoolBalanceDisplay = (props: SinglePoolProperties) => {
-    const { balanceOf } = props;
-    //const displayValue = utils.formatUnits(value, decimals);
-    return <div className="selectable">{roundTo4(balanceOf)}</div>
-    //return <div>balance</div>
+    const { totalSupply, balanceOf, collateral, price } = props;
+    const balanceOfBN = utils.parseEther(balanceOf);
+    const totalSupplyBN = utils.parseEther(totalSupply);
+    const collateralBN = utils.parseEther(collateral);
+    const priceBN = utils.parseEther(price);
+    const scaleBN = utils.parseEther('1');
+    let quote = utils.formatEther(utils.parseEther('0'));
+    if (!totalSupplyBN.isZero()) {
+        quote = utils.formatEther(collateralBN.mul(priceBN).div(scaleBN).mul(balanceOfBN).div(totalSupplyBN));
+    }
+    return <div className="selectable">{roundTo4(quote)}</div>
 }

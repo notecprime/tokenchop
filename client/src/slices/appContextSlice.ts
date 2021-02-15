@@ -44,14 +44,14 @@ export const appContextSlice = createSlice({
         state.stepperStage = 2;
       }
     },
-    selectToken: (state, action: PayloadAction<ValidToken>) => {
+    selectTokenAction: (state, action: PayloadAction<ValidToken>) => {
       state.selectedToken = action.payload;
       state.mainWindowStage = 'PlaceOrder';
       state.stepperStage = 2;
     }    
   }
 });
-export const { selectToken, updateStage } = appContextSlice.actions;
+export const { selectTokenAction, updateStage } = appContextSlice.actions;
 
 export const selectAppContext = (state: RootState) => state.appContext;
 
