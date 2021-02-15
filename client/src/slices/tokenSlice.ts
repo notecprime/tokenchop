@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../store';
 import { utils } from 'ethers';
 import { ERC20PresetMinterPauser } from '../contracts/external';
-import { updateBalances, ValidToken } from './walletSlice';
+import { isValidToken, updateBalances, ValidToken } from './walletSlice';
 import { TokenChopSpec, TokenChopStable } from '../contracts';
 
 export type ApprovalStatus = 'Approved' | 'Pending' | 'NotApproved';
@@ -19,7 +19,7 @@ interface TokenProperties {
   }
 }
 
-export type TokenState = Record<string, TokenProperties>;
+export type TokenState = Record<ValidToken, TokenProperties>;
 
 export const initialState: TokenState = {
   WBNB: {
@@ -65,14 +65,14 @@ export const initialState: TokenState = {
 };
 
 interface TokenDetails {
-  name: string;
+  name: ValidToken;
   symbol: string;
   decimals: number;
   totalSupply: string;
 }
 
 interface TokenBalanceOf {
-  name: string;
+  name: ValidToken;
   balanceOf: string;
 }
 
@@ -117,14 +117,14 @@ export const tokenSlice = createSlice({
 const { updateApproval, updateDetails, updateBalanceOf } = tokenSlice.actions;
 
 export const getDetailsAsync = (contract: ERC20PresetMinterPauser): AppThunk => async dispatch => {
-  const [name, symbol, decimals, totalSupply] = await Promise.all([
+  const [mightBeName, symbol, decimals, totalSupply] = await Promise.all([
     await contract.name(),
     await contract.symbol(),
     await contract.decimals(),
     await contract.totalSupply()
   ]);
   dispatch(updateDetails({
-    name,
+    name: isValidToken(mightBeName),
     symbol,
     decimals,
     totalSupply: totalSupply.toString()
@@ -170,11 +170,15 @@ export const approveAsync = (
       // user cancelled
       return;
     }
+    if (err.code === "-32603") {
+      // nonce mismatch
+      throw new Error("tx mismatch. please reset metamask account");
+    }    
     debugger;
   }
 };
 
-export const selectToken = (tokenName: string) => (state: RootState) => {
+export const selectToken = (tokenName: ValidToken) => (state: RootState) => {
   return state.token[tokenName] || {};
 }
 

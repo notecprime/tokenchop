@@ -8,7 +8,15 @@ import { utils } from 'ethers';
 import { updateStage } from './appContextSlice';
 import { TokenChopSpec, TokenChopStable } from '../contracts';
 
-export type ValidToken = 'WBNB' | 'ETH' | 'BTC' | 'XRP' | 'DAI';
+const validTokens = ['WBNB', 'ETH', 'BTC', 'XRP', 'DAI'] as const;
+export type ValidToken = typeof validTokens[number];
+export function isValidToken(mightBe: string): ValidToken {
+  const validToken = validTokens.find(name => name === mightBe);
+  if (validToken) {
+      return validToken;
+  }
+  throw new Error(`${mightBe} is not a valid token`);
+}
 
 interface WalletState {
     connected: boolean;

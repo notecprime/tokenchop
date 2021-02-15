@@ -1,132 +1,135 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../store';
 import { utils } from 'ethers';
-import { ERC20PresetMinterPauser } from '../contracts/external';
-import { updateBalances, ValidToken } from './walletSlice';
-import { TokenChopStable, TokenChopSpec } from '../contracts';
+import { ValidToken } from './walletSlice';
+import { PoolsContracts } from '../hooks/usePoolsContracts';
 
 export type ChopStatus = 'Complete' | 'Pending' | 'NotStarted';
-export type PoolType = 'spec' | 'stable';
 
-export interface PoolsState {
-  chop: {
-    status: ChopStatus,
-    type?: PoolType
+const poolTypes = ['spec', 'stable'] as const;
+export type PoolType = typeof poolTypes[number];
+export function isPoolType(mightBe: string): PoolType {
+  const poolType = poolTypes.find(name => name === mightBe);
+  if (poolType) {
+      return poolType;
   }
+  throw new Error(`${mightBe} is not a pool type`);
 }
+
+export interface SinglePoolProperties {
+  totalSupply: string,
+  balanceOf: string,
+  collateral: string
+}
+export type PoolsProperties = Record<PoolType, SinglePoolProperties>;
+export type PoolsState = Record<ValidToken, PoolsProperties>;
 
 export const initialState: PoolsState = {
-    chop: { status: 'NotStarted' }
+  WBNB: {
+    spec: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    },
+    stable: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    }
+  },
+  ETH: {
+    spec: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    },
+    stable: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    }
+  },
+  BTC: {
+    spec: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    },
+    stable: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    }
+  },
+  XRP: {
+    spec: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    },
+    stable: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    }
+  },
+  DAI: {
+    spec: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    },
+    stable: {
+      totalSupply: '0',
+      balanceOf: '0',
+      collateral: '0'
+    }
+  }    
 };
-
-interface PoolsDetails {
-  name: string;
-  symbol: string;
-  decimals: number;
-  totalSupply: string;
-}
-
-interface PoolsBalanceOf {
-  name: string;
-  balanceOf: string;
-}
-
-interface PoolsChop {
-  name: string;
-  status: ChopStatus;
-  type?: ChopType;
-}
 
 export const tokenSlice = createSlice({
   name: 'token',
   initialState,
   reducers: {
-    updateDetails: (state, action: PayloadAction<PoolsDetails>) => {
-      const { name } = action.payload;
-    },
-    updateBalanceOf: (state, action: PayloadAction<PoolsBalanceOf>) => {
-      const { name, balanceOf } = action.payload;
-    },
-    updateChop: (state, action: PayloadAction<PoolsChop>) => {
-      const { name, status, type } = action.payload;
-      if (!name) return;
-      return { ...state };
-    }    
+    updateDetails: (_, action: PayloadAction<PoolsState>) => {
+      return action.payload;
+    } 
   }
 });
-const { updateChop, updateDetails, updateBalanceOf } = tokenSlice.actions;
+const { updateDetails } = tokenSlice.actions;
 
-export const getPoolsDetailsAsync = (contract: ERC20PresetMinterPauser): AppThunk => async dispatch => {
-  const [name, symbol, decimals, totalSupply] = await Promise.all([
-    await contract.name(),
-    await contract.symbol(),
-    await contract.decimals(),
-    await contract.totalSupply()
-  ]);
-  dispatch(updateDetails({
-    name,
-    symbol,
-    decimals,
-    totalSupply: totalSupply.toString()
-  }));
-};
-
-export const getBalanceOfAsync = (contract: ERC20PresetMinterPauser, account: string, tokenName: ValidToken): AppThunk => async dispatch => {
-  const balanceOf = await contract.balanceOf(account);
-  dispatch(updateBalanceOf({ name: tokenName, balanceOf: balanceOf.toString()}));
-};
-
-export const getBalanceOfsAsync = (tokenNames: string[], contracts: ERC20PresetMinterPauser[], account: string): AppThunk => async dispatch => {
+export const getPoolsDetailsAsync = (names: ValidToken[], contracts: PoolsContracts[], account: string): AppThunk => async dispatch => {
   const balances = await Promise.all(contracts.map(
-    async c => await c.balanceOf(account)
+    async c => await Promise.all([
+      await c.stable.totalSupply(),
+      await c.stable.balanceOf(account),
+      await c.stable.collateral(),
+      await c.spec.totalSupply(),
+      await c.spec.balanceOf(account),
+      await c.spec.collateral()
+    ])
   ));
-  dispatch(updateBalances({
-    WBNB: utils.formatUnits(balances[0], 18),
-    ETH: utils.formatUnits(balances[1], 18),
-    BTC: utils.formatUnits(balances[2], 18),
-    XRP: utils.formatUnits(balances[3], 18),
-    DAI: utils.formatUnits(balances[4], 18)
-  }));  
+  const details = names.reduce((acc, name, idx) => {
+    const balance = balances[idx];
+    acc[name] = {
+      stable: {
+        totalSupply: utils.formatUnits(balance[0], 18),
+        balanceOf: utils.formatUnits(balance[1], 18),
+        collateral: utils.formatUnits(balance[2], 18)
+      },
+      spec: {
+        totalSupply: utils.formatUnits(balance[3], 18),
+        balanceOf: utils.formatUnits(balance[4], 18),
+        collateral: utils.formatUnits(balance[5], 18)
+      }    
+    };
+    return acc;
+  }, {} as PoolsState)
+  dispatch(updateDetails(details));
 };
 
-export const chopAsync = (contract: TokenChopPools, name: ValidToken, amount: string, type: ChopType ): AppThunk => async dispatch => {
-  
-  
-  
-  
-  
-  dispatch(updateChop({ name, status: 'Pending', type }));
-  const tokenChopAddress = '0xeFFEa4030f19C9588c7cE864ae5553745717766B';
-  const chopAmount = utils.parseEther(amount).toString();
-  let result;
-  try {
-    // const filter = contract.filters.Transfer(account, tokenChopAddress, null);
-    // contract.on(filter, (address, account, amount) => {
-    //   dispatch(updateChop({name, status: 'Approved', amountInWei: approveAmount}));
-    // });
-    result = type === 'spec'
-       ? await contract.mintLowToken(name, chopAmount)
-       : await contract.mintHighToken(name, chopAmount);
-  } catch (err) {
-    if (err.code === "4001") {
-      // user cancelled
-      return;
-    }
-    debugger;
-  }
-};
-
-
-export const mintAsync = (contract: ERC20PresetMinterPauser, account: string, tokenName: string): AppThunk => async dispatch => {
-  const amount = utils.parseEther('2').toString();
-  const result = await contract.mint(account, amount);
-  await result.wait();
-  const balanceOf = await contract.balanceOf(account);
-  dispatch(updateBalanceOf({ name: tokenName, balanceOf: balanceOf.toString()}));
-};
-
-export const selectPools = (tokenName: string) => (state: RootState) => {
-  return state.factory || {};
+export const selectPools = () => (state: RootState) => {
+  return state.pools || {};
 }
 
 export default tokenSlice.reducer;

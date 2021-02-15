@@ -20,7 +20,10 @@ import { getBalanceOfsAsync } from '../../slices/tokenSlice';
 import { ERC20PresetMinterPauser } from '../../contracts/external';
 import { selectWallet, ValidToken } from '../../slices/walletSlice';
 import { usePoolsContracts } from '../../hooks/usePoolsContracts';
-// #3f51b5
+import { getPoolsDetailsAsync, PoolsProperties, selectPools } from '../../slices/poolsSlice';
+import { PoolBalanceDisplay } from './PoolBalanceDisplay';
+import { TotalPoolDisplay } from './TotalPoolDisplay';
+
 const useStyles = makeStyles({
   table: {
     width: '390px'
@@ -47,8 +50,15 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(id: number, base: ValidToken, price: string, balance: string) {
-  return { id, base, price, balance };
+function createData(id: number, base: ValidToken, price: string, balance: string, pools: PoolsProperties) {
+  return {
+    id,
+    base,
+    price,
+    balance,
+    spec: pools.spec,
+    stable: pools.stable
+  };
 }
 
 const quotesTableState = {
@@ -61,6 +71,8 @@ interface RowData {
   base: ValidToken;
   price: string;
   balance: string;
+  spec: PoolsProperties['spec'];
+  stable: PoolsProperties['stable'];
 }
 
 export default function QuotesTable() {
@@ -70,17 +82,18 @@ export default function QuotesTable() {
   const { account, library } = useWeb3React<Web3Provider>();
   const dispatch = useDispatch();
   const { prices } = useSelector(selectBandProtocol);
+  const pools = useSelector(selectPools());
   const { balances } = useSelector(selectWallet);
   useEffect(() => {
     const newRows = [
-      createData(1, 'WBNB', prices.WBNB, balances.WBNB),
-      createData(2, 'ETH', prices.ETH, balances.ETH),
-      createData(3, 'BTC', prices.BTC, balances.BTC),
-      createData(4, 'XRP', prices.XRP, balances.XRP),
-      createData(5, 'DAI', prices.DAI, balances.DAI)
+      createData(1, 'WBNB', prices.WBNB, balances.WBNB, pools.WBNB),
+      createData(2, 'ETH', prices.ETH, balances.ETH, pools.ETH),
+      createData(3, 'BTC', prices.BTC, balances.BTC, pools.BTC),
+      createData(4, 'XRP', prices.XRP, balances.XRP, pools.XRP),
+      createData(5, 'DAI', prices.DAI, balances.DAI, pools.DAI)
     ];
     setState({...state, rows: newRows});
-    }, [prices, balances]
+    }, [prices, balances, pools]
   );
   // Get price from Band Protocol
   const contract = useBandProtocolContract();
@@ -91,7 +104,7 @@ export default function QuotesTable() {
     }, []
   );
   // Get balances for the contracts
-  const tokens = ['WBNB','ETH','BTC','XRP','DAI'];
+  const tokens: ValidToken[] = ['WBNB','ETH','BTC','XRP','DAI'];
   const contracts = [
     useERC20Contract('WBNB'),
     useERC20Contract('ETH'),
@@ -120,7 +133,7 @@ export default function QuotesTable() {
   }
   useEffect(() => {
     if (account != null){
-      dispatch(getPoolsDetailsAsync(tokens, contracts, account));
+      dispatch(getPoolsDetailsAsync(tokens, poolContracts, account));
     }
   },[account, library]);
   
@@ -137,6 +150,8 @@ export default function QuotesTable() {
             <TableCell align="right" className={classes.tableHeadCellBalance}>Wallet</TableCell>
             <TableCell align="right" className={classes.tableHeadCellBalance}>Spec</TableCell>
             <TableCell align="right" className={classes.tableHeadCellBalance}>Stable</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Total Spec</TableCell>
+            <TableCell align="right" className={classes.tableHeadCellBalance}>Total Stable</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -145,8 +160,10 @@ export default function QuotesTable() {
               <TableCell component="th" scope="row">{row.base}</TableCell>
               <TableCell align="right"><PriceDisplay value={row.price}/></TableCell>
               <TableCell align="right"><BalanceDisplay value={row.balance}/></TableCell>
-              <TableCell align="right"><BalanceDisplay value={'0'}/></TableCell>
-              <TableCell align="right"><BalanceDisplay value={'0'}/></TableCell>
+              <TableCell align="right"><PoolBalanceDisplay {...row.spec}/></TableCell>
+              <TableCell align="right"><PoolBalanceDisplay {...row.stable}/></TableCell>
+              <TableCell align="right"><TotalPoolDisplay {...row.spec} price={row.price}/></TableCell>
+              <TableCell align="right"><TotalPoolDisplay {...row.stable} price={row.price}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

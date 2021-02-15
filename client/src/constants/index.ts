@@ -86,23 +86,5 @@ export const BAND_PROTOCOL_ADDRESS: AddressByChain = {
     [ChainId.LOCAL]: '0xDA7a001b254CD22e46d3eAB04d937489c93174C3'
 }
 
-export type ChainLinkSymbols = 'WBNB' | 'BTC' | 'ETH';
-
-export const CHAINLINK_BNBUSD_PROTOCOL_ADDRESS: AddressByChain = {
-    [ChainId.LOCAL]: '0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE'
-}
-
-export const CHAINLINK_BTCUSD_PROTOCOL_ADDRESS: AddressByChain = {
-    [ChainId.LOCAL]: '0x264990fbd0A4796A3E3d8E37C4d5F87a3aCa5Ebf'
-}
-
-export const CHAINLINK_ETHUSD_PROTOCOL_ADDRESS: AddressByChain = {
-    [ChainId.LOCAL]: '0x9ef1B8c0E4F7dc8bF5719Ea496883DC6401d5b2e'
-}
-
-export const WBNB_TOKEN_ADDRESS: AddressByChain = {
-    [ChainId.LOCAL]: '0xae13d989dac2f0debff460ac112a837c89baa7cd'
-}
-
 //export const SUPPORTED_CHAIN_IDS = [1, 3, 4, 5, 42, 56, 97, 1337];
 export const SUPPORTED_CHAIN_IDS = [97, 1337];

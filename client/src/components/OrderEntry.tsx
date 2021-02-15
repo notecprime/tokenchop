@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useERC20Contract } from "../hooks/useERC20Contract";
 import { selectAppContext } from "../slices/appContextSlice";
 import { approveAsync, selectToken } from "../slices/tokenSlice";
-import { mintSpecAsync, mintStableAsync, Pool, selectWallet, ValidToken } from "../slices/walletSlice";
+import { mintSpecAsync, mintStableAsync, selectWallet, ValidToken } from "../slices/walletSlice";
 import { usePoolsContracts } from "../hooks/usePoolsContracts";
-import { PoolType } from "../slices/poolsSlice";
+import { isPoolType, PoolType } from "../slices/poolsSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,9 +68,10 @@ export default function OrderEntry(){
         chop: ''
     });
     function handleRadioChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const value = (event.target as HTMLInputElement).value as Pool;
-        setFormValues({ ...formValues, type: value });
-    };      
+        const mightBePoolType = (event.target as HTMLInputElement).value;
+        setFormValues({ ...formValues, type: isPoolType(mightBePoolType) });
+    };
+
     function handleAmountChange(event: React.ChangeEvent<HTMLInputElement>) {
         let value = (event.target as HTMLInputElement).value;
         value = value.replace(/^0+/, '');
