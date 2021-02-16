@@ -93,3 +93,15 @@ await f.createPair('0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8', '0xeD24FC36d5Ee
 await f.createPair('0xa83575490D7df4E2F47b7D38ef351a2722cA45b9', '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee');
 // DAI, BUSD  
 await f.createPair('0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867', '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee');
+
+
+backend
+clone
+npm install
+create .secret file with mnemonic phrase
+npm run ganache
+truffle test (runs tests against mock BandProtocol contract)
+truffle test --network staging (runs tests against real BandProtocol contract)
+truffle migrate 
+
+npm run build - build contracts and Typescript contract artifacts. Output dir 
