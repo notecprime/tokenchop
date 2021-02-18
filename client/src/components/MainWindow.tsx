@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectAppContext } from '../slices/appContextSlice';
+import IntroWindow from './IntroWindow';
 import TradeWindow from './TradeWindow';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,9 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     instructions: {
       width: '100%',
+      height: '1000%',
       display: 'flex',
-      justifyContent: 'center',
-      flex: '1 1 auto'
+      flexDirection: 'column'
     },
     message: {
       marginTop: '40px',
@@ -36,7 +37,7 @@ function getStepContent(stepIndex: number, classes: any, errorReason: string) {
     case -1:
       return <Typography color="error" className={classes.message}>{errorReason}</Typography>;
     case 0:
-      return <Typography className={classes.message}>Connect to your wallet with the buttons above</Typography>;
+      return <IntroWindow></IntroWindow>;
     case 1:
     case 2:      
       return <TradeWindow></TradeWindow>;

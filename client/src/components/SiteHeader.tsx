@@ -1,4 +1,4 @@
-import { AppBar, createStyles, makeStyles, Theme, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
 import { Wallet } from "./Wallet";
 

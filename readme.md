@@ -67,11 +67,6 @@ burn stable 300		1500
 burn spec 1000		3000
 
 
-
-factory 0x721241fe78f48f386E6Fb29a2535572Fc690199e
-spec factory 0xB32a43bc28cb95AA12C83320B330D47e5007cf60
-stable factory 0xFdb950ebeD62900624264C4Fb51eBEA61171914C
-
 const f = await TokenChopFactory.at('0x721241fe78f48f386E6Fb29a2535572Fc690199e')
 const r = await f.setPoolFactories('0xFdb950ebeD62900624264C4Fb51eBEA61171914C', '0xB32a43bc28cb95AA12C83320B330D47e5007cf60')
 const stable = await TokenChopStableFactory.at('0xFdb950ebeD62900624264C4Fb51eBEA61171914C')
@@ -95,6 +90,8 @@ await f.createPair('0xa83575490D7df4E2F47b7D38ef351a2722cA45b9', '0xeD24FC36d5Ee
 await f.createPair('0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867', '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee');
 
 
+# Build and Deployment
+
 backend
 clone
 npm install
@@ -105,3 +102,47 @@ truffle test --network staging (runs tests against real BandProtocol contract)
 truffle migrate 
 
 npm run build - build contracts and Typescript contract artifacts. Output dir 
+
+ganache-cli@6.12.2
+truffle@5.1.63
+
+
+# Contract Addresses
+TokenChopFactory [0x721241fe78f48f386E6Fb29a2535572Fc690199e](https://testnet.bscscan.com/address/0x721241fe78f48f386E6Fb29a2535572Fc690199e)
+
+TokenChopSpecFactory [0xB32a43bc28cb95AA12C83320B330D47e5007cf60](https://testnet.bscscan.com/address/0xB32a43bc28cb95AA12C83320B330D47e5007cf60)
+
+TokenChopStableFactory [0xFdb950ebeD62900624264C4Fb51eBEA61171914C](https://testnet.bscscan.com/address/0xFdb950ebeD62900624264C4Fb51eBEA61171914C)
+
+StablePool (WBNB/BUSD) [0x68bc4408Cc0Cd5C9A84c40f95553df50D54F5d2E](https://testnet.bscscan.com/address/0x68bc4408Cc0Cd5C9A84c40f95553df50D54F5d2E)
+
+SpecPool (WBNB/BUSD) [0x4E02e6BF75c1894C805e59433C26D76CbB1E9950](https://testnet.bscscan.com/address/0x4E02e6BF75c1894C805e59433C26D76CbB1E9950)
+
+StablePool (ETH/BUSD) [0xb9A5e888192713c9E4d6005Da9D441bbd431D442](https://testnet.bscscan.com/address/0xb9A5e888192713c9E4d6005Da9D441bbd431D442)
+
+SpecPool (ETH/BUSD) [0x1b7CF1a8088Ab8738A4C38BebD3c34515f125bf9](https://testnet.bscscan.com/address/0x1b7CF1a8088Ab8738A4C38BebD3c34515f125bf9)
+
+StablePool (BTC/BUSD) [0xDD6021CfB0dc12b287d42A44cB09361ABbf6234b](https://testnet.bscscan.com/address/0xDD6021CfB0dc12b287d42A44cB09361ABbf6234b)
+
+SpecPool (BTC/BUSD) [0xf7FD68F477F31EE88e6e55191E95f8Da8e79F500](https://testnet.bscscan.com/address/0xf7FD68F477F31EE88e6e55191E95f8Da8e79F500)
+
+StablePool (XRP/BUSD) [0xe1F603dDdC524c1ac6D9728D8AC580960a9FC25C](https://testnet.bscscan.com/address/0xe1F603dDdC524c1ac6D9728D8AC580960a9FC25C)
+
+SpecPool (XRP/BUSD) [0x01096bb743CB1A86147ab8ef2b4b744ADc79639d](https://testnet.bscscan.com/address/0x01096bb743CB1A86147ab8ef2b4b744ADc79639d)
+
+StablePool (DAI/BUSD) [0xAf5A68f6461eD3C19d8BaF789d08d41e219c99a1](https://testnet.bscscan.com/address/0xAf5A68f6461eD3C19d8BaF789d08d41e219c99a1)
+
+SpecPool (DAI/BUSD) [0xe407E9A7EF6b875A40aB2eB59Ace72Dadc00eBC8](https://testnet.bscscan.com/address/0xe407E9A7EF6b875A40aB2eB59Ace72Dadc00eBC8)
+
+## Token Contract Addresses
+Get these tokens from the [Binance Smart Chain Faucet](https://testnet.binance.org/faucet-smart)
+
+WBNB [0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd](https://testnet.bscscan.com/address/0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd)
+
+ETH [0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378](https://testnet.bscscan.com/address/0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378)
+
+BTC [0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8](https://testnet.bscscan.com/address/0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8)
+
+XRP [0xa83575490D7df4E2F47b7D38ef351a2722cA45b9](https://testnet.bscscan.com/address/0xa83575490D7df4E2F47b7D38ef351a2722cA45b9)
+
+DAI [0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867](https://testnet.bscscan.com/address/0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867)

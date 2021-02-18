@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'row',
       alignItems: 'flex-start',
       justifyContent: 'space-around'
+    },
+    message: {
+      padding: '8px 0 0 30px'
     }
   }),
 );
@@ -37,6 +41,7 @@ export default function TradeWindow() {
   const { connected } = useSelector(selectWallet);  
   return (
     <div className={classes.tradeWindow}>
+      <Typography className={classes.message}>This site only works with Binance Smart Chain Testnet</Typography>      
       <div className={classes.selectWindow}>
         <QuotesTable></QuotesTable>
       </div>
