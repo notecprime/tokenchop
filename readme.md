@@ -1,4 +1,7 @@
 Tokenchop is a DeFi solution that splits any BEP20 token (e.g. WBNB) into two new BEP20 tokens with different risk-return profiles based on a pair (e.g. WBNB/BUSD). 
+
+[Tokenchop Overview video](https://youtu.be/PH--VbwsMzU)
+
 # Build and Deployment
 
 ### Requirements
